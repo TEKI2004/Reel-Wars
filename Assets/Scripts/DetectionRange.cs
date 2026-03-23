@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class DetectionRange : MonoBehaviour
 {
@@ -6,8 +7,8 @@ public class DetectionRange : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        UnitBehaviour enemy = other.GetComponent<UnitBehaviour>();
-        if (enemy != null)
+        IAttackable enemy = other.GetComponent<IAttackable>();
+        if (enemy != null && enemy.OwnerId != ownerUnit.OwnerId)
         {
             ownerUnit.AddEnemyToRange(enemy);
         }
@@ -15,8 +16,8 @@ public class DetectionRange : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        UnitBehaviour enemy = other.GetComponent<UnitBehaviour>();
-        if (enemy != null)
+        IAttackable enemy = other.GetComponent<IAttackable>();
+        if (enemy != null && ownerUnit != null)
         {
             ownerUnit.RemoveEnemyFromRange(enemy);
         }

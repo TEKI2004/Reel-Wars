@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [Header("Unit Prefab")]
     [SerializeField] private GameObject unitPrefab;
 
+
+
     private void Start()
     {
         SpawnUnit(leftSpawnPoint, 0, UnitDirection.Right);

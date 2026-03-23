@@ -7,7 +7,7 @@ public enum UnitDirection
     Right
 }
 
-public class UnitBehaviour : MonoBehaviour
+public class UnitBehaviour : MonoBehaviour, IAttackable
 {
     private static float default_rangeY = 1f;
     private static float default_rangeZ = 1f;
@@ -23,8 +23,8 @@ public class UnitBehaviour : MonoBehaviour
     private int currentHealth;
     private float lastAttackTime;
 
-    private UnitBehaviour currentTarget;
-    private readonly List<UnitBehaviour> enemiesInRange = new();
+    private IAttackable currentTarget;
+    private readonly List<IAttackable> enemiesInRange = new();
 
 
     public int OwnerId { get; private set; }
@@ -59,17 +59,13 @@ public class UnitBehaviour : MonoBehaviour
 
         CleanupEnemyList();
 
-        if (currentTarget == null || !enemiesInRange.Contains(currentTarget))
-        {
-            currentTarget = GetNextTarget();
-        }
-
         if (currentTarget != null)
         {
-            Attack(currentTarget);
+            Attack();
         }
         else
         {
+            currentTarget = GetNextTarget();
             MoveForward();
         }
     }
@@ -85,40 +81,50 @@ public class UnitBehaviour : MonoBehaviour
         transform.Translate(moveSpeed * Time.deltaTime * DirectionVector);
     }
 
-    private UnitBehaviour GetNextTarget()
+    private IAttackable GetNextTarget()
     {
         return enemiesInRange.Count > 0 ? enemiesInRange[0] : null;
     }
 
-    private void Attack(UnitBehaviour target)
+    private void Attack()
     {
         if (Time.time < lastAttackTime + attackCooldown) return;
 
         lastAttackTime = Time.time;
-        target.TakeDamage(damage);
+        bool hasDied = currentTarget.TakeDamage(damage);
+        if (hasDied)
+        {
+            enemiesInRange.Remove(currentTarget);
+            currentTarget = null;
+        }
     }
 
-    public void TakeDamage(int amount)
+    public bool TakeDamage(int amount)
     {
         currentHealth -= amount;
+        Debug.Log($"Player{OwnerId+1} took {amount} damage, current health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
+            currentTarget = null;
+            enemiesInRange.Clear();
             Destroy(gameObject);
+            return true;
         }
+
+        return false;
     }
 
-    public void AddEnemyToRange(UnitBehaviour enemy)
+    public void AddEnemyToRange(IAttackable enemy)
     {
-        if (enemy == null) return;
-        if (enemy.OwnerId == OwnerId) return;
         if (!enemiesInRange.Contains(enemy))
         {
             enemiesInRange.Add(enemy);
+            Debug.Log($"For Player{OwnerId+1} Enemy added to range: Player{enemy.OwnerId+1}");
         }
     }
 
-    public void RemoveEnemyFromRange(UnitBehaviour enemy)
+    public void RemoveEnemyFromRange(IAttackable enemy)
     {
         if (enemy == null) return;
         enemiesInRange.Remove(enemy);
