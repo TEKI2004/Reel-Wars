@@ -1,0 +1,43 @@
+/* ===== CONTAINER (common) ===== */
+.container {
+    position: absolute;
+    flex-grow: 1;
+
+    width: 600px;
+    height: 150px;
+
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    padding: 0;
+    margin: 0;
+}
+
+/* ===== LEFT / RIGHT positioning ===== */
+.left-panel {
+    top: 75px;
+    left: 75px;
+}
+
+.right-panel {
+    top: 75px;
+    right: 75px;
+}
+
+/* ===== BUTTON STYLE ===== */
+.menu-button {
+    width: 130px;
+    height: 110px;
+
+    font-size: 92px;
+    -unity-text-align: middle-center;
+
+    border-width: 3px;
+    border-color: rgb(26, 26, 26);
+    border-radius: 1px;
+
+    margin-right: 10px;
+}

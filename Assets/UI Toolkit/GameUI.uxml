@@ -1,0 +1,23 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+
+    <Style src="project://database/Assets/UI Toolkit/Styles.uss" />
+
+    <!-- Left panel -->
+    <ui:VisualElement name="LeftButtonPanel" class="container left-panel">
+        <ui:Button text="1" name="LeftButton1" class="menu-button" />
+        <ui:Button text="2" name="LeftButton2" class="menu-button" />
+        <ui:Button text="3" name="LeftButton3" class="menu-button" />
+    </ui:VisualElement>
+
+    <!-- Right panel -->
+    <ui:VisualElement name="RightButtonPanel" class="container right-panel">
+        <ui:Button text="1" name="RightButton1" class="menu-button" />
+        <ui:Button text="2" name="RightButton2" class="menu-button" />
+        <ui:Button text="3" name="RightButton3" class="menu-button" />
+    </ui:VisualElement>
+
+</ui:UXML>

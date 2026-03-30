@@ -9,17 +9,33 @@ public class GameManager : MonoBehaviour
     [Header("Unit Prefab")]
     [SerializeField] private GameObject unitPrefab;
 
+    [Header("Unit Prefab")]
+    public string LeftPlayerName { get; private set; } = "Player1";
+    public string RightPlayerName { get; private set; } = "Player2";
 
 
     private void Start()
     {
-        SpawnUnit(leftSpawnPoint, 0, UnitDirection.Right);
-        SpawnUnit(rightSpawnPoint, 1, UnitDirection.Left);
+        //SpawnUnit(FacingDirection.Right);
+        //SpawnUnit(FacingDirection.Left);
     }
 
-    private void SpawnUnit(Transform spawnPoint, int ownerId, UnitDirection direction)
+    public void SpawnUnit(FacingDirection direction)
     {
-        if (unitPrefab == null || spawnPoint == null) return;
+        if (unitPrefab == null) return;
+
+        Transform spawnPoint;
+        string ownerId;
+        if (direction == FacingDirection.Left)
+        {
+            spawnPoint = rightSpawnPoint;
+            ownerId = RightPlayerName;
+        }
+        else
+        {
+            spawnPoint = leftSpawnPoint;
+            ownerId = LeftPlayerName;
+        }
 
         GameObject unitObject = Instantiate(unitPrefab, spawnPoint.position, Quaternion.identity);
         UnitBehaviour unit = unitObject.GetComponent<UnitBehaviour>();

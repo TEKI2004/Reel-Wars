@@ -2,6 +2,6 @@ using UnityEngine;
 
 public interface IAttackable 
 {
-    int OwnerId { get; }
+    string OwnerId { get; }
     bool TakeDamage(int amount);
 }

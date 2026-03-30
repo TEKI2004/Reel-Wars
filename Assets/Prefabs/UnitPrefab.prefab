@@ -34,6 +34,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5274777394216909505}
   - {fileID: 2918080532969013620}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -132,7 +133,8 @@ MonoBehaviour:
   damage: 10
   attackRange: 1.5
   attackCooldown: 1
-  detectionRangeCollider: {fileID: 2370312609983721794}
+  attackRangeDetectorCollider: {fileID: 2370312609983721794}
+  moveRangeDetectorCollider: {fileID: 4466963664906640443}
   direction: 1
 --- !u!54 &8918220334771693962
 Rigidbody:
@@ -161,6 +163,73 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 8
   m_CollisionDetection: 0
+--- !u!1 &7908456812997627264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5274777394216909505}
+  - component: {fileID: 4466963664906640443}
+  - component: {fileID: 5394078400278332405}
+  m_Layer: 0
+  m_Name: MoveRangeDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5274777394216909505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908456812997627264}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5545551502273422819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4466963664906640443
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908456812997627264}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5394078400278332405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7908456812997627264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50906f5322b94a342952603943384504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MoveRangeDetecor
+  ownerUnit: {fileID: 6799871862351974249}
 --- !u!1 &8911595878172132263
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +242,7 @@ GameObject:
   - component: {fileID: 2370312609983721794}
   - component: {fileID: 8380238236230450138}
   m_Layer: 0
-  m_Name: DetectionRange
+  m_Name: AttackRangeDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
