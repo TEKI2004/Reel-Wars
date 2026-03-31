@@ -44,16 +44,13 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         }
     }
 
-    private void Awake()
-    {
-        currentHealth = maxHealth;
-    }
-
     public void Initialize(string ownerId, FacingDirection moveDirection)
     {
         OwnerId = ownerId;
         UnitId = unitNumber++;
         direction = moveDirection;
+        currentHealth = maxHealth;
+        lastAttackTime = -attackCooldown;
         ConfigureDetectors();
     }
 
