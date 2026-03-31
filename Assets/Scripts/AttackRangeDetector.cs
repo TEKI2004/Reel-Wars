@@ -11,21 +11,25 @@ public class AttackRangeDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (ownerUnit == null) return;
+
         IAttackable attackable = other.GetComponent<IAttackable>();
-
         if (attackable == null) return;
-        if (attackable == (IAttackable)ownerUnit) return;
+        if (other.transform.root == ownerUnit.transform.root) return;
         if (attackable.OwnerId == ownerUnit.OwnerId) return;
-
-        ownerUnit.AddEnemyToRange(attackable);
+        
+        ownerUnit.HandleEnemyEnter(attackable);
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (ownerUnit == null) return;
+
         IAttackable attackable = other.GetComponent<IAttackable>();
-
         if (attackable == null) return;
+        if (other.transform.root == ownerUnit.transform.root) return;
+        if (attackable.OwnerId == ownerUnit.OwnerId) return;
 
-        ownerUnit.RemoveEnemyFromRange(attackable);
+        ownerUnit.HandleEnemyExit(attackable);
     }
 }

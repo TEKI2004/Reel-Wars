@@ -25,7 +25,7 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         currentHealth = maxHealth;
     }
 
-    public bool TakeDamage(int amount)
+    public void TakeDamage(int amount)
     {
         currentHealth -= amount;
         Debug.Log($"{gameObject.name} took {amount} damage. Current health: {currentHealth}/{maxHealth}");
@@ -34,7 +34,5 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         {
             Debug.Log($"{gameObject.name} has been destroyed.");
         }
-
-        return false;
     }
 }

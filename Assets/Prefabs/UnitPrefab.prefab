@@ -135,6 +135,8 @@ MonoBehaviour:
   attackCooldown: 1
   attackRangeDetectorCollider: {fileID: 2370312609983721794}
   moveRangeDetectorCollider: {fileID: 4466963664906640443}
+  attackDetector: {fileID: 8380238236230450138}
+  moveDetector: {fileID: 5394078400278332405}
   direction: 1
 --- !u!54 &8918220334771693962
 Rigidbody:

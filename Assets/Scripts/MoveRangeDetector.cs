@@ -1,7 +1,6 @@
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-public class MoveRangeDetecor : MonoBehaviour
+public class MoveRangeDetector : MonoBehaviour
 {
     [SerializeField] private UnitBehaviour ownerUnit;
 
@@ -16,10 +15,9 @@ public class MoveRangeDetecor : MonoBehaviour
 
         IAttackable attackable = other.GetComponent<IAttackable>();
         if (attackable == null) return;
-
         if (other.transform.root == ownerUnit.transform.root) return;
 
-        ownerUnit.AddBlockingEntityToRange(attackable);
+        ownerUnit.HandleBlockEnter(attackable);
     }
 
     private void OnTriggerExit(Collider other)
@@ -28,9 +26,8 @@ public class MoveRangeDetecor : MonoBehaviour
 
         IAttackable attackable = other.GetComponent<IAttackable>();
         if (attackable == null) return;
-
         if (other.transform.root == ownerUnit.transform.root) return;
 
-        ownerUnit.RemoveBlockingEntityFromRange(attackable);
+        ownerUnit.HandleBlockExit(attackable);
     }
 }

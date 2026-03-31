@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [Header("Unit Prefab")]
     [SerializeField] private GameObject unitPrefab;
 
-    [Header("Unit Prefab")]
+    [Header("Names")]
     public string LeftPlayerName { get; private set; } = "Player1";
     public string RightPlayerName { get; private set; } = "Player2";
 

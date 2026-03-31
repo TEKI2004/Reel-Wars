@@ -254,6 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6ae3a6d07a9504a9e0d7517a209be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  gameManager: {fileID: 372157071}
+  facingDirection: 1
+  maxHealth: 500
 --- !u!65 &237540034
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -459,8 +462,6 @@ MonoBehaviour:
   leftSpawnPoint: {fileID: 891579595}
   rightSpawnPoint: {fileID: 2130064543}
   unitPrefab: {fileID: 187218633972683070, guid: cd47e4ad5ef416b41a0fe1f1ccefcce3, type: 3}
-  leftPlayerName: Player1
-  rightPlayerName: Player2
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,6 +714,7 @@ GameObject:
   - component: {fileID: 910961995}
   - component: {fileID: 910961994}
   - component: {fileID: 910961997}
+  - component: {fileID: 910961998}
   m_Layer: 0
   m_Name: BaseRight
   m_TagString: Untagged
@@ -813,6 +815,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &910961998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910961992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6ae3a6d07a9504a9e0d7517a209be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BaseBehaviour
+  gameManager: {fileID: 372157071}
+  facingDirection: 0
+  maxHealth: 500
 --- !u!1 &934046198
 GameObject:
   m_ObjectHideFlags: 0

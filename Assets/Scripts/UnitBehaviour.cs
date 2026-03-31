@@ -7,14 +7,14 @@ public enum FacingDirection
     Right
 }
 
-public class UnitBehaviour : MonoBehaviour, IAttackable
+public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 {
     private static float default_rangeY = 1f;
     private static float default_rangeZ = 1f;
     private static float blockRange = 1.1f;
     private static int unitNumber = 0;
+    public int UnitId { get; private set; }
 
-    private int unitId;
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int damage = 10;
@@ -30,6 +30,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackable
     private IAttackable currentTarget;
     private readonly List<IAttackable> enemiesInRange = new();
     private readonly List<IAttackable> blockingEntitiesInRange = new();
+    private readonly HashSet<IAttackableObserver> observers = new();
 
     public string OwnerId { get; private set; }
 
@@ -51,7 +52,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackable
     public void Initialize(string ownerId, FacingDirection moveDirection)
     {
         OwnerId = ownerId;
-        unitId = unitNumber++;
+        UnitId = unitNumber++;
         direction = moveDirection;
         ConfigureDetectors();
     }
@@ -60,8 +61,6 @@ public class UnitBehaviour : MonoBehaviour, IAttackable
     void Update()
     {
         if (currentHealth <= 0) return;
-
-        CleanupEnemyList();
 
         if (currentTarget == null)
         {
@@ -90,21 +89,19 @@ public class UnitBehaviour : MonoBehaviour, IAttackable
 
     private bool HasBlockingEntity()
     {
-        blockingEntitiesInRange.RemoveAll(e => e == null);
-
-        foreach (var entity in blockingEntitiesInRange)
-        {
-            if (entity.OwnerId == OwnerId) 
-            { 
-                Debug.Log($"For {OwnerId}:U{unitId} Ignoring blocking entity in range: {entity.OwnerId} (same owner)");
-            } 
-            else
-            {
-                Debug.Log($"For {OwnerId}:U{unitId} Blocking entity in range: {entity.OwnerId}");
-            }
+        //foreach (var entity in blockingEntitiesInRange)
+        //{
+        //    if (entity.OwnerId == OwnerId) 
+        //    { 
+        //        Debug.Log($"For {OwnerId}:U{unitId} Ignoring blocking entity in range: {entity.OwnerId} (same owner)");
+        //    } 
+        //    else
+        //    {
+        //        Debug.Log($"For {OwnerId}:U{unitId} Blocking entity in range: {entity.OwnerId}");
+        //    }
             
-            return true;
-        }
+        //    return true;
+        //}
 
         return blockingEntitiesInRange.Count != 0;
     }
@@ -130,70 +127,103 @@ public class UnitBehaviour : MonoBehaviour, IAttackable
         if (Time.time < lastAttackTime + attackCooldown) return;
 
         lastAttackTime = Time.time;
-        bool hasDied = currentTarget.TakeDamage(damage);
-        if (hasDied)
-        {
-            blockingEntitiesInRange.Remove(currentTarget);
-            enemiesInRange.Remove(currentTarget);
-            currentTarget = null;
-        }
+        currentTarget.TakeDamage(damage);
     }
 
-    public bool TakeDamage(int amount)
+    public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        Debug.Log($"{OwnerId} took {amount} damage, current health: {currentHealth}");
+        Debug.Log($"{OwnerId}:U{UnitId} took {amount} damage, current health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
             currentTarget = null;
             enemiesInRange.Clear();
+            blockingEntitiesInRange.Clear();
+            NotifyDeath();
             Destroy(gameObject);
-            return true;
         }
-
-        return false;
     }
 
-    public void AddBlockingEntityToRange(IAttackable entity)
+    private void NotifyDeath()
     {
-        if (entity == null || entity == (IAttackable) this) return;
+        foreach (var observer in observers)
+        {
+            if (observer != null)
+            {
+                observer.HandleObservedTargetDestroyed(this);
+                Debug.Log($"{OwnerId}:U{UnitId} Notifying observer {observer.OwnerId}:U{observer.UnitId} of death");
+            }
+        }
+
+        observers.Clear();
+    }
+
+    public void RegisterObserver(IAttackableObserver observer)
+    {
+        if (observer == null) return;
+        observers.Add(observer);
+    }
+
+    public void UnregisterObserver(IAttackableObserver observer)
+    {
+        if (observer == null) return;
+        observers.Remove(observer);
+    }
+
+    public void HandleObservedTargetDestroyed(IAttackable destroyedTarget)
+    {
+        if (currentTarget == destroyedTarget)
+        {
+            currentTarget = null;
+        }
+        enemiesInRange.Remove(destroyedTarget);
+        blockingEntitiesInRange.Remove(destroyedTarget);
+    }
+
+    public void HandleEnemyEnter(IAttackable enemy)
+    {
+        if (enemy == null) return;
+        if (enemy.OwnerId == OwnerId) return;
+
+        if (!enemiesInRange.Contains(enemy))
+        {
+            enemiesInRange.Add(enemy);
+            var observable = enemy as IAttackableObserver;
+            observable?.RegisterObserver(this);
+        }
+    }
+
+    public void HandleEnemyExit(IAttackable enemy)
+    {
+        if (enemy == null) return;
+
+        enemiesInRange.Remove(enemy);
+        var observable = enemy as IAttackableObserver;
+        observable?.UnregisterObserver(this);
+
+        if (currentTarget == enemy)
+            currentTarget = null;
+    }
+
+    public void HandleBlockEnter(IAttackable entity)
+    {
+        if (entity == null) return;
 
         if (!blockingEntitiesInRange.Contains(entity))
         {
             blockingEntitiesInRange.Add(entity);
+            var observable = entity as IAttackableObserver;
+            observable?.RegisterObserver(this);
         }
     }
 
-    public void RemoveBlockingEntityFromRange(IAttackable entity)
+    public void HandleBlockExit(IAttackable entity)
     {
         if (entity == null) return;
 
         blockingEntitiesInRange.Remove(entity);
-    }
-
-    public void AddEnemyToRange(IAttackable enemy)
-    {
-        if (!enemiesInRange.Contains(enemy))
-        {
-            enemiesInRange.Add(enemy);
-            Debug.Log($"For {OwnerId} Enemy added to range: {enemy.OwnerId}");
-        }
-    }
-
-    public void RemoveEnemyFromRange(IAttackable enemy)
-    {
-        if (enemy == null) return;
-        enemiesInRange.Remove(enemy);
-
-        if (currentTarget == enemy)
-        {
-            currentTarget = null;
-        }
-    }
-
-    private void CleanupEnemyList()
-    {
-        enemiesInRange.RemoveAll(enemy => enemy == null);
+        var observable = entity as IAttackableObserver;
+        observable?.UnregisterObserver(this);
     }
 }
