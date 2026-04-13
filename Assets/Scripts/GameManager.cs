@@ -1,3 +1,4 @@
+using Unity.ProjectAuditor.Editor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -5,6 +6,11 @@ public class GameManager : MonoBehaviour
     [Header("Spawn Points")]
     [SerializeField] private Transform leftSpawnPoint;
     [SerializeField] private Transform rightSpawnPoint;
+
+    [Header("Spawn Area")]
+    [SerializeField] private LayerMask unitLayer;
+    [SerializeField] private BoxCollider leftSpawnArea;
+    [SerializeField] private BoxCollider rightSpawnArea;
 
     [Header("Unit Prefab")]
     [SerializeField] private GameObject unitPrefab;
@@ -27,19 +33,15 @@ public class GameManager : MonoBehaviour
     {
         if (unitPrefab == null) return;
 
-        Transform spawnPoint;
-        string ownerId;
-        if (direction == FacingDirection.Left)
+        string ownerId = GetOwnerId(direction);
+
+        if (!IsSpawnAreaFree(ownerId, direction))
         {
-            spawnPoint = rightSpawnPoint;
-            ownerId = RightPlayerName;
-        }
-        else
-        {
-            spawnPoint = leftSpawnPoint;
-            ownerId = LeftPlayerName;
+            Debug.LogWarning("Spawn area is occupied. Cannot spawn unit.");
+            return;
         }
 
+        Transform spawnPoint = GetSpawnPoint(direction);
         GameObject unitObject = Instantiate(unitPrefab, spawnPoint.position, Quaternion.identity);
         UnitBehaviour unit = unitObject.GetComponent<UnitBehaviour>();
 
@@ -48,4 +50,43 @@ public class GameManager : MonoBehaviour
             unit.Initialize(ownerId, direction);
         }
     }
+
+    private Transform GetSpawnPoint(FacingDirection direction)
+    {
+        return direction == FacingDirection.Left ? rightSpawnPoint : leftSpawnPoint;
+    }
+
+    private BoxCollider GetSpawnArea(FacingDirection direction)
+    {
+        return direction == FacingDirection.Left ? rightSpawnArea : leftSpawnArea;
+    }
+
+    private string GetOwnerId(FacingDirection direction)
+    {
+        return direction == FacingDirection.Left ? RightPlayerName : LeftPlayerName;
+    }
+
+    private bool IsSpawnAreaFree(string ownerId, FacingDirection direction)
+    {
+        BoxCollider spawnArea = GetSpawnArea(direction);
+
+        Collider[] hits = Physics.OverlapBox(
+            spawnArea.bounds.center,
+            spawnArea.bounds.extents,
+            Quaternion.identity,
+            unitLayer
+        );
+
+        foreach (var hit in hits)
+        {
+            var attackable = hit.GetComponent<IAttackable>();
+            if (attackable != null && attackable.OwnerId == ownerId)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

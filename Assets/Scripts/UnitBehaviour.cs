@@ -15,9 +15,9 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     private static int unitNumber = 0;
     public int UnitId { get; private set; }
 
-    [SerializeField] private float moveSpeed = 3f;
-    [SerializeField] private int maxHealth = 100;
     [SerializeField] private int damage = 10;
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private float attackCooldown = 1f;
 

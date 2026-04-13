@@ -1,22 +1,22 @@
-/* ===== CONTAINER (common) ===== */
 .container {
+    background-image: url("project://database/Assets/UI%20Toolkit/Images/SpawnerBorder_.jpg?fileID=2800000&guid=31832b4958f8d9b4abfbfcb7498c5837&type=3#SpawnerBorder_");
+    -unity-background-scale-mode: stretch-to-fill;
+    -unity-slice-left: 30;
+    -unity-slice-right: 30;
+    -unity-slice-top: 40;
+    -unity-slice-bottom: 40;
     position: absolute;
     flex-grow: 1;
-
-    width: 600px;
-    height: 150px;
-
+    width: 561px;
+    height: 180px;
     flex-direction: row;
-
     justify-content: center;
     align-items: center;
     align-content: center;
-
     padding: 0;
     margin: 0;
 }
 
-/* ===== LEFT / RIGHT positioning ===== */
 .left-panel {
     top: 75px;
     left: 75px;
@@ -27,17 +27,14 @@
     right: 75px;
 }
 
-/* ===== BUTTON STYLE ===== */
 .menu-button {
-    width: 130px;
-    height: 110px;
-
+    width: 179px;
+    height: 140px;
     font-size: 92px;
     -unity-text-align: middle-center;
-
     border-width: 3px;
     border-color: rgb(26, 26, 26);
     border-radius: 1px;
-
-    margin-right: 10px;
+    margin-right: 4px;
+    margin-left: 4px;
 }
