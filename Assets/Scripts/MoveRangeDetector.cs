@@ -17,6 +17,9 @@ public class MoveRangeDetector : MonoBehaviour
         if (attackable == null) return;
         if (other.transform.root == ownerUnit.transform.root) return;
 
+        var baseBehaviour = other.GetComponent<BaseBehaviour>();
+        if (baseBehaviour != null && baseBehaviour.OwnerId == ownerUnit.OwnerId) return;
+
         ownerUnit.HandleBlockEnter(attackable);
     }
 
@@ -27,6 +30,9 @@ public class MoveRangeDetector : MonoBehaviour
         IAttackable attackable = other.GetComponent<IAttackable>();
         if (attackable == null) return;
         if (other.transform.root == ownerUnit.transform.root) return;
+
+        var baseBehaviour = other.GetComponent<BaseBehaviour>();
+        if (baseBehaviour != null && baseBehaviour.OwnerId == ownerUnit.OwnerId) return;
 
         ownerUnit.HandleBlockExit(attackable);
     }

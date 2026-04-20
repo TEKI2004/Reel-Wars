@@ -29,9 +29,15 @@ public class GameManager : MonoBehaviour
         //SpawnUnit(FacingDirection.Left);
     }
 
-    public void SpawnUnit(FacingDirection direction)
+    public void SpawnUnit(FacingDirection direction, UnitType unitType)
     {
         if (unitPrefab == null) return;
+
+        if (unitType == null)
+        {
+            Debug.LogError("UnitType is null!");
+            return;
+        }
 
         string ownerId = GetOwnerId(direction);
 
@@ -47,7 +53,7 @@ public class GameManager : MonoBehaviour
 
         if (unit != null)
         {
-            unit.Initialize(ownerId, direction);
+            unit.Initialize(ownerId, direction, unitType);
         }
     }
 

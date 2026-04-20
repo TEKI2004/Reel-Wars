@@ -11,7 +11,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 {
     private static float default_rangeY = 1f;
     private static float default_rangeZ = 1f;
-    private static float blockRange = 1.1f;
+    private static float blockRange = 0.7f;
     private static int unitNumber = 0;
     public int UnitId { get; private set; }
 
@@ -21,6 +21,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private float attackCooldown = 1f;
 
+    [SerializeField] private UnitType unitType;
     [SerializeField] private BoxCollider attackRangeDetectorCollider;
     [SerializeField] private BoxCollider moveRangeDetectorCollider;
 
@@ -34,7 +35,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     public string OwnerId { get; private set; }
 
-    public FacingDirection direction = FacingDirection.Right;
+    private FacingDirection direction = FacingDirection.Right;
     
     private Vector3 FacingDirectionVector 
     {
@@ -44,13 +45,21 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         }
     }
 
-    public void Initialize(string ownerId, FacingDirection moveDirection)
+    public void Initialize(string ownerId, FacingDirection moveDirection, UnitType unitType)
     {
         OwnerId = ownerId;
         UnitId = unitNumber++;
+
+        damage = unitType.damage;
+        maxHealth = unitType.maxHealth;
+        moveSpeed = unitType.moveSpeed;
+        attackRange = unitType.attackRange;
+        attackCooldown = unitType.attackCooldown;
+        
         direction = moveDirection;
         currentHealth = maxHealth;
         lastAttackTime = -attackCooldown;
+
         ConfigureDetectors();
     }
 
@@ -73,6 +82,10 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         {
             MoveForward();
         }
+        //else
+        //{
+        //    Debug.Log($"{OwnerId}:U{UnitId} is blocked.");
+        //}
     }
 
     private void ConfigureDetectors()

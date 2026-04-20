@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2344258758761433124}
   - component: {fileID: 7511259475104335115}
   - component: {fileID: 6799871862351974249}
-  - component: {fileID: 8918220334771693962}
+  - component: {fileID: 8028871305866220772}
   m_Layer: 3
   m_Name: UnitPrefab
   m_TagString: Untagged
@@ -110,7 +110,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -135,8 +135,7 @@ MonoBehaviour:
   attackCooldown: 1
   attackRangeDetectorCollider: {fileID: 2370312609983721794}
   moveRangeDetectorCollider: {fileID: 4466963664906640443}
-  direction: 1
---- !u!54 &8918220334771693962
+--- !u!54 &8028871305866220772
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,9 +158,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1 &7908456812997627264
 GameObject:

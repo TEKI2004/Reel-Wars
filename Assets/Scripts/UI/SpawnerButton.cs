@@ -15,6 +15,14 @@ public class SpawnerButton : MonoBehaviour
     private Button rightButton2;
     private Button rightButton3;
 
+    [SerializeField] private UnitType leftUnitType1;
+    [SerializeField] private UnitType leftUnitType2;
+    [SerializeField] private UnitType leftUnitType3;
+
+    [SerializeField] private UnitType rightUnitType1;
+    [SerializeField] private UnitType rightUnitType2;
+    [SerializeField] private UnitType rightUnitType3;
+
     private void OnEnable()
     {
         // UIDocument lekérése ugyanarról az objektumról
@@ -40,6 +48,15 @@ public class SpawnerButton : MonoBehaviour
         rightButton1.clicked += OnRightButton1Clicked;
         rightButton2.clicked += OnRightButton2Clicked;
         rightButton3.clicked += OnRightButton3Clicked;
+
+        UnitType basicUnitType = Resources.Load<UnitType>("UnitTypes/Basic");
+
+        leftUnitType1 = basicUnitType;
+        leftUnitType2 = basicUnitType;
+        leftUnitType3 = basicUnitType;
+        rightUnitType1 = basicUnitType;
+        rightUnitType2 = basicUnitType;
+        rightUnitType3 = basicUnitType;
     }
 
     private void OnDisable()
@@ -58,36 +75,36 @@ public class SpawnerButton : MonoBehaviour
     private void OnLeftButton1Clicked()
     {
         Debug.Log("Bal 1 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Right);
+        gameManager.SpawnUnit(FacingDirection.Right, leftUnitType1);
     }
 
     private void OnLeftButton2Clicked()
     {
         Debug.Log("Bal 2 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Right);
+        gameManager.SpawnUnit(FacingDirection.Right, leftUnitType2);
     }
 
     private void OnLeftButton3Clicked()
     {
         Debug.Log("Bal 3 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Right);
+        gameManager.SpawnUnit(FacingDirection.Right, leftUnitType3);
     }
 
     private void OnRightButton1Clicked()
     {
         Debug.Log("Jobb 1 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Left);
+        gameManager.SpawnUnit(FacingDirection.Left, rightUnitType1);
     }
 
     private void OnRightButton2Clicked()
     {
         Debug.Log("Jobb 2 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Left);
+        gameManager.SpawnUnit(FacingDirection.Left, rightUnitType2);
     }
 
     private void OnRightButton3Clicked()
     {
         Debug.Log("Jobb 3 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Left);
+        gameManager.SpawnUnit(FacingDirection.Left, rightUnitType3);
     }
 }
