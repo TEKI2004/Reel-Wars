@@ -7,7 +7,7 @@ public enum UnitRole
     Heavy
 }
 
-[CreateAssetMenu(fileName = "UnitType", menuName = "Game/Unit Type")]
+[CreateAssetMenu(menuName = "Game/Unit Type")]
 public class UnitType : ScriptableObject
 {
     public string unitName;

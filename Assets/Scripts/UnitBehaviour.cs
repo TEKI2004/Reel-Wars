@@ -15,13 +15,8 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     private static int unitNumber = 0;
     public int UnitId { get; private set; }
 
-    [SerializeField] private int damage = 10;
-    [SerializeField] private int maxHealth = 100;
-    [SerializeField] private float moveSpeed = 3f;
-    [SerializeField] private float attackRange = 1.5f;
-    [SerializeField] private float attackCooldown = 1f;
-
     [SerializeField] private UnitType unitType;
+
     [SerializeField] private BoxCollider attackRangeDetectorCollider;
     [SerializeField] private BoxCollider moveRangeDetectorCollider;
 
@@ -41,24 +36,22 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     {
         get
         {
-            return direction == FacingDirection.Right ? Vector3.right : Vector3.left;
+            return direction == FacingDirection.Left ? Vector3.left : Vector3.right;
         }
     }
 
-    public void Initialize(string ownerId, FacingDirection moveDirection, UnitType unitType)
+    public void Initialize(string ownerId, UnitType unitType, FacingDirection moveDirection)
     {
         OwnerId = ownerId;
         UnitId = unitNumber++;
 
-        damage = unitType.damage;
-        maxHealth = unitType.maxHealth;
-        moveSpeed = unitType.moveSpeed;
-        attackRange = unitType.attackRange;
-        attackCooldown = unitType.attackCooldown;
+        this.unitType = unitType;
+
+        gameObject.name = $"{OwnerId}:U{UnitId}({unitType.role})";
         
         direction = moveDirection;
-        currentHealth = maxHealth;
-        lastAttackTime = -attackCooldown;
+        currentHealth = unitType.maxHealth;
+        lastAttackTime = -unitType.attackCooldown;
 
         ConfigureDetectors();
     }
@@ -82,16 +75,12 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         {
             MoveForward();
         }
-        //else
-        //{
-        //    Debug.Log($"{OwnerId}:U{UnitId} is blocked.");
-        //}
     }
 
     private void ConfigureDetectors()
     {
-        attackRangeDetectorCollider.size = new Vector3(attackRange, default_rangeY, default_rangeZ);
-        attackRangeDetectorCollider.center = attackRange * 0.5f * FacingDirectionVector;
+        attackRangeDetectorCollider.size = new Vector3(unitType.attackRange, default_rangeY, default_rangeZ);
+        attackRangeDetectorCollider.center = unitType.attackRange * 0.5f * FacingDirectionVector;
 
         moveRangeDetectorCollider.size = new Vector3(blockRange, default_rangeY, default_rangeZ);
         moveRangeDetectorCollider.center = blockRange * 0.5f * FacingDirectionVector;
@@ -99,26 +88,12 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     private bool HasBlockingEntity()
     {
-        //foreach (var entity in blockingEntitiesInRange)
-        //{
-        //    if (entity.OwnerId == OwnerId) 
-        //    { 
-        //        Debug.Log($"For {OwnerId}:U{unitId} Ignoring blocking entity in range: {entity.OwnerId} (same owner)");
-        //    } 
-        //    else
-        //    {
-        //        Debug.Log($"For {OwnerId}:U{unitId} Blocking entity in range: {entity.OwnerId}");
-        //    }
-            
-        //    return true;
-        //}
-
         return blockingEntitiesInRange.Count != 0;
     }
 
     private void MoveForward()
     {
-        transform.Translate(moveSpeed * Time.deltaTime * FacingDirectionVector, Space.World);
+        transform.Translate(unitType.moveSpeed * Time.deltaTime * FacingDirectionVector, Space.World);
     }
 
     private IAttackable GetNextTarget()
@@ -134,25 +109,30 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
             return;
         }
 
-        if (Time.time < lastAttackTime + attackCooldown) return;
+        if (Time.time < lastAttackTime + unitType.attackCooldown) return;
 
         lastAttackTime = Time.time;
-        currentTarget.TakeDamage(damage);
+        currentTarget.TakeDamage(unitType.damage);
     }
 
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
-        Debug.Log($"{OwnerId}:U{UnitId} took {amount} damage, current health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
+            GameManager.Instance.GiveReward(direction, unitType.role, unitType.cost);
+
             currentTarget = null;
             enemiesInRange.Clear();
             blockingEntitiesInRange.Clear();
+
             NotifyDeath();
             Destroy(gameObject);
         }
+
+        Debug.Log($"{OwnerId}:U{UnitId} took {amount} damage, current health: {currentHealth}");
     }
 
     private void NotifyDeath()

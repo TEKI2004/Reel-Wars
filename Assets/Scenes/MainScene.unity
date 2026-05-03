@@ -367,9 +367,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6ae3a6d07a9504a9e0d7517a209be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  gameManager: {fileID: 372157071}
-  facingDirection: 1
-  maxHealth: 500
+  spawnArea: {fileID: 237540034}
+  spawnPoint: {fileID: 891579595}
+  unitLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  unitPrefab: {fileID: 187218633972683070, guid: cd47e4ad5ef416b41a0fe1f1ccefcce3, type: 3}
 --- !u!65 &237540034
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -572,16 +575,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970867dd5169ff54b8ac74cf6a920217, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  leftSpawnPoint: {fileID: 891579595}
-  rightSpawnPoint: {fileID: 2130064543}
-  unitLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  leftSpawnArea: {fileID: 891579596}
-  rightSpawnArea: {fileID: 2130064544}
-  unitPrefab: {fileID: 187218633972683070, guid: cd47e4ad5ef416b41a0fe1f1ccefcce3, type: 3}
+  defaultStatsConfig: {fileID: 11400000, guid: e528f888c7c3d75448c13068c72a4a2c, type: 2}
   leftPlayerName: Player1
   rightPlayerName: Player2
+  leftBase: {fileID: 237540033}
+  rightBase: {fileID: 910961998}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,9 +968,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6ae3a6d07a9504a9e0d7517a209be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseBehaviour
-  gameManager: {fileID: 372157071}
-  facingDirection: 0
-  maxHealth: 500
+  spawnArea: {fileID: 910961997}
+  spawnPoint: {fileID: 2130064543}
+  unitLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  unitPrefab: {fileID: 187218633972683070, guid: cd47e4ad5ef416b41a0fe1f1ccefcce3, type: 3}
 --- !u!1 &934046198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1336,6 +1337,7 @@ GameObject:
   - component: {fileID: 1853227120}
   - component: {fileID: 1853227119}
   - component: {fileID: 1853227121}
+  - component: {fileID: 1853227122}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -1393,7 +1395,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eee61cab36835f468a996c5e81ff43e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerButton
-  gameManager: {fileID: 372157071}
+  leftUnitType1: {fileID: 0}
+  leftUnitType2: {fileID: 0}
+  leftUnitType3: {fileID: 0}
+  rightUnitType1: {fileID: 0}
+  rightUnitType2: {fileID: 0}
+  rightUnitType3: {fileID: 0}
+--- !u!114 &1853227122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853227118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe8d5949f8ae24e459549971b9283904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatsUI
 --- !u!1 &1861540276
 GameObject:
   m_ObjectHideFlags: 0

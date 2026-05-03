@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Basic
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
-  unitName: 
-  cost: 0
-  damage: 0
-  maxHealth: 0
-  moveSpeed: 0
-  attackRange: 0
-  attackCooldown: 0
+  unitName: Basic
+  cost: 10
+  damage: 50
+  maxHealth: 100
+  moveSpeed: 3
+  attackRange: 1.5
+  attackCooldown: 1
   role: 0

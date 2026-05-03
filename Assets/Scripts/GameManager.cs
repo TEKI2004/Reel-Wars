@@ -1,98 +1,55 @@
-using Unity.ProjectAuditor.Editor;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
-{
-    [Header("Spawn Points")]
-    [SerializeField] private Transform leftSpawnPoint;
-    [SerializeField] private Transform rightSpawnPoint;
-
-    [Header("Spawn Area")]
-    [SerializeField] private LayerMask unitLayer;
-    [SerializeField] private BoxCollider leftSpawnArea;
-    [SerializeField] private BoxCollider rightSpawnArea;
-
-    [Header("Unit Prefab")]
-    [SerializeField] private GameObject unitPrefab;
+{   
+    [Header("Config")]
+    [SerializeField] private StatsConfig defaultStatsConfig;
 
     [Header("Names")]
     [SerializeField] private string leftPlayerName = "Player1";
     [SerializeField] private string rightPlayerName = "Player2";
 
-    public string LeftPlayerName => leftPlayerName;
-    public string RightPlayerName => rightPlayerName;
+    [Header("Base Behaviours")]
+    [SerializeField] private BaseBehaviour leftBase;
+    [SerializeField] private BaseBehaviour rightBase;
 
+    public BaseBehaviour LeftBase => leftBase;
+    public BaseBehaviour RightBase => rightBase;
 
-    private void Start()
+    public StatsConfig Config => defaultStatsConfig;
+
+    public static GameManager Instance { get; private set; } 
+
+    private void Awake()
     {
-        //SpawnUnit(FacingDirection.Right);
-        //SpawnUnit(FacingDirection.Left);
-    }
-
-    public void SpawnUnit(FacingDirection direction, UnitType unitType)
-    {
-        if (unitPrefab == null) return;
-
-        if (unitType == null)
+        if (Instance != null && Instance != this)
         {
-            Debug.LogError("UnitType is null!");
+            Destroy(gameObject);
             return;
         }
 
-        string ownerId = GetOwnerId(direction);
+        Instance = this;
 
-        if (!IsSpawnAreaFree(ownerId, direction))
-        {
-            Debug.LogWarning("Spawn area is occupied. Cannot spawn unit.");
-            return;
+        if (defaultStatsConfig == null)
+        { 
+            defaultStatsConfig = Resources.Load<StatsConfig>("StatsConfig");
         }
 
-        Transform spawnPoint = GetSpawnPoint(direction);
-        GameObject unitObject = Instantiate(unitPrefab, spawnPoint.position, Quaternion.identity);
-        UnitBehaviour unit = unitObject.GetComponent<UnitBehaviour>();
+        leftBase.Initialize(leftPlayerName, FacingDirection.Right);
+        rightBase.Initialize(rightPlayerName, FacingDirection.Left);
+    }
 
-        if (unit != null)
+    public void GiveReward(FacingDirection victimDirection, UnitRole victimRole, int victimCost)
+    {
+        if (victimDirection == FacingDirection.Left) 
         {
-            unit.Initialize(ownerId, direction, unitType);
+            leftBase.ClaimReward(victimRole, victimCost);
         }
-    }
-
-    private Transform GetSpawnPoint(FacingDirection direction)
-    {
-        return direction == FacingDirection.Left ? rightSpawnPoint : leftSpawnPoint;
-    }
-
-    private BoxCollider GetSpawnArea(FacingDirection direction)
-    {
-        return direction == FacingDirection.Left ? rightSpawnArea : leftSpawnArea;
-    }
-
-    private string GetOwnerId(FacingDirection direction)
-    {
-        return direction == FacingDirection.Left ? RightPlayerName : LeftPlayerName;
-    }
-
-    private bool IsSpawnAreaFree(string ownerId, FacingDirection direction)
-    {
-        BoxCollider spawnArea = GetSpawnArea(direction);
-
-        Collider[] hits = Physics.OverlapBox(
-            spawnArea.bounds.center,
-            spawnArea.bounds.extents,
-            Quaternion.identity,
-            unitLayer
-        );
-
-        foreach (var hit in hits)
+        else 
         {
-            var attackable = hit.GetComponent<IAttackable>();
-            if (attackable != null && attackable.OwnerId == ownerId)
-            {
-                return false;
-            }
+            rightBase.ClaimReward(victimRole, victimCost);
         }
-
-        return true;
     }
 
 }

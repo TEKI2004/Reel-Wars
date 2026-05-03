@@ -1,11 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class SpawnerButton : MonoBehaviour
 {
     private UIDocument uiDocument;
-
-    [SerializeField] private GameManager gameManager;
 
     private Button leftButton1;
     private Button leftButton2;
@@ -15,13 +14,13 @@ public class SpawnerButton : MonoBehaviour
     private Button rightButton2;
     private Button rightButton3;
 
-    [SerializeField] private UnitType leftUnitType1;
-    [SerializeField] private UnitType leftUnitType2;
-    [SerializeField] private UnitType leftUnitType3;
+    [SerializeField] private UnitType leftMeleeType;
+    [SerializeField] private UnitType leftRangedType;
+    [SerializeField] private UnitType leftHeavyType;
 
-    [SerializeField] private UnitType rightUnitType1;
-    [SerializeField] private UnitType rightUnitType2;
-    [SerializeField] private UnitType rightUnitType3;
+    [SerializeField] private UnitType rightMeleeType;
+    [SerializeField] private UnitType rightRangedType;
+    [SerializeField] private UnitType rightHeavyType;
 
     private void OnEnable()
     {
@@ -51,12 +50,12 @@ public class SpawnerButton : MonoBehaviour
 
         UnitType basicUnitType = Resources.Load<UnitType>("UnitTypes/Basic");
 
-        leftUnitType1 = basicUnitType;
-        leftUnitType2 = basicUnitType;
-        leftUnitType3 = basicUnitType;
-        rightUnitType1 = basicUnitType;
-        rightUnitType2 = basicUnitType;
-        rightUnitType3 = basicUnitType;
+        leftMeleeType = basicUnitType;
+        leftRangedType = basicUnitType;
+        leftHeavyType = basicUnitType;
+        rightMeleeType = basicUnitType;
+        rightRangedType = basicUnitType;
+        rightHeavyType = basicUnitType;
     }
 
     private void OnDisable()
@@ -74,37 +73,37 @@ public class SpawnerButton : MonoBehaviour
     // ==== CALLBACK-ek ====
     private void OnLeftButton1Clicked()
     {
-        Debug.Log("Bal 1 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Right, leftUnitType1);
+        GameManager.Instance.LeftBase.SpawnUnit(leftMeleeType);
+        Debug.Log("Left Melee Spawned");
     }
 
     private void OnLeftButton2Clicked()
     {
-        Debug.Log("Bal 2 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Right, leftUnitType2);
+        Debug.Log("Left Ranged Spawned");
+        GameManager.Instance.LeftBase.SpawnUnit(leftRangedType);
     }
 
     private void OnLeftButton3Clicked()
     {
-        Debug.Log("Bal 3 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Right, leftUnitType3);
+        Debug.Log("Left Heavy Spawned");
+        GameManager.Instance.LeftBase.SpawnUnit(leftHeavyType);
     }
 
     private void OnRightButton1Clicked()
     {
-        Debug.Log("Jobb 1 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Left, rightUnitType1);
+        Debug.Log("Right Melee Spawned");
+        GameManager.Instance.RightBase.SpawnUnit(rightMeleeType);
     }
 
     private void OnRightButton2Clicked()
     {
-        Debug.Log("Jobb 2 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Left, rightUnitType2);
+        Debug.Log("Right Ranged Spawned");
+        GameManager.Instance.RightBase.SpawnUnit(rightRangedType);
     }
 
     private void OnRightButton3Clicked()
     {
-        Debug.Log("Jobb 3 gomb megnyomva");
-        gameManager.SpawnUnit(FacingDirection.Left, rightUnitType3);
+        Debug.Log("Right Heavy Spawned");
+        GameManager.Instance.RightBase.SpawnUnit(rightHeavyType);
     }
 }
