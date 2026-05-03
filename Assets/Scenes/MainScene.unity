@@ -119,37 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &16385493
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 16385494}
-  m_Layer: 0
-  m_Name: Player2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &16385494
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 16385493}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1298310846}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &116444966
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,11 +336,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6ae3a6d07a9504a9e0d7517a209be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  spawnArea: {fileID: 237540034}
+  spawnArea: {fileID: 891579596}
   spawnPoint: {fileID: 891579595}
   unitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   unitPrefab: {fileID: 187218633972683070, guid: cd47e4ad5ef416b41a0fe1f1ccefcce3, type: 3}
 --- !u!65 &237540034
 BoxCollider:
@@ -800,7 +769,7 @@ GameObject:
   - component: {fileID: 891579595}
   - component: {fileID: 891579596}
   m_Layer: 0
-  m_Name: LeftSpawnPoint
+  m_Name: LeftSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -968,43 +937,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6ae3a6d07a9504a9e0d7517a209be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseBehaviour
-  spawnArea: {fileID: 910961997}
+  spawnArea: {fileID: 2130064544}
   spawnPoint: {fileID: 2130064543}
   unitLayer:
     serializedVersion: 2
     m_Bits: 8
   unitPrefab: {fileID: 187218633972683070, guid: cd47e4ad5ef416b41a0fe1f1ccefcce3, type: 3}
---- !u!1 &934046198
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 934046199}
-  m_Layer: 0
-  m_Name: Player1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &934046199
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934046198}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1298310846}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &973057084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,39 +973,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 638199820}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1298310845
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1298310846}
-  m_Layer: 0
-  m_Name: Players
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1298310846
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298310845}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 934046199}
-  - {fileID: 16385494}
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1507498060
 GameObject:
@@ -1395,12 +1300,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eee61cab36835f468a996c5e81ff43e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnerButton
-  leftUnitType1: {fileID: 0}
-  leftUnitType2: {fileID: 0}
-  leftUnitType3: {fileID: 0}
-  rightUnitType1: {fileID: 0}
-  rightUnitType2: {fileID: 0}
-  rightUnitType3: {fileID: 0}
+  leftMeleeType: {fileID: 0}
+  leftRangedType: {fileID: 0}
+  leftHeavyType: {fileID: 0}
+  rightMeleeType: {fileID: 0}
+  rightRangedType: {fileID: 0}
+  rightHeavyType: {fileID: 0}
 --- !u!114 &1853227122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1457,7 +1362,7 @@ GameObject:
   - component: {fileID: 2130064543}
   - component: {fileID: 2130064544}
   m_Layer: 0
-  m_Name: RightSpawnPoint
+  m_Name: RightSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1507,7 +1412,6 @@ SceneRoots:
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 1507498064}
-  - {fileID: 1298310846}
   - {fileID: 1664622735}
   - {fileID: 1861540277}
   - {fileID: 638199820}

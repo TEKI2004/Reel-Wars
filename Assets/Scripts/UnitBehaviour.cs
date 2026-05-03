@@ -142,7 +142,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
             if (observer != null)
             {
                 observer.HandleObservedTargetDestroyed(this);
-                Debug.Log($"{OwnerId}:U{UnitId} Notifying observer {observer.OwnerId}:U{observer.UnitId} of death");
+                //Debug.Log($"{OwnerId}:U{UnitId} Notifying observer {observer.OwnerId}:U{observer.UnitId} of death");
             }
         }
 

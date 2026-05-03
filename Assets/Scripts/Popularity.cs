@@ -12,17 +12,18 @@ public class Popularity
         CurrentPoints += points;
         OnPointsChanged?.Invoke(CurrentPoints);
 
-        while (CurrentPoints >= GetPointsForNextTier(CurrentTier))
+        while (CurrentPoints >= GetPointsForNextTier())
         {
             CurrentTier++;
+            Debug.Log($"Popularity tier increased to {CurrentTier}");
         }
     }
 
-    public int GetPointsForNextTier(int currentTier)
+    public int GetPointsForNextTier()
     {
         return GameManager.Instance.Config.baseLimit
-         + currentTier * GameManager.Instance.Config.linearLimitGrowth
-         + currentTier * currentTier * GameManager.Instance.Config.quadraticLimitGrowth;
+         + CurrentTier * GameManager.Instance.Config.linearLimitGrowth
+         + CurrentTier * CurrentTier * GameManager.Instance.Config.quadraticLimitGrowth;
     }
 
 }

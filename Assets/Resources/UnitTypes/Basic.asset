@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Basic
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
   unitName: Basic
-  cost: 10
-  damage: 50
+  cost: 100
+  damage: 40
   maxHealth: 100
   moveSpeed: 3
   attackRange: 1.5
   attackCooldown: 1
-  role: 0
+  role: 2
