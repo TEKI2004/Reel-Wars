@@ -1,11 +1,9 @@
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class SpawnerButton : MonoBehaviour
 {
-    private UIDocument uiDocument;
-
     private Button leftButton1;
     private Button leftButton2;
     private Button leftButton3;
@@ -24,13 +22,8 @@ public class SpawnerButton : MonoBehaviour
 
     private void OnEnable()
     {
-        // UIDocument lekérése ugyanarról az objektumról
-        uiDocument = GetComponent<UIDocument>();
+        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
-        // Root element
-        VisualElement root = uiDocument.rootVisualElement;
-
-        // Gombok lekérése név alapján
         leftButton1 = root.Q<Button>("LeftButton1");
         leftButton2 = root.Q<Button>("LeftButton2");
         leftButton3 = root.Q<Button>("LeftButton3");
@@ -39,7 +32,7 @@ public class SpawnerButton : MonoBehaviour
         rightButton2 = root.Q<Button>("RightButton2");
         rightButton3 = root.Q<Button>("RightButton3");
 
-        // Események hozzárendelése
+        // Subscribe to events
         leftButton1.clicked += OnLeftButton1Clicked;
         leftButton2.clicked += OnLeftButton2Clicked;
         leftButton3.clicked += OnLeftButton3Clicked;
@@ -48,19 +41,21 @@ public class SpawnerButton : MonoBehaviour
         rightButton2.clicked += OnRightButton2Clicked;
         rightButton3.clicked += OnRightButton3Clicked;
 
-        UnitType basicUnitType = Resources.Load<UnitType>("UnitTypes/Basic");
+        UnitType basicMeleeType = Resources.Load<UnitType>("UnitTypes/BasicMelee");
+        UnitType basicRangedType = Resources.Load<UnitType>("UnitTypes/BasicRanged");
+        UnitType basicHeavyType = Resources.Load<UnitType>("UnitTypes/BasicHeavy");
 
-        leftMeleeType = basicUnitType;
-        leftRangedType = basicUnitType;
-        leftHeavyType = basicUnitType;
-        rightMeleeType = basicUnitType;
-        rightRangedType = basicUnitType;
-        rightHeavyType = basicUnitType;
+        leftMeleeType = basicMeleeType;
+        leftRangedType = basicRangedType;
+        leftHeavyType = basicHeavyType;
+        rightMeleeType = basicMeleeType;
+        rightRangedType = basicRangedType;
+        rightHeavyType = basicHeavyType;
     }
 
     private void OnDisable()
     {
-        // Események levétele
+        // Unsubscribe from events
         leftButton1.clicked -= OnLeftButton1Clicked;
         leftButton2.clicked -= OnLeftButton2Clicked;
         leftButton3.clicked -= OnLeftButton3Clicked;
@@ -70,40 +65,46 @@ public class SpawnerButton : MonoBehaviour
         rightButton3.clicked -= OnRightButton3Clicked;
     }
 
-    // ==== CALLBACK-ek ====
-    private void OnLeftButton1Clicked()
+    // ==== CALLBACKS ====
+    private void OnLeftButton1Clicked() => SpawnLeft(leftMeleeType);
+    private void OnLeftButton2Clicked() => SpawnLeft(leftRangedType);
+    private void OnLeftButton3Clicked() => SpawnLeft(leftHeavyType);
+
+    private void OnRightButton1Clicked() => SpawnRight(rightMeleeType);
+    private void OnRightButton2Clicked() => SpawnRight(rightRangedType);
+    private void OnRightButton3Clicked() => SpawnRight(rightHeavyType);
+
+    private void SpawnLeft(UnitType unitType)
     {
-        GameManager.Instance.LeftBase.SpawnUnit(leftMeleeType);
-        Debug.Log("Left Melee Spawned");
+        GameManager.Instance.LeftBase.SpawnUnit(unitType);
     }
 
-    private void OnLeftButton2Clicked()
+    private void SpawnRight(UnitType unitType)
     {
-        Debug.Log("Left Ranged Spawned");
-        GameManager.Instance.LeftBase.SpawnUnit(leftRangedType);
+        GameManager.Instance.RightBase.SpawnUnit(unitType);
     }
 
-    private void OnLeftButton3Clicked()
+    private void Update()
     {
-        Debug.Log("Left Heavy Spawned");
-        GameManager.Instance.LeftBase.SpawnUnit(leftHeavyType);
-    }
+        var keyboard = Keyboard.current;
+        if (keyboard == null) return;
 
-    private void OnRightButton1Clicked()
-    {
-        Debug.Log("Right Melee Spawned");
-        GameManager.Instance.RightBase.SpawnUnit(rightMeleeType);
-    }
+        if (keyboard.digit1Key.wasPressedThisFrame)
+            OnLeftButton1Clicked();
 
-    private void OnRightButton2Clicked()
-    {
-        Debug.Log("Right Ranged Spawned");
-        GameManager.Instance.RightBase.SpawnUnit(rightRangedType);
-    }
+        if (keyboard.digit2Key.wasPressedThisFrame)
+            OnLeftButton2Clicked();
 
-    private void OnRightButton3Clicked()
-    {
-        Debug.Log("Right Heavy Spawned");
-        GameManager.Instance.RightBase.SpawnUnit(rightHeavyType);
+        if (keyboard.digit3Key.wasPressedThisFrame)
+            OnLeftButton3Clicked();
+
+        if (keyboard.leftArrowKey.wasPressedThisFrame)
+            OnRightButton1Clicked();
+
+        if (keyboard.downArrowKey.wasPressedThisFrame)
+            OnRightButton2Clicked();
+
+        if (keyboard.rightArrowKey.wasPressedThisFrame)
+            OnRightButton3Clicked();
     }
 }

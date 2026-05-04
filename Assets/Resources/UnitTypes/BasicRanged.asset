@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
-  m_Name: Basic
+  m_Name: BasicRanged
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
-  unitName: Basic
-  cost: 100
-  damage: 40
-  maxHealth: 100
+  unitName: BasicRanged
+  cost: 400
+  damage: 25
+  maxHealth: 80
   moveSpeed: 3
-  attackRange: 1.5
+  attackRange: 3
   attackCooldown: 1
-  role: 2
+  role: 1

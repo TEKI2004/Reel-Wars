@@ -1,0 +1,101 @@
+﻿.clapper-panel {
+    position: absolute;
+    width: 400px;
+    height: 260px;
+
+    background-color: white;
+    border-width: 2px;
+    border-color: black;
+
+    flex-direction: column;
+}
+
+.left-panel {
+    top: 20px;
+    left: 20px;
+}
+
+.right-panel {
+    top: 20px;
+    right: 20px;
+}
+
+.clapper-top {
+    height: 28px;
+    border-bottom-width: 2px;
+    border-bottom-color: black;
+}
+
+.player-name {
+    height: 28px;
+    -unity-text-align: middle-center;
+    font-size: 14px;
+    border-bottom-width: 1px;
+    border-bottom-color: black;
+}
+
+.slot-row {
+    height: 100px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.unit-slot {
+    width: 108px;
+    height: 84px;
+    background-color: white;
+    border-width: 1px;
+    border-color: black;
+}
+
+.info-row {
+    height: 36px;
+    flex-direction: row;
+    border-top-width: 2px;
+    border-top-color: black;
+    border-bottom-width: 2px;
+    border-bottom-color: black;
+}
+
+.info-title {
+    font-size: 14px;
+    -unity-text-align: middle-center;
+}
+
+.info-value {
+    font-size: 14px;
+    -unity-text-align: middle-center;
+    flex-grow: 1;
+}
+
+.bottom-row {
+    flex-grow: 1;
+    flex-direction: row;
+}
+
+.genre-box {
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxoffice-box {
+    width: 125px;
+    justify-content: center;
+    align-items: center;
+    border-left-width: 2px;
+    border-left-color: black;
+}
+
+.genre-label {
+    font-size: 22px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.money-label {
+    font-size: 24px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}

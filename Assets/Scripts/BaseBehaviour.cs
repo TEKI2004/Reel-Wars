@@ -48,13 +48,13 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
 
         if (IsSpawnAreaBlocked())
         {
-            Debug.LogWarning("Spawn area is occupied. Cannot spawn unit.");
+            Debug.LogWarning($"{OwnerId}'s spawn area is occupied. Cannot spawn unit.");
             return;
         }
 
         if (!Player.BuyUnit(unitType))
         {
-            Debug.LogWarning("Player cannot buy unit.");
+            Debug.LogWarning($"{OwnerId} cannot buy unit.");
             return;
         }
 
@@ -64,6 +64,8 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         {
             unit.Initialize(OwnerId, unitType, facingDirection);
         }
+
+        Debug.Log($"{OwnerId} Spawned {unitType.unitName}");
     }
 
     public bool IsSpawnAreaBlocked()

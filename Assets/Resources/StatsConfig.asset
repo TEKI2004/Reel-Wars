@@ -16,7 +16,7 @@ MonoBehaviour:
   meleeDeathPoints: 1
   rangedDeathPoints: 2
   heavyDeathPoints: 4
-  costMultiplier: 1.4
+  costMultiplier: 1.25
   startingPoints: 0
   startingTier: 1
   baseLimit: 0

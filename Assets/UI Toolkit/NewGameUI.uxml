@@ -1,0 +1,38 @@
+﻿<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ui="UnityEngine.UIElements"
+         xmlns:uie="UnityEditor.UIElements"
+         noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+
+    <Style src="project://database/Assets/UI Toolkit/NewStyles.uss" />
+
+    <!-- HUD -->
+    <ui:VisualElement name="LeftClapperPanel" class="clapper-panel left-panel">
+        <ui:VisualElement class="clapper-top" />
+        <ui:Label name="LeftPlayerName" text="PLAYER1" class="player-name" />
+
+        <ui:VisualElement class="slot-row">
+            <ui:Button name="LeftButton1" class="unit-slot" />
+            <ui:Button name="LeftButton2" class="unit-slot" />
+            <ui:Button name="LeftButton3" class="unit-slot" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="info-row">
+            <ui:Label text="Passive" class="info-title" />
+            <ui:Label name="LeftPassive" text="Units cost less" class="info-value" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="bottom-row">
+            <ui:VisualElement class="genre-box">
+                <ui:Label text="Genre" class="info-title" />
+                <ui:Label name="LeftGenre" text="Pscychological Thriller" class="genre-label" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="boxoffice-box">
+                <ui:Label text="Box Office" class="info-title" />
+                <ui:Label name="LeftBoxOffice" text="50M $" class="money-label" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement> 
+
+</ui:UXML>

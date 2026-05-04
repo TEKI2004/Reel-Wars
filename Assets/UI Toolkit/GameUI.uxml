@@ -6,15 +6,13 @@
 
     <Style src="project://database/Assets/UI Toolkit/Styles.uss" />
 
-     <!-- HUD -->
+    <!-- HUD -->
     <ui:VisualElement name="TopBar" class="top-bar">
-        <!-- LEFT -->
         <ui:VisualElement class="player-stats">
             <ui:Label text="BoxOffice: - $" name="LeftBoxOffice" />
             <ui:Label text="Popularity: - " name="LeftPopularity" />
         </ui:VisualElement>
 
-        <!-- RIGHT -->
         <ui:VisualElement class="player-stats">
             <ui:Label text="BoxOffice: - $" name="RightBoxOffice"/>
             <ui:Label text="Popularity: - " name="RightPopularity" />
@@ -22,14 +20,12 @@
     </ui:VisualElement>
 
 
-    <!-- Left panel -->
     <ui:VisualElement name="LeftButtonPanel" class="container left-panel">
         <ui:Button text="1" name="LeftButton1" class="menu-button" />
         <ui:Button text="2" name="LeftButton2" class="menu-button" />
         <ui:Button text="3" name="LeftButton3" class="menu-button" />
     </ui:VisualElement>
 
-    <!-- Right panel -->
     <ui:VisualElement name="RightButtonPanel" class="container right-panel">
         <ui:Button text="1" name="RightButton1" class="menu-button" />
         <ui:Button text="2" name="RightButton2" class="menu-button" />
