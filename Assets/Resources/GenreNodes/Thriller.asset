@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8809ed0c30225c54e94606dfa93fc47f, type: 3}
+  m_Name: Thriller
+  m_EditorClassIdentifier: Assembly-CSharp::GenreNode
+  GenreName: Thriller
+  RequiredTier: 1
+  MeleeUnit: {fileID: 11400000, guid: 4c52a8dccdc397d49b3569b63292dc09, type: 2}
+  RangedUnit: {fileID: 11400000, guid: 3d20b3fef142dff4a89bfafdc9451e68, type: 2}
+  HeavyUnit: {fileID: 11400000, guid: e64b6836d2be79144ac7d45c630ef14b, type: 2}
+  Children: []

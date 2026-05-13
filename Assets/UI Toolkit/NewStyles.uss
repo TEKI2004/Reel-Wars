@@ -1,101 +1,129 @@
-﻿.clapper-panel {
+.clapper-panel {
     position: absolute;
-    width: 400px;
-    height: 260px;
-
-    background-color: white;
-    border-width: 2px;
-    border-color: black;
-
-    flex-direction: column;
+    width: 512px;
+    height: 448px;
+    -unity-background-scale-mode: stretch-to-fill;
 }
 
-.left-panel {
-    top: 20px;
-    left: 20px;
+.left-clapper {
+    top: 18px;
+    left: 18px;
+    background-image: url("project://database/Assets/UI%20Toolkit/Images/LeftClapper.png?fileID=2800000&guid=2902130023911db43b083984d75c9822&type=3#LeftClapper");
 }
 
-.right-panel {
-    top: 20px;
-    right: 20px;
-}
-
-.clapper-top {
-    height: 28px;
-    border-bottom-width: 2px;
-    border-bottom-color: black;
+.right-clapper {
+    top: 18px;
+    right: 18px;
+    background-image: url("project://database/Assets/UI%20Toolkit/Images/RightClapper.png?fileID=2800000&guid=cb3466c463a4d664dad3317401d0ae2a&type=3#RightClapper");
 }
 
 .player-name {
-    height: 28px;
-    -unity-text-align: middle-center;
-    font-size: 14px;
-    border-bottom-width: 1px;
-    border-bottom-color: black;
+    position: absolute;
+    top: 167px;
+    left: 11px;
+    right: 4px;
+    height: 24px;
+
+    font-size: 16px;
+    color: white;
+    -unity-font-style: bold;
+    -unity-text-align: lower-center;
 }
 
-.slot-row {
+.unit-row {
+    position: absolute;
+    top: 225px;
+    left: 19px;
+    right: 13px;
+    height: 101px;
+
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.unit-button {
+    width: 145px;
     height: 100px;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+
+    font-size: 40px;
+    -unity-text-align: middle-center;
+
+    background-color: rgba(255, 255, 255, 0.9);
+    border-width: 0;
 }
 
-.unit-slot {
-    width: 108px;
-    height: 84px;
-    background-color: white;
-    border-width: 1px;
-    border-color: black;
-}
+.passive-title {
+    position: absolute;
+    top: 363px;
+    left: 42px;
+    width: 110px;
+    height: 26px;
 
-.info-row {
-    height: 36px;
-    flex-direction: row;
-    border-top-width: 2px;
-    border-top-color: black;
-    border-bottom-width: 2px;
-    border-bottom-color: black;
-}
-
-.info-title {
-    font-size: 14px;
+    font-size: 16px;
+    color: white;
     -unity-text-align: middle-center;
 }
 
-.info-value {
-    font-size: 14px;
-    -unity-text-align: middle-center;
-    flex-grow: 1;
-}
+.passive-value {
+    position: absolute;
+    top: 366px;
+    left: 176px;
+    right: 22px;
+    height: 26px;
 
-.bottom-row {
-    flex-grow: 1;
-    flex-direction: row;
-}
-
-.genre-box {
-    flex-grow: 1;
-    justify-content: center;
-    align-items: center;
-}
-
-.boxoffice-box {
-    width: 125px;
-    justify-content: center;
-    align-items: center;
-    border-left-width: 2px;
-    border-left-color: black;
-}
-
-.genre-label {
-    font-size: 22px;
+    font-size: 16px;
+    color: white;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
 }
 
-.money-label {
-    font-size: 24px;
+.genre-title {
+    position: absolute;
+    top: 399px;
+    left: 31px;
+    width: 302px;
+    height: 14px;
+
+    font-size: 14px;
+    color: white;
+    -unity-text-align: middle-center;
+}
+
+.genre-value {
+    position: absolute;
+    top: 410px;
+    left: 43px;
+    width: 276px;
+    height: 29px;
+
+    font-size: 20px;
+    color: white;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.boxoffice-title {
+    position: absolute;
+    top: 395px;
+    right: 22px;
+    width: 139px;
+    height: 20px;
+
+    font-size: 14px;
+    color: white;
+    -unity-text-align: middle-center;
+}
+
+.boxoffice-value {
+    position: absolute;
+    top: 413px;
+    right: 23px;
+    width: 141px;
+    height: 28px;
+
+    font-size: 22px;
+    color: white;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
 }

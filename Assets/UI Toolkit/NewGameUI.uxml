@@ -1,38 +1,47 @@
-﻿<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns:ui="UnityEngine.UIElements"
          xmlns:uie="UnityEditor.UIElements"
          noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
          editor-extension-mode="False">
 
-    <Style src="project://database/Assets/UI Toolkit/NewStyles.uss" />
+    <Style src="project://database/Assets/UI%20Toolkit/NewStyles.uss?fileID=7433441132597879392&amp;guid=05b1babbee6540d4aadf1f1c4adff632&amp;type=3#NewStyles"/>
 
-    <!-- HUD -->
-    <ui:VisualElement name="LeftClapperPanel" class="clapper-panel left-panel">
-        <ui:VisualElement class="clapper-top" />
+    <ui:VisualElement name="LeftClapperPanel" class="clapper-panel left-clapper">
         <ui:Label name="LeftPlayerName" text="PLAYER1" class="player-name" />
 
-        <ui:VisualElement class="slot-row">
-            <ui:Button name="LeftButton1" class="unit-slot" />
-            <ui:Button name="LeftButton2" class="unit-slot" />
-            <ui:Button name="LeftButton3" class="unit-slot" />
+        <ui:VisualElement class="unit-row">
+            <ui:Button name="LeftButton1" text="1" class="unit-button" />
+            <ui:Button name="LeftButton2" text="2" class="unit-button" />
+            <ui:Button name="LeftButton3" text="3" class="unit-button" />
         </ui:VisualElement>
 
-        <ui:VisualElement class="info-row">
-            <ui:Label text="Passive" class="info-title" />
-            <ui:Label name="LeftPassive" text="Units cost less" class="info-value" />
+        <ui:Label name="LeftPassiveTitle" text="Passive" class="passive-title" />
+        <ui:Label name="LeftPassiveValue" text="Units cost less" class="passive-value" />
+
+        <ui:Label name="LeftGenreTitle" text="Genre" class="genre-title" />
+        <ui:Label name="LeftGenre" text="Psychological Thriller" class="genre-value" />
+
+        <ui:Label name="LeftBoxOfficeTitle" text="Box Office" class="boxoffice-title" />
+        <ui:Label name="LeftBoxOffice" text="50M $" class="boxoffice-value" />
+    </ui:VisualElement>
+
+    <!-- RIGHT -->
+    <ui:VisualElement name="RightClapperPanel" class="clapper-panel right-clapper">
+        <ui:Label name="RightPlayerName" text="PLAYER2" class="player-name" />
+
+        <ui:VisualElement class="unit-row">
+            <ui:Button name="RightButton1" text="1" class="unit-button" />
+            <ui:Button name="RightButton2" text="2" class="unit-button" />
+            <ui:Button name="RightButton3" text="3" class="unit-button" />
         </ui:VisualElement>
 
-        <ui:VisualElement class="bottom-row">
-            <ui:VisualElement class="genre-box">
-                <ui:Label text="Genre" class="info-title" />
-                <ui:Label name="LeftGenre" text="Pscychological Thriller" class="genre-label" />
-            </ui:VisualElement>
+        <ui:Label name="RightPassiveTitle" text="Passive" class="passive-title" />
+        <ui:Label name="RightPassiveValue" text="Units cost less" class="passive-value" />
 
-            <ui:VisualElement class="boxoffice-box">
-                <ui:Label text="Box Office" class="info-title" />
-                <ui:Label name="LeftBoxOffice" text="50M $" class="money-label" />
-            </ui:VisualElement>
-        </ui:VisualElement>
-    </ui:VisualElement> 
+        <ui:Label name="RightGenreTitle" text="Genre" class="genre-title" />
+        <ui:Label name="RightGenre" text="Psychological Thriller" class="genre-value" />
 
+        <ui:Label name="RightBoxOfficeTitle" text="Box Office" class="boxoffice-title" />
+        <ui:Label name="RightBoxOffice" text="50M $" class="boxoffice-value" />
+    </ui:VisualElement>
 </ui:UXML>

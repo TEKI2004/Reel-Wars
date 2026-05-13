@@ -12,18 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed413a9fe4d756d44b5efeb7252d7952, type: 3}
   m_Name: StatsConfig
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
-  baseHealth: 500
-  meleeDeathPoints: 1
-  rangedDeathPoints: 2
-  heavyDeathPoints: 4
-  costMultiplier: 1.25
-  startingPoints: 0
-  startingTier: 1
-  baseLimit: 0
-  linearLimitGrowth: 10
-  quadraticLimitGrowth: 10
-  tier1: 20
-  tier2: 60
-  tier3: 120
-  tier4: 200
-  startingMoney: 1000
+  BaseStats:
+    BaseHealth: 500
+  Rewards:
+    MeleeDeathPoints: 1
+    RangedDeathPoints: 2
+    HeavyDeathPoints: 4
+    CostMultiplier: 1.2
+  Popularity:
+    StartingPoints: 0
+    StartingTier: 1
+    BaseLimit: 5
+    LinearLimitGrowth: 10
+    QuadraticLimitGrowth: 5
+    tier1: 20
+    tier2: 45
+    tier3: 80
+    tier4: 125
+  BoxOffice:
+    StartingMoney: 1000

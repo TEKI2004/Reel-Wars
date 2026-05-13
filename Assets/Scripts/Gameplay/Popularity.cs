@@ -4,8 +4,8 @@ using UnityEngine;
 public class Popularity
 {
     public event System.Action<int> OnPointsChanged;
-    public int CurrentPoints { get; private set; } = GameManager.Instance.Config.startingPoints;
-    public int CurrentTier { get; private set; } = GameManager.Instance.Config.startingTier;
+    public int CurrentPoints { get; private set; } = GameManager.Instance.Config.Popularity.StartingPoints;
+    public int CurrentTier { get; private set; } = GameManager.Instance.Config.Popularity.StartingTier;
 
     public void Add(int points)
     {
@@ -21,9 +21,11 @@ public class Popularity
 
     public int GetPointsForNextTier()
     {
-        return GameManager.Instance.Config.baseLimit
-         + CurrentTier * GameManager.Instance.Config.linearLimitGrowth
-         + CurrentTier * CurrentTier * GameManager.Instance.Config.quadraticLimitGrowth;
+        StatsConfig config = GameManager.Instance.Config;
+
+        return config.Popularity.BaseLimit
+         + CurrentTier * config.Popularity.LinearLimitGrowth
+         + CurrentTier * CurrentTier * config.Popularity.QuadraticLimitGrowth;
     }
 
 }

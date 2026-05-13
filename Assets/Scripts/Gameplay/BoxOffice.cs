@@ -3,7 +3,7 @@ using UnityEngine;
 public class BoxOffice
 {
     public event System.Action<int> OnMoneyChanged;
-    public int Money { get; private set; } = GameManager.Instance.Config.startingMoney;
+    public int Money { get; private set; } = GameManager.Instance.Config.BoxOffice.StartingMoney;
 
     public void Add(int amount)
     {

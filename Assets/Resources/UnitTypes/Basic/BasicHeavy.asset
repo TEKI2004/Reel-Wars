@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BasicHeavy
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
   unitName: BasicHeavy
-  cost: 1500
+  cost: 1000
   damage: 70
   maxHealth: 250
   moveSpeed: 2
