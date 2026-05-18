@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8809ed0c30225c54e94606dfa93fc47f, type: 3}
+  m_Name: Black & White
+  m_EditorClassIdentifier: Assembly-CSharp::GenreNode
+  GenreName: Black & White
+  RequiredTier: 1
+  MeleeUnit: {fileID: 11400000, guid: e64b6836d2be79144ac7d45c630ef14b, type: 2}
+  RangedUnit: {fileID: 11400000, guid: 888c9dbc68fe0f84c9048592601c69dd, type: 2}
+  HeavyUnit: {fileID: 11400000, guid: f4a47f9b34d15364cbd18587f774dd76, type: 2}
+  PassiveDescription: Units cost less
+  Children:
+  - {fileID: 11400000, guid: da3c5c692ef25724593c072e62f7b54a, type: 2}
+  - {fileID: 11400000, guid: c6ca6e7541e17b548ad6b1d5a72d6aa9, type: 2}

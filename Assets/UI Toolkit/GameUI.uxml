@@ -4,32 +4,85 @@
          noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
          editor-extension-mode="False">
 
-    <Style src="project://database/Assets/UI Toolkit/Styles.uss" />
+    <Style src="project://database/Assets/UI%20Toolkit/Styles.uss?fileID=7433441132597879392&amp;guid=05b1babbee6540d4aadf1f1c4adff632&amp;type=3#Styles" />
 
-    <!-- HUD -->
-    <ui:VisualElement name="TopBar" class="top-bar">
-        <ui:VisualElement class="player-stats">
-            <ui:Label text="BoxOffice: - $" name="LeftBoxOffice" />
-            <ui:Label text="Popularity: - " name="LeftPopularity" />
+    <!-- LEFT CLAPPERBOARD -->
+    <ui:VisualElement name="LeftClapperPanel" class="clapper-panel left-clapper">
+
+        <ui:Label name="LeftPlayerName"
+                  text="PLAYER1"
+                  class="player-name" />
+
+        <ui:VisualElement name="LeftUnitRow" class="unit-row">
+            <ui:Button name="LeftButton1" text="1" class="unit-button" />
+            <ui:Button name="LeftButton2" text="2" class="unit-button" />
+            <ui:Button name="LeftButton3" text="3" class="unit-button" />
         </ui:VisualElement>
 
-        <ui:VisualElement class="player-stats">
-            <ui:Label text="BoxOffice: - $" name="RightBoxOffice"/>
-            <ui:Label text="Popularity: - " name="RightPopularity" />
-        </ui:VisualElement>
+        <ui:Label name="LeftPassiveTitle"
+                  text="Passive"
+                  class="passive-title" />
+
+        <ui:Label name="LeftPassiveValue"
+                  text="Units cost less"
+                  class="passive-value" />
+
+        <ui:Label name="LeftGenreTitle"
+                  text="Genre"
+                  class="genre-title" />
+
+        <ui:Label name="LeftGenreName"
+                  text="Psychological Thriller"
+                  class="genre-value" />
+
+        <ui:Label name="LeftBoxOfficeTitle"
+                  text="Box Office"
+                  class="boxoffice-title" />
+
+        <ui:Label name="LeftBoxOffice"
+                  text="50M $"
+                  class="boxoffice-value" />
+
     </ui:VisualElement>
 
 
-    <ui:VisualElement name="LeftButtonPanel" class="container left-panel">
-        <ui:Button text="1" name="LeftButton1" class="menu-button" />
-        <ui:Button text="2" name="LeftButton2" class="menu-button" />
-        <ui:Button text="3" name="LeftButton3" class="menu-button" />
-    </ui:VisualElement>
+    <!-- RIGHT CLAPPERBOARD -->
+    <ui:VisualElement name="RightClapperPanel" class="clapper-panel right-clapper">
 
-    <ui:VisualElement name="RightButtonPanel" class="container right-panel">
-        <ui:Button text="1" name="RightButton1" class="menu-button" />
-        <ui:Button text="2" name="RightButton2" class="menu-button" />
-        <ui:Button text="3" name="RightButton3" class="menu-button" />
+        <ui:Label name="RightPlayerName"
+                  text="PLAYER2"
+                  class="player-name" />
+
+        <ui:VisualElement name="RightUnitRow" class="unit-row">
+            <ui:Button name="RightButton1" text="1" class="unit-button" />
+            <ui:Button name="RightButton2" text="2" class="unit-button" />
+            <ui:Button name="RightButton3" text="3" class="unit-button" />
+        </ui:VisualElement>
+
+        <ui:Label name="RightPassiveTitle"
+                  text="Passive"
+                  class="passive-title" />
+
+        <ui:Label name="RightPassiveValue"
+                  text="Units cost less"
+                  class="passive-value" />
+
+        <ui:Label name="RightGenreTitle"
+                  text="Genre"
+                  class="genre-title" />
+
+        <ui:Label name="RightGenreName"
+                  text="Psychological Thriller"
+                  class="genre-value" />
+
+        <ui:Label name="RightBoxOfficeTitle"
+                  text="Box Office"
+                  class="boxoffice-title" />
+
+        <ui:Label name="RightBoxOffice"
+                  text="50M $"
+                  class="boxoffice-value" />
+
     </ui:VisualElement>
 
 </ui:UXML>

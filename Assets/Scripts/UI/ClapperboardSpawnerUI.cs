@@ -17,13 +17,13 @@ public class ClapperboardSpawnerUI : MonoBehaviour
     private Button rightButton2;
     private Button rightButton3;
 
-    [SerializeField] private UnitType leftMeleeType;
-    [SerializeField] private UnitType leftRangedType;
-    [SerializeField] private UnitType leftHeavyType;
+    private UnitType leftMeleeType;
+    private UnitType leftRangedType;
+    private UnitType leftHeavyType;
 
-    [SerializeField] private UnitType rightMeleeType;
-    [SerializeField] private UnitType rightRangedType;
-    [SerializeField] private UnitType rightHeavyType;
+    private UnitType rightMeleeType;
+    private UnitType rightRangedType;
+    private UnitType rightHeavyType;
 
     private Player leftPlayer;
     private Player rightPlayer;
@@ -60,7 +60,11 @@ public class ClapperboardSpawnerUI : MonoBehaviour
         leftPlayer = GameManager.Instance.LeftBase.Player;
         rightPlayer = GameManager.Instance.RightBase.Player;
 
-        ApplyStartingGenres();
+        leftPlayer.OnGenreChanged += UpdateLeftUnitTypes;
+        rightPlayer.OnGenreChanged += UpdateRightUnitTypes;
+
+        UpdateLeftUnitTypes(leftPlayer.CurrentGenre);
+        UpdateRightUnitTypes(rightPlayer.CurrentGenre);
     }
 
     private void OnDisable()
@@ -72,6 +76,9 @@ public class ClapperboardSpawnerUI : MonoBehaviour
         UnbindSpawn(rightButton1, inputActions.Gameplay.SpawnRightMelee, SpawnRightMelee);
         UnbindSpawn(rightButton2, inputActions.Gameplay.SpawnRightRanged, SpawnRightRanged);
         UnbindSpawn(rightButton3, inputActions.Gameplay.SpawnRightHeavy, SpawnRightHeavy);
+
+        leftPlayer.OnGenreChanged -= UpdateLeftUnitTypes;
+        rightPlayer.OnGenreChanged -= UpdateRightUnitTypes;
 
         inputActions.Gameplay.Disable();
     }
@@ -98,6 +105,20 @@ public class ClapperboardSpawnerUI : MonoBehaviour
         }
     }
 
+    private void UpdateLeftUnitTypes(GenreNode genre)
+    {
+        leftMeleeType = genre.MeleeUnit;
+        leftRangedType = genre.RangedUnit;
+        leftHeavyType = genre.HeavyUnit;
+    }
+
+    private void UpdateRightUnitTypes(GenreNode genre)
+    {
+        rightMeleeType = genre.MeleeUnit;
+        rightRangedType = genre.RangedUnit;
+        rightHeavyType = genre.HeavyUnit;
+    }
+
     // ==== CALLBACKS ====
     private void SpawnLeftMelee() => SpawnLeft(leftMeleeType);
     private void SpawnLeftRanged() => SpawnLeft(leftRangedType);
@@ -108,49 +129,8 @@ public class ClapperboardSpawnerUI : MonoBehaviour
     private void SpawnRightHeavy() => SpawnRight(rightHeavyType);
 
 
-    private void SpawnLeft(UnitType unitType)
-    {
-        if (unitType == null) return;
-        GameManager.Instance.LeftBase.SpawnUnit(unitType);
-    }
-
-    private void SpawnRight(UnitType unitType)
-    {
-        if (unitType == null) return;
-        GameManager.Instance.RightBase.SpawnUnit(unitType);
-    }
-
-    private void ApplyStartingGenres()
-    {
-        GenreNode basic = Resources.Load<GenreNode>("GenreNodes/Basic");
-        if (basic == null)
-        {
-            Debug.LogError("No Starting Genre!");
-            return;
-        }
-        leftPlayer.SetStartingGenre(basic);
-        rightPlayer.SetStartingGenre(basic);
-        ApplyLeftGenres();
-        ApplyRightGenres();
-    }    
-
-    private void ApplyLeftGenres()
-    {
-        GenreNode genre = leftPlayer.CurrentGenre;
-
-        leftMeleeType = genre.MeleeUnit;
-        leftRangedType = genre.RangedUnit;
-        leftHeavyType = genre.HeavyUnit;
-    }
-
-    private void ApplyRightGenres()
-    {
-        GenreNode genre = rightPlayer.CurrentGenre;
-
-        rightMeleeType = genre.MeleeUnit;
-        rightRangedType = genre.RangedUnit;
-        rightHeavyType = genre.HeavyUnit;
-    }
+    private void SpawnLeft(UnitType unitType) => GameManager.Instance.LeftBase.SpawnUnit(unitType);
+    private void SpawnRight(UnitType unitType) => GameManager.Instance.RightBase.SpawnUnit(unitType);
 
     private void OnDestroy()
     {

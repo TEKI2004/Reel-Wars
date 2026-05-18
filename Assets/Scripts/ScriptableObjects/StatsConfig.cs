@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Stats Config")]
@@ -8,10 +9,11 @@ public class StatsConfig : ScriptableObject
     public RewardConfig Rewards;
     public PopularityConfig Popularity;
     public BoxOfficeConfig BoxOffice;
+    public GenreConfig Genre;
 
     private void OnValidate()
     {
-        Popularity.RefreshDebugLimits();
+        Popularity.RefreshLimits();
     }
 }
 
@@ -33,18 +35,22 @@ public class RewardConfig
 [Serializable]
 public class PopularityConfig
 {
+    [Header("Starting Values")]
     public int StartingPoints;
     public int StartingTier;
 
+    [Header("Max Values")]
+    public int MaxTier;
+    public int MaxPoints;
+
+    [Header("Tier Limit Growth")]
     public int BaseLimit;
     public int LinearLimitGrowth;
     public int QuadraticLimitGrowth;
 
     [Header("Debug Tier Limits")]
-    [SerializeField] private int tier1;
-    [SerializeField] private int tier2;
-    [SerializeField] private int tier3;
-    [SerializeField] private int tier4;
+    [SerializeField] private int tier1Limit;
+    [SerializeField] private int tier2Limit;
 
     private int GetLimit(int tier)
     {
@@ -53,12 +59,11 @@ public class PopularityConfig
              + tier * tier * QuadraticLimitGrowth;
     }
 
-    public void RefreshDebugLimits()
+    public void RefreshLimits()
     {
-        tier1 = GetLimit(1);
-        tier2 = GetLimit(2);
-        tier3 = GetLimit(3);
-        tier4 = GetLimit(4);
+        tier1Limit = GetLimit(1);
+        tier2Limit = GetLimit(2);
+        MaxPoints = GetLimit(MaxTier);
     }
 }
 
@@ -66,4 +71,10 @@ public class PopularityConfig
 public class BoxOfficeConfig
 {
     public int StartingMoney;
+}
+
+[Serializable]
+public class GenreConfig
+{
+    public GenreNode StartingGenre;
 }

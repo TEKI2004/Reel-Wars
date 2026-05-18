@@ -16,18 +16,20 @@ MonoBehaviour:
     BaseHealth: 500
   Rewards:
     MeleeDeathPoints: 1
-    RangedDeathPoints: 2
+    RangedDeathPoints: 20
     HeavyDeathPoints: 4
     CostMultiplier: 1.2
   Popularity:
     StartingPoints: 0
     StartingTier: 1
+    MaxTier: 3
+    MaxPoints: 80
     BaseLimit: 5
     LinearLimitGrowth: 10
     QuadraticLimitGrowth: 5
-    tier1: 20
-    tier2: 45
-    tier3: 80
-    tier4: 125
+    tier1Limit: 20
+    tier2Limit: 45
   BoxOffice:
     StartingMoney: 1000
+  Genre:
+    StartingGenre: {fileID: 11400000, guid: 95b18529105db2e439f657f42ab909eb, type: 2}

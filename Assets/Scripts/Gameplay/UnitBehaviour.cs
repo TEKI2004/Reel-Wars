@@ -47,12 +47,11 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
         this.unitType = unitType;
 
-        gameObject.name = $"{OwnerId}:U{UnitId}({unitType.role})";
+        gameObject.name = $"{OwnerId}:U{UnitId}({unitType.UnitName})";
         
         direction = moveDirection;
-        currentHealth = unitType.maxHealth;
-        lastAttackTime = -unitType.attackCooldown;
-
+        currentHealth = unitType.MaxHealth;
+        lastAttackTime = -unitType.AttackCooldown;
         ConfigureDetectors();
     }
 
@@ -79,8 +78,8 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     private void ConfigureDetectors()
     {
-        attackRangeDetectorCollider.size = new Vector3(unitType.attackRange, default_rangeY, default_rangeZ);
-        attackRangeDetectorCollider.center = unitType.attackRange * 0.5f * FacingDirectionVector;
+        attackRangeDetectorCollider.size = new Vector3(unitType.AttackRange, default_rangeY, default_rangeZ);
+        attackRangeDetectorCollider.center = unitType.AttackRange * 0.5f * FacingDirectionVector;
 
         moveRangeDetectorCollider.size = new Vector3(blockRange, default_rangeY, default_rangeZ);
         moveRangeDetectorCollider.center = blockRange * 0.5f * FacingDirectionVector;
@@ -93,7 +92,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     private void MoveForward()
     {
-        transform.Translate(unitType.moveSpeed * Time.deltaTime * FacingDirectionVector, Space.World);
+        transform.Translate(unitType.MoveSpeed * Time.deltaTime * FacingDirectionVector, Space.World);
     }
 
     private IAttackable GetNextTarget()
@@ -109,10 +108,10 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
             return;
         }
 
-        if (Time.time < lastAttackTime + unitType.attackCooldown) return;
+        if (Time.time < lastAttackTime + unitType.AttackCooldown) return;
 
         lastAttackTime = Time.time;
-        currentTarget.TakeDamage(unitType.damage);
+        currentTarget.TakeDamage(unitType.Damage);
     }
 
     public void TakeDamage(int amount)
@@ -122,7 +121,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            GameManager.Instance.GiveReward(direction, unitType.role, unitType.cost);
+            GameManager.Instance.GiveReward(direction, unitType.Role, unitType.Cost);
 
             currentTarget = null;
             enemiesInRange.Clear();
@@ -132,7 +131,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
             Destroy(gameObject);
         }
 
-        Debug.Log($"{OwnerId}:U{UnitId} took {amount} damage, current health: {currentHealth}");
+        Debug.Log($"{OwnerId}:U{UnitId}({unitType.UnitName}) took {amount} damage, current health: {currentHealth}");
     }
 
     private void NotifyDeath()
@@ -142,7 +141,6 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
             if (observer != null)
             {
                 observer.HandleObservedTargetDestroyed(this);
-                //Debug.Log($"{OwnerId}:U{UnitId} Notifying observer {observer.OwnerId}:U{observer.UnitId} of death");
             }
         }
 

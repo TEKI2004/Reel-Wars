@@ -5,7 +5,6 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
     [SerializeField] private BoxCollider spawnArea;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private LayerMask unitLayer;
-    [SerializeField] private GameObject unitPrefab;
 
     public string OwnerId { get; private set; }
     public Player Player { get; private set; }
@@ -58,14 +57,14 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
             return;
         }
 
-        GameObject unitObject = Instantiate(unitPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject unitObject = Instantiate(unitType.VisualPrefab, spawnPoint.position, Quaternion.identity);
         UnitBehaviour unit = unitObject.GetComponent<UnitBehaviour>();
         if (unit != null)
         {
             unit.Initialize(OwnerId, unitType, facingDirection);
         }
 
-        Debug.Log($"{OwnerId} Spawned {unitType.unitName}");
+        Debug.Log($"{OwnerId} Spawned {unitType.UnitName}");
     }
 
     public bool IsSpawnAreaBlocked()

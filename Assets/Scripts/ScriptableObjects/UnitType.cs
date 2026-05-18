@@ -10,12 +10,23 @@ public enum UnitRole
 [CreateAssetMenu(menuName = "Game/Unit Type")]
 public class UnitType : ScriptableObject
 {
-    public string unitName;
-    public int cost;
-    public int damage;
-    public int maxHealth;
-    public float moveSpeed;
-    public float attackRange;
-    public float attackCooldown;
-    public UnitRole role;
+    [Header("Identity")]
+    public string UnitName;
+    public UnitRole Role;
+
+    [Header("Visual")]
+    public Sprite Icon;
+    public GameObject VisualPrefab;
+
+    [Header("Economy")]
+    public int Cost;
+
+    [Header("Combat")]
+    public int Damage;
+    public int MaxHealth;
+    public float AttackRange;
+    public float AttackCooldown;
+
+    [Header("Movement")]
+    public float MoveSpeed;
 }

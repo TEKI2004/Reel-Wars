@@ -5,12 +5,18 @@ public class Player
 {
     public BoxOffice BoxOffice { get; } = new();
     public Popularity Popularity { get; } = new();
-    public GenreNode CurrentGenre { get; private set; }
 
-    public void SetStartingGenre(GenreNode genre)
+    private GenreNode _currentGenre = GameManager.Instance.Config.Genre.StartingGenre;
+    public GenreNode CurrentGenre
     {
-        CurrentGenre = genre;
+        get => _currentGenre;
+        set
+        {
+            _currentGenre = value;
+            OnGenreChanged?.Invoke(value);
+        }
     }
+    public event Action<GenreNode> OnGenreChanged;
 
     public bool TryChooseGenre(GenreNode nextGenre)
     {
@@ -24,7 +30,7 @@ public class Player
 
     public bool BuyUnit(UnitType unitType)
     {
-        return BoxOffice.Spend(unitType.cost);
+        return BoxOffice.Spend(unitType.Cost);
     }
 
     public void ClaimReward(UnitRole victimRole, int victimCost)

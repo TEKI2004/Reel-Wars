@@ -1,9 +1,11 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 public class Popularity
 {
-    public event System.Action<int> OnPointsChanged;
+    public event Action<int> OnPointsChanged;
+    public event Action<int> OnTierChanged;
+
     public int CurrentPoints { get; private set; } = GameManager.Instance.Config.Popularity.StartingPoints;
     public int CurrentTier { get; private set; } = GameManager.Instance.Config.Popularity.StartingTier;
 
@@ -12,20 +14,32 @@ public class Popularity
         CurrentPoints += points;
         OnPointsChanged?.Invoke(CurrentPoints);
 
-        while (CurrentPoints >= GetPointsForNextTier())
+        while (CurrentTier < GameManager.Instance.Config.Popularity.MaxTier && CurrentPoints >= GetLimitToLeaveTier(CurrentTier))
         {
             CurrentTier++;
+            OnTierChanged?.Invoke(CurrentTier);
             Debug.Log($"Popularity tier increased to {CurrentTier}");
         }
     }
 
-    public int GetPointsForNextTier()
+    public static int[] GetPopularityThresholds()
+    {
+        StatsConfig config = GameManager.Instance.Config;
+        int[] limits = new int[config.Popularity.MaxTier - 1];
+        for (int tier = 1; tier < config.Popularity.MaxTier; tier++)
+        {
+            limits[tier - 1] = GetLimitToLeaveTier(tier);
+        }
+        return limits;
+    }
+
+    public static int GetLimitToLeaveTier(int tier)
     {
         StatsConfig config = GameManager.Instance.Config;
 
         return config.Popularity.BaseLimit
-         + CurrentTier * config.Popularity.LinearLimitGrowth
-         + CurrentTier * CurrentTier * config.Popularity.QuadraticLimitGrowth;
+         + tier * config.Popularity.LinearLimitGrowth
+         + tier * tier * config.Popularity.QuadraticLimitGrowth;
     }
 
 }
