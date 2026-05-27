@@ -15,7 +15,7 @@ MonoBehaviour:
   UnitName: King Kong
   Role: 2
   Icon: {fileID: 0}
-  VisualPrefab: {fileID: 187218633972683070, guid: cd47e4ad5ef416b41a0fe1f1ccefcce3, type: 3}
+  VisualPrefab: {fileID: 187218633972683070, guid: c4bb9371c43a42d489a45e93dc32a079, type: 3}
   Cost: 5
   Damage: 50
   MaxHealth: 150

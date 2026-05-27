@@ -9,16 +9,16 @@ public enum FacingDirection
 
 public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 {
-    private static float default_rangeY = 1f;
-    private static float default_rangeZ = 1f;
     private static float blockRange = 0.7f;
     private static int unitNumber = 0;
     public int UnitId { get; private set; }
-
-    [SerializeField] private UnitType unitType;
+    private UnitType unitType;
 
     [SerializeField] private BoxCollider attackRangeDetectorCollider;
     [SerializeField] private BoxCollider moveRangeDetectorCollider;
+
+    private Vector3 attackDefaultCenter;
+    private Vector3 moveDefaultCenter;
 
     private int currentHealth;
     private float lastAttackTime;
@@ -29,18 +29,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     private readonly HashSet<IAttackableObserver> observers = new();
 
     public string OwnerId { get; private set; }
-
-    private FacingDirection direction = FacingDirection.Right;
-    
-    private Vector3 FacingDirectionVector 
-    {
-        get
-        {
-            return direction == FacingDirection.Left ? Vector3.left : Vector3.right;
-        }
-    }
-
-    public void Initialize(string ownerId, UnitType unitType, FacingDirection moveDirection)
+    public void Initialize(string ownerId, UnitType unitType)
     {
         OwnerId = ownerId;
         UnitId = unitNumber++;
@@ -49,9 +38,11 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
         gameObject.name = $"{OwnerId}:U{UnitId}({unitType.UnitName})";
         
-        direction = moveDirection;
         currentHealth = unitType.MaxHealth;
         lastAttackTime = -unitType.AttackCooldown;
+
+        attackDefaultCenter = attackRangeDetectorCollider.center;
+        moveDefaultCenter = moveRangeDetectorCollider.center;
         ConfigureDetectors();
     }
 
@@ -78,11 +69,23 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     private void ConfigureDetectors()
     {
-        attackRangeDetectorCollider.size = new Vector3(unitType.AttackRange, default_rangeY, default_rangeZ);
-        attackRangeDetectorCollider.center = unitType.AttackRange * 0.5f * FacingDirectionVector;
+        attackRangeDetectorCollider.size = new Vector3(
+            unitType.AttackRange * attackRangeDetectorCollider.size.x,
+            attackRangeDetectorCollider.size.y,
+            attackRangeDetectorCollider.size.z
+        );
 
-        moveRangeDetectorCollider.size = new Vector3(blockRange, default_rangeY, default_rangeZ);
-        moveRangeDetectorCollider.center = blockRange * 0.5f * FacingDirectionVector;
+        attackRangeDetectorCollider.center =
+            attackDefaultCenter + unitType.AttackRange * 0.5f * Vector3.right;
+
+        moveRangeDetectorCollider.size = new Vector3(
+            blockRange * moveRangeDetectorCollider.size.x,
+            moveRangeDetectorCollider.size.y,
+            moveRangeDetectorCollider.size.z
+        );
+
+        moveRangeDetectorCollider.center =
+            moveDefaultCenter + blockRange * 0.5f * Vector3.right;
     }
 
     private bool HasBlockingEntity()
@@ -92,7 +95,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     private void MoveForward()
     {
-        transform.Translate(unitType.MoveSpeed * Time.deltaTime * FacingDirectionVector, Space.World);
+        transform.Translate(unitType.MoveSpeed * Time.deltaTime * Vector3.right);
     }
 
     private IAttackable GetNextTarget()
@@ -121,7 +124,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            GameManager.Instance.GiveReward(direction, unitType.Role, unitType.Cost);
+            GameManager.Instance.GiveReward(OwnerId, unitType.Role, unitType.Cost);
 
             currentTarget = null;
             enemiesInRange.Clear();

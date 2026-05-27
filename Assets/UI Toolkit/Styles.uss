@@ -49,6 +49,12 @@
     font-size: 40px;
     -unity-text-align: middle-center;
 
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0px;
+    padding-bottom: 0px;
+
     background-color: rgba(255, 255, 255, 0);
     border-width: 0;
 }
@@ -126,4 +132,24 @@
     color: white;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
+}
+
+
+
+.unit-name {
+    height: 16px;
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: white;
+    -unity-text-align: upper-center;
+    margin-top: -6px;
+}
+
+.unit-cost {
+    height: 16px;
+    font-size: 12px;
+    -unity-font-style: bold;
+    color: white;
+    -unity-text-align: lower-center;
+    margin-bottom: -2px;
 }

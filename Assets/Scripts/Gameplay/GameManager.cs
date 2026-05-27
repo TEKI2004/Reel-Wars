@@ -45,15 +45,19 @@ public class GameManager : MonoBehaviour
         rightBase.Initialize(rightPlayerName, FacingDirection.Left);
     }
 
-    public void GiveReward(FacingDirection victimDirection, UnitRole victimRole, int victimCost)
+    public void GiveReward(string victimOwnerId, UnitRole victimRole, int victimCost)
     {
-        if (victimDirection == FacingDirection.Left) 
+        if (victimOwnerId == leftPlayerName)
+        {
+            rightBase.ClaimReward(victimRole, victimCost);
+        }
+        else if (victimOwnerId == rightPlayerName)
         {
             leftBase.ClaimReward(victimRole, victimCost);
         }
-        else 
+        else
         {
-            rightBase.ClaimReward(victimRole, victimCost);
+            Debug.LogError($"Invalid victim owner ID: {victimOwnerId}");
         }
     }
 

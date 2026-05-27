@@ -14,9 +14,20 @@
                   class="player-name" />
 
         <ui:VisualElement name="LeftUnitRow" class="unit-row">
-            <ui:Button name="LeftButton1" text="1" class="unit-button" />
-            <ui:Button name="LeftButton2" text="2" class="unit-button" />
-            <ui:Button name="LeftButton3" text="3" class="unit-button" />
+            <ui:Button name="LeftButton1" class="unit-button">
+                <ui:Label name="LeftUnit1Name" text="Chaplin" class="unit-name" />
+                <ui:Label name="LeftUnit1Cost" text="10M $" class="unit-cost" />
+            </ui:Button>
+
+            <ui:Button name="LeftButton2" class="unit-button">
+                <ui:Label name="LeftUnit2Name" text="Cameraman" class="unit-name" />
+                <ui:Label name="LeftUnit2Cost" text="20M $" class="unit-cost" />
+            </ui:Button>
+
+            <ui:Button name="LeftButton3" class="unit-button">
+                <ui:Label name="LeftUnit3Name" text="King Kong" class="unit-name" />
+                <ui:Label name="LeftUnit3Cost" text="30M $" class="unit-cost" />
+            </ui:Button>
         </ui:VisualElement>
 
         <ui:Label name="LeftPassiveTitle"
@@ -54,9 +65,20 @@
                   class="player-name" />
 
         <ui:VisualElement name="RightUnitRow" class="unit-row">
-            <ui:Button name="RightButton1" text="1" class="unit-button" />
-            <ui:Button name="RightButton2" text="2" class="unit-button" />
-            <ui:Button name="RightButton3" text="3" class="unit-button" />
+            <ui:Button name="RightButton1" class="unit-button">
+                <ui:Label name="RightUnit1Name" text="Chaplin" class="unit-name" />
+                <ui:Label name="RightUnit1Cost" text="10M $" class="unit-cost" />
+            </ui:Button>
+
+            <ui:Button name="RightButton2" class="unit-button">
+                <ui:Label name="RightUnit2Name" text="Cameraman" class="unit-name" />
+                <ui:Label name="RightUnit2Cost" text="20M $" class="unit-cost" />
+            </ui:Button>
+
+            <ui:Button name="RightButton3" class="unit-button">
+                <ui:Label name="RightUnit3Name" text="King Kong" class="unit-name" />
+                <ui:Label name="RightUnit3Cost" text="30M $" class="unit-cost" />
+            </ui:Button>
         </ui:VisualElement>
 
         <ui:Label name="RightPassiveTitle"

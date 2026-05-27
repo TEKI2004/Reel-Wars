@@ -15,7 +15,7 @@ MonoBehaviour:
   UnitName: Chaplin
   Role: 0
   Icon: {fileID: 0}
-  VisualPrefab: {fileID: 187218633972683070, guid: cd47e4ad5ef416b41a0fe1f1ccefcce3, type: 3}
+  VisualPrefab: {fileID: 187218633972683070, guid: 9b2dd2c8078729042b5d57bf63ff9f7e, type: 3}
   Cost: 1
   Damage: 20
   MaxHealth: 100
