@@ -16,6 +16,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     [SerializeField] private BoxCollider attackRangeDetectorCollider;
     [SerializeField] private BoxCollider moveRangeDetectorCollider;
+    [SerializeField] private AttackedShaker unitShaker;
 
     private Vector3 attackDefaultCenter;
     private Vector3 moveDefaultCenter;
@@ -120,6 +121,8 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
+
+        unitShaker.Shake();
 
         if (currentHealth <= 0)
         {

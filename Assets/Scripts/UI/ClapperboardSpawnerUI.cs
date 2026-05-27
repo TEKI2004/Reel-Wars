@@ -8,6 +8,7 @@ public class ClapperboardSpawnerUI : MonoBehaviour
 {
     private GameInputActions inputActions;
     private readonly Dictionary<InputAction, Action<InputAction.CallbackContext>> callbacks = new();
+    private readonly Dictionary<Button, Action> buttonFlashCallbacks = new();
 
     private Button leftButton1;
     private Button leftButton2;
@@ -87,16 +88,37 @@ public class ClapperboardSpawnerUI : MonoBehaviour
     {
         button.clicked += spawnAction;
 
-        Action<InputAction.CallbackContext> callback = _ => spawnAction();
+        Action flashCallback = async () =>
+        {
+            button.AddToClassList("spawn-flash");
 
-        callbacks[action] = callback;
+            await System.Threading.Tasks.Task.Delay(90);
 
-        action.performed += callback;
+            button.RemoveFromClassList("spawn-flash");
+        };
+
+        buttonFlashCallbacks[button] = flashCallback;
+        button.clicked += flashCallback;
+
+        Action<InputAction.CallbackContext> inputCallback = _ =>
+        {
+            spawnAction();
+            flashCallback();
+        };
+
+        callbacks[action] = inputCallback;
+        action.performed += inputCallback;
     }
 
     private void UnbindSpawn(Button button, InputAction action, Action spawnAction)
     {
         button.clicked -= spawnAction;
+
+        if (buttonFlashCallbacks.TryGetValue(button, out var flashCallback))
+        {
+            button.clicked -= flashCallback;
+            buttonFlashCallbacks.Remove(button);
+        }
 
         if (callbacks.TryGetValue(action, out var callback))
         {
@@ -127,7 +149,6 @@ public class ClapperboardSpawnerUI : MonoBehaviour
     private void SpawnRightMelee() => SpawnRight(rightMeleeType);
     private void SpawnRightRanged() => SpawnRight(rightRangedType);
     private void SpawnRightHeavy() => SpawnRight(rightHeavyType);
-
 
     private void SpawnLeft(UnitType unitType) => GameManager.Instance.LeftBase.SpawnUnit(unitType);
     private void SpawnRight(UnitType unitType) => GameManager.Instance.RightBase.SpawnUnit(unitType);

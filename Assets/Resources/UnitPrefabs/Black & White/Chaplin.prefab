@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5545551502273422819}
   - component: {fileID: 8891304504735232869}
   - component: {fileID: 6799871862351974249}
+  - component: {fileID: 3855080032318725900}
   - component: {fileID: 2247230182148201020}
   - component: {fileID: 6375139383324997046}
   m_Layer: 3
@@ -60,6 +61,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   attackRangeDetectorCollider: {fileID: 2370312609983721794}
   moveRangeDetectorCollider: {fileID: 4466963664906640443}
+  unitShaker: {fileID: 3855080032318725900}
+--- !u!114 &3855080032318725900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187218633972683070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653d856c5767f6449b4568b13ea14f6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AttackedShaker
+  shakeDuration: 0.08
+  shakeStrength: 0.06
 --- !u!65 &2247230182148201020
 BoxCollider:
   m_ObjectHideFlags: 0

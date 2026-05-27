@@ -1,110 +1,55 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:ui="UnityEngine.UIElements"
-         xmlns:uie="UnityEditor.UIElements"
-         noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
-         editor-extension-mode="False">
-
-    <Style src="project://database/Assets/UI%20Toolkit/Styles.uss?fileID=7433441132597879392&amp;guid=05b1babbee6540d4aadf1f1c4adff632&amp;type=3#Styles" />
-
-    <!-- LEFT CLAPPERBOARD -->
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/Styles.uss?fileID=7433441132597879392&amp;guid=05b1babbee6540d4aadf1f1c4adff632&amp;type=3#Styles"/>
     <ui:VisualElement name="LeftClapperPanel" class="clapper-panel left-clapper">
-
-        <ui:Label name="LeftPlayerName"
-                  text="PLAYER1"
-                  class="player-name" />
-
-        <ui:VisualElement name="LeftUnitRow" class="unit-row">
+        <ui:Label name="LeftPlayerName" text="PLAYER1" class="player-name"/>
+        <ui:VisualElement name="LeftUnitRow" class="unit-row-left">
             <ui:Button name="LeftButton1" class="unit-button">
-                <ui:Label name="LeftUnit1Name" text="Chaplin" class="unit-name" />
-                <ui:Label name="LeftUnit1Cost" text="10M $" class="unit-cost" />
+                <ui:Label name="LeftMeleeName" text="Chaplin" class="unit-name"/>
+                <ui:VisualElement name="LeftMeleeIcon" class="unit-icon"/>
+                <ui:Label name="LeftMeleeCost" text="10M $" class="unit-cost"/>
             </ui:Button>
-
             <ui:Button name="LeftButton2" class="unit-button">
-                <ui:Label name="LeftUnit2Name" text="Cameraman" class="unit-name" />
-                <ui:Label name="LeftUnit2Cost" text="20M $" class="unit-cost" />
+                <ui:Label name="LeftRangedName" text="Cameraman" class="unit-name"/>
+                <ui:VisualElement name="LeftRangedIcon" class="unit-icon"/>
+                <ui:Label name="LeftRangedCost" text="20M $" class="unit-cost"/>
             </ui:Button>
-
             <ui:Button name="LeftButton3" class="unit-button">
-                <ui:Label name="LeftUnit3Name" text="King Kong" class="unit-name" />
-                <ui:Label name="LeftUnit3Cost" text="30M $" class="unit-cost" />
+                <ui:Label name="LeftHeavyName" text="King Kong" class="unit-name"/>
+                <ui:VisualElement name="LeftHeavyIcon" class="unit-icon"/>
+                <ui:Label name="LeftHeavyCost" text="30M $" class="unit-cost"/>
             </ui:Button>
         </ui:VisualElement>
-
-        <ui:Label name="LeftPassiveTitle"
-                  text="Passive"
-                  class="passive-title" />
-
-        <ui:Label name="LeftPassiveValue"
-                  text="Units cost less"
-                  class="passive-value" />
-
-        <ui:Label name="LeftGenreTitle"
-                  text="Genre"
-                  class="genre-title" />
-
-        <ui:Label name="LeftGenreName"
-                  text="Psychological Thriller"
-                  class="genre-value" />
-
-        <ui:Label name="LeftBoxOfficeTitle"
-                  text="Box Office"
-                  class="boxoffice-title" />
-
-        <ui:Label name="LeftBoxOffice"
-                  text="50M $"
-                  class="boxoffice-value" />
-
+        <ui:Label name="LeftPassiveTitle" text="Passive" class="passive-title"/>
+        <ui:Label name="LeftPassiveValue" text="Units cost less" class="passive-value"/>
+        <ui:Label name="LeftGenreTitle" text="Genre" class="genre-title"/>
+        <ui:Label name="LeftGenreName" text="Psychological Thriller" class="genre-value"/>
+        <ui:Label name="LeftBoxOfficeTitle" text="Box Office" class="boxoffice-title"/>
+        <ui:Label name="LeftBoxOffice" text="50M $" class="boxoffice-value"/>
     </ui:VisualElement>
-
-
-    <!-- RIGHT CLAPPERBOARD -->
     <ui:VisualElement name="RightClapperPanel" class="clapper-panel right-clapper">
-
-        <ui:Label name="RightPlayerName"
-                  text="PLAYER2"
-                  class="player-name" />
-
-        <ui:VisualElement name="RightUnitRow" class="unit-row">
+        <ui:Label name="RightPlayerName" text="PLAYER2" class="player-name"/>
+        <ui:VisualElement name="RightUnitRow" class="unit-row-right">
             <ui:Button name="RightButton1" class="unit-button">
-                <ui:Label name="RightUnit1Name" text="Chaplin" class="unit-name" />
-                <ui:Label name="RightUnit1Cost" text="10M $" class="unit-cost" />
+                <ui:Label name="RightMeleeName" text="Chaplin" class="unit-name"/>
+                <ui:VisualElement name="RightMeleeIcon" class="unit-icon"/>
+                <ui:Label name="RightMeleeCost" text="10M $" class="unit-cost"/>
             </ui:Button>
-
             <ui:Button name="RightButton2" class="unit-button">
-                <ui:Label name="RightUnit2Name" text="Cameraman" class="unit-name" />
-                <ui:Label name="RightUnit2Cost" text="20M $" class="unit-cost" />
+                <ui:Label name="RightRangedName" text="Cameraman" class="unit-name"/>
+                <ui:VisualElement name="RightRangedIcon" class="unit-icon"/>
+                <ui:Label name="RightRangedCost" text="20M $" class="unit-cost"/>
             </ui:Button>
-
             <ui:Button name="RightButton3" class="unit-button">
-                <ui:Label name="RightUnit3Name" text="King Kong" class="unit-name" />
-                <ui:Label name="RightUnit3Cost" text="30M $" class="unit-cost" />
+                <ui:Label name="RightHeavyName" text="King Kong" class="unit-name"/>
+                <ui:VisualElement name="RightHeavyIcon" class="unit-icon"/>
+                <ui:Label name="RightHeavyCost" text="30M $" class="unit-cost"/>
             </ui:Button>
         </ui:VisualElement>
-
-        <ui:Label name="RightPassiveTitle"
-                  text="Passive"
-                  class="passive-title" />
-
-        <ui:Label name="RightPassiveValue"
-                  text="Units cost less"
-                  class="passive-value" />
-
-        <ui:Label name="RightGenreTitle"
-                  text="Genre"
-                  class="genre-title" />
-
-        <ui:Label name="RightGenreName"
-                  text="Psychological Thriller"
-                  class="genre-value" />
-
-        <ui:Label name="RightBoxOfficeTitle"
-                  text="Box Office"
-                  class="boxoffice-title" />
-
-        <ui:Label name="RightBoxOffice"
-                  text="50M $"
-                  class="boxoffice-value" />
-
+        <ui:Label name="RightPassiveTitle" text="Passive" class="passive-title"/>
+        <ui:Label name="RightPassiveValue" text="Units cost less" class="passive-value"/>
+        <ui:Label name="RightGenreTitle" text="Genre" class="genre-title"/>
+        <ui:Label name="RightGenreName" text="Psychological Thriller" class="genre-value"/>
+        <ui:Label name="RightBoxOfficeTitle" text="Box Office" class="boxoffice-title"/>
+        <ui:Label name="RightBoxOffice" text="50M $" class="boxoffice-value"/>
     </ui:VisualElement>
-
 </ui:UXML>

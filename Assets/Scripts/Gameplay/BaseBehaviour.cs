@@ -14,7 +14,7 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
 
 
     [Header("Reactive Effects")]
-    [SerializeField] private BaseShaker baseShaker;
+    [SerializeField] private AttackedShaker baseShaker;
     [SerializeField] private BaseEmissionFader baseEmissionFader;
 
     public string OwnerId { get; private set; }

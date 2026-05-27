@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BaseShaker : MonoBehaviour
+public class AttackedShaker : MonoBehaviour
 {
     [SerializeField] private float shakeDuration = 0.08f;
     [SerializeField] private float shakeStrength = 0.06f;
