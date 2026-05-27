@@ -36,6 +36,11 @@ public class GameManager : MonoBehaviour
             defaultStatsConfig = Resources.Load<StatsConfig>("StatsConfig");
         }
 
+        if (leftPlayerName == rightPlayerName)
+        {
+            Debug.LogError("Player names must be unique.");
+        }
+
         leftBase.Initialize(leftPlayerName, FacingDirection.Right);
         rightBase.Initialize(rightPlayerName, FacingDirection.Left);
     }

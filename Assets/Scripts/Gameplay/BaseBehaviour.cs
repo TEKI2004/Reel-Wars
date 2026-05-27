@@ -1,10 +1,21 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class BaseBehaviour : MonoBehaviour, IAttackable
 {
+    [Header("Neon Display")]
+    [SerializeField] private NeonPlayerName playerNameDisplay;
+
+    [Header("Spawn Settings")]
     [SerializeField] private BoxCollider spawnArea;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private LayerMask unitLayer;
+
+
+    [Header("Reactive Effects")]
+    [SerializeField] private BaseShaker baseShaker;
+    [SerializeField] private BaseEmissionFader baseEmissionFader;
 
     public string OwnerId { get; private set; }
     public Player Player { get; private set; }
@@ -22,11 +33,17 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         facingDirection = direction;
         maxHealth = GameManager.Instance.Config.BaseStats.BaseHealth;
         currentHealth = maxHealth;
+
+        playerNameDisplay.SetName(OwnerId);
     }
 
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
+
+        playerNameDisplay.SetLitPercent((float)currentHealth / maxHealth);
+        baseEmissionFader.SetLitPercent((float)currentHealth / maxHealth);
+        baseShaker.Shake();
 
         if (currentHealth <= 0)
         {
