@@ -52,4 +52,15 @@
         <ui:Label name="RightBoxOfficeTitle" text="Box Office" class="boxoffice-title"/>
         <ui:Label name="RightBoxOffice" text="50M $" class="boxoffice-value"/>
     </ui:VisualElement>
+    <ui:VisualElement name="LeftGenreChoiceFrame" class="genre-choice-frame genre-choice-frame-left">
+        <ui:VisualElement name="TopGenreIcon" class="genre-icon top-genre-icon"/>
+        <ui:VisualElement name="BottomGenreIcon" class="genre-icon bottom-genre-icon"/>
+        <ui:VisualElement class="genre-divider"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="RightGenreChoiceFrame" class="genre-choice-frame genre-choice-frame-right">
+        <ui:VisualElement name="TopGenreIcon" class="genre-icon top-genre-icon"/>
+        <ui:VisualElement name="BottomGenreIcon" class="genre-icon bottom-genre-icon"/>
+        <ui:VisualElement class="genre-divider"/>
+    </ui:VisualElement>
+    <ui:Label name="SpawnKey" text="Q" class="keybind-circle"/>
 </ui:UXML>

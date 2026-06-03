@@ -16,7 +16,7 @@ MonoBehaviour:
   Role: 0
   Icon: {fileID: 21300000, guid: 0727554d88fc0964a882d535342d771f, type: 3}
   VisualPrefab: {fileID: 187218633972683070, guid: 9b2dd2c8078729042b5d57bf63ff9f7e, type: 3}
-  Cost: 1
+  Cost: 50
   Damage: 20
   MaxHealth: 100
   AttackRange: 1

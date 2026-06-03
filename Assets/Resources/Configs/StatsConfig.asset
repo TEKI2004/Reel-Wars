@@ -23,12 +23,12 @@ MonoBehaviour:
     StartingPoints: 0
     StartingTier: 1
     MaxTier: 3
-    MaxPoints: 80
-    BaseLimit: 5
-    LinearLimitGrowth: 10
-    QuadraticLimitGrowth: 5
-    tier1Limit: 20
-    tier2Limit: 45
+    MaxPoints: 100
+    BaseLimit: 16
+    LinearLimitGrowth: 25
+    QuadraticLimitGrowth: 1
+    tier1Limit: 42
+    tier2Limit: 70
   BoxOffice:
     StartingMoney: 1000
   Genre:

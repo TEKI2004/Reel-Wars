@@ -7,7 +7,10 @@ public class GenreNode : ScriptableObject
     [Header("Genre Info")]
     public string GenreName;
     public int RequiredTier;
-    
+
+    [Header("Visual")]
+    public Sprite Banner;
+
     [Header("Unit Types")]
     public UnitType MeleeUnit;
     public UnitType RangedUnit;

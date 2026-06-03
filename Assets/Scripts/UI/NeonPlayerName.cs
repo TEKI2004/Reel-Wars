@@ -18,7 +18,7 @@ public class NeonPlayerName : MonoBehaviour
         if (playerName.Length > maxLetters)
         {
             playerName = playerName.Substring(0, maxLetters);
-            Debug.LogWarning("Player name too long, truncating to 7 characters.");
+            Debug.LogWarning($"Player name too long, truncating to {maxLetters} characters.");
         }
 
         playerName = playerName.Trim().ToUpper();

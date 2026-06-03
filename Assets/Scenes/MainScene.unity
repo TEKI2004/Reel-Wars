@@ -1036,8 +1036,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   defaultStatsConfig: {fileID: 11400000, guid: e528f888c7c3d75448c13068c72a4a2c, type: 2}
-  leftPlayerName: Player1
-  rightPlayerName: Player2
+  leftPlayerName: Egyes
+  rightPlayerName: Kettes
   leftBase: {fileID: 237540033}
   rightBase: {fileID: 841109261}
 --- !u!1 &386886165
@@ -1762,7 +1762,7 @@ Transform:
   m_GameObject: {fileID: 636442751}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 15.5, z: 50.24}
+  m_LocalPosition: {x: 0, y: 15.5, z: 50}
   m_LocalScale: {x: 9, y: 0.58593756, z: 6}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -2265,7 +2265,7 @@ Light:
   serializedVersion: 13
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 150
+  m_Intensity: 200
   m_Range: 50
   m_SpotAngle: 125.239365
   m_InnerSpotAngle: 125.239365
@@ -2327,7 +2327,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828679786}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 19.5, z: 33.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
