@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
+  m_Name: Columbo
+  m_EditorClassIdentifier: Assembly-CSharp::UnitType
+  UnitName: Columbo
+  Role: 1
+  Icon: {fileID: 21300000, guid: 179a3972123973b4a9d6a94ed964184a, type: 3}
+  VisualPrefab: {fileID: 187218633972683070, guid: 7cbe2a1eb1b86eb4fa7c3f530dd8b379, type: 3}
+  Cost: 100
+  Damage: 40
+  MaxHealth: 75
+  AttackRange: 4
+  AttackCooldown: 1
+  MoveSpeed: 3

@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed413a9fe4d756d44b5efeb7252d7952, type: 3}
+  m_Name: StatsConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
+  BaseStats:
+    BaseHealth: 2000
+  Rewards:
+    MeleeDeathPoints: 5
+    RangedDeathPoints: 7
+    HeavyDeathPoints: 15
+    CostMultiplier: 1.5
+  Popularity:
+    StartingPoints: 0
+    StartingTier: 1
+    MaxTier: 3
+    MaxPoints: 100
+    BaseLimit: 16
+    LinearLimitGrowth: 25
+    QuadraticLimitGrowth: 1
+    tier1Limit: 42
+    tier2Limit: 70
+  BoxOffice:
+    StartingMoney: 300
+  Genre:
+    StartingGenre: {fileID: 11400000, guid: c6ca6e7541e17b548ad6b1d5a72d6aa9, type: 2}
