@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Zorro
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
-  unitName: ThrillerRanged
-  cost: 3
-  damage: 50
-  maxHealth: 80
-  moveSpeed: 3
-  attackRange: 3
-  attackCooldown: 1
-  role: 1
+  UnitName: Zorro
+  Role: 0
+  Icon: {fileID: 21300000, guid: 0d62fc73db4703d45af5ec5cc6d8e732, type: 3}
+  VisualPrefab: {fileID: 187218633972683070, guid: ab5821bb1ef617f40aa7c7ffdd5fc043, type: 3}
+  Cost: 60
+  Damage: 35
+  MaxHealth: 100
+  AttackRange: 1
+  AttackCooldown: 1
+  MoveSpeed: 3

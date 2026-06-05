@@ -76,8 +76,6 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
 
         Quaternion rotation = facingDirection == FacingDirection.Right ? Quaternion.identity : Quaternion.Euler(0f, 180f, 0f);
 
-        Debug.Log("rotation: " + rotation.eulerAngles);
-
         GameObject unitObject = Instantiate(unitType.VisualPrefab, spawnPoint.position, rotation);
         UnitBehaviour unit = unitObject.GetComponent<UnitBehaviour>();
         if (unit != null)

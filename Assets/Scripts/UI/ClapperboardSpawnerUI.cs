@@ -1,3 +1,4 @@
+using GLTFast.Schema;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,16 +38,7 @@ public class ClapperboardSpawnerUI : MonoBehaviour
     // ==== SETUP ====
     private void OnEnable()
     {
-        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-
-        leftButton1 = root.Q<Button>("LeftButton1");
-        leftButton2 = root.Q<Button>("LeftButton2");
-        leftButton3 = root.Q<Button>("LeftButton3");
-
-        rightButton1 = root.Q<Button>("RightButton1");
-        rightButton2 = root.Q<Button>("RightButton2");
-        rightButton3 = root.Q<Button>("RightButton3");
-
+        GetUIComponents();
 
         inputActions.Gameplay.Enable();
 
@@ -82,6 +74,19 @@ public class ClapperboardSpawnerUI : MonoBehaviour
         rightPlayer.OnGenreChanged -= UpdateRightUnitTypes;
 
         inputActions.Gameplay.Disable();
+    }
+
+    private void GetUIComponents()
+    {
+        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+
+        leftButton1 = root.Q<Button>("LeftButton1");
+        leftButton2 = root.Q<Button>("LeftButton2");
+        leftButton3 = root.Q<Button>("LeftButton3");
+
+        rightButton1 = root.Q<Button>("RightButton1");
+        rightButton2 = root.Q<Button>("RightButton2");
+        rightButton3 = root.Q<Button>("RightButton3");
     }
 
     private void BindSpawn(Button button, InputAction action, Action spawnAction)

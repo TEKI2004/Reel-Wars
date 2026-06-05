@@ -30,6 +30,9 @@ public class ClapperboardHUD : MonoBehaviour
     Label leftPlayerName;
     Label rightPlayerName;
 
+    private VisualElement leftCurrentGenreIcon;
+    private VisualElement rightCurrentGenreIcon;
+
     private Label leftGenreName;
     private Label rightGenreName;
 
@@ -49,7 +52,7 @@ public class ClapperboardHUD : MonoBehaviour
 
     private void OnEnable()
     {
-        GetHUDElements();
+        GetUIComponents();
 
         leftPlayer = GameManager.Instance.LeftBase.Player;
         rightPlayer = GameManager.Instance.RightBase.Player;
@@ -79,7 +82,7 @@ public class ClapperboardHUD : MonoBehaviour
         rightPlayer.OnGenreChanged -= UpdateRightGenre;
     }
 
-    private void GetHUDElements()
+    private void GetUIComponents()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -88,6 +91,9 @@ public class ClapperboardHUD : MonoBehaviour
 
         leftBoxOffice = root.Q<Label>("LeftBoxOffice");
         rightBoxOffice = root.Q<Label>("RightBoxOffice");
+
+        leftCurrentGenreIcon = root.Q<VisualElement>("LeftCurrentGenreIcon");
+        rightCurrentGenreIcon = root.Q<VisualElement>("RightCurrentGenreIcon");
 
         leftGenreName = root.Q<Label>("LeftGenreName");
         rightGenreName = root.Q<Label>("RightGenreName");
@@ -106,6 +112,8 @@ public class ClapperboardHUD : MonoBehaviour
     {
         leftGenreName.text = genre.GenreName;
 
+        leftCurrentGenreIcon.style.backgroundImage = new StyleBackground(genre.Icon);
+
         leftMelee.SetUnit(genre.MeleeUnit);
         leftRanged.SetUnit(genre.RangedUnit);
         leftHeavy.SetUnit(genre.HeavyUnit);
@@ -114,6 +122,8 @@ public class ClapperboardHUD : MonoBehaviour
     private void UpdateRightGenre(GenreNode genre)
     {
         rightGenreName.text = genre.GenreName;
+
+        rightCurrentGenreIcon.style.backgroundImage = new StyleBackground(genre.Icon);
 
         rightMelee.SetUnit(genre.MeleeUnit);
         rightRanged.SetUnit(genre.RangedUnit);

@@ -53,6 +53,7 @@
 }
 
 .unit-button {
+    position: relative;
     width: 150px;
     height: 101px;
     flex-direction: column;
@@ -109,8 +110,8 @@
 .genre-title {
     position: absolute;
     top: 399px;
-    left: 31px;
-    width: 302px;
+    left: 80px;
+    width: 276px;
     height: 14px;
     font-size: 14px;
     color: white;
@@ -120,7 +121,7 @@
 .genre-value {
     position: absolute;
     top: 410px;
-    left: 43px;
+    left: 80px;
     width: 276px;
     height: 29px;
     font-size: 20px;
@@ -179,6 +180,7 @@
     border-width: 4px;
     border-color: white;
     rotate: 45deg;
+    display: none;
 }
 
 .genre-choice-frame-left {
@@ -201,33 +203,79 @@
 
 .genre-icon {
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     left: auto;
     rotate: -45deg;
     -unity-background-scale-mode: scale-to-fit;
 }
 
 .top-genre-icon {
-    top: 35px;
-    left: 35px;
+    top: 8px;
+    left: 8px;
 }
 
 .bottom-genre-icon {
     top: auto;
-    bottom: 35px;
+    bottom: 8px;
     left: auto;
-    right: 35px;
+    right: 8px;
 }
 
 .keybind-circle {
-    width: 32px;
-    height: 32px;
-    border-radius: 16px;
+    min-width: 60px;
+    height: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    align-self: center;
+    border-radius: 30px;
     border-width: 2px;
-    border-color: rgb(230, 200, 120);
+    border-color: rgb(196, 147, 63);
     background-color: rgb(20, 20, 20);
     color: white;
+    font-size: 24px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
+}
+
+.unit-keybind-circle {
+    position: absolute;
+    z-index: 10;
+    left: 82px;
+    top: 14px;
+    min-width: 25px;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    padding-left: 0;
+    padding-right: 0;
+    border-radius: 12px;
+}
+
+.top-genre-keybind-circle {
+    position: absolute;
+    top: -70px;
+    bottom: auto;
+    left: 26px;
+    right: 26px;
+}
+
+.bottom-genre-keybind-circle {
+    position: absolute;
+    top: auto;
+    bottom: -70px;
+    left: 26px;
+    right: 26px;
+}
+
+.current-genre-icon {
+    position: absolute;
+    left: 80px;
+    top: 408px;
+    width: 35px;
+    height: 35px;
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: resource("GenreBanners/black_n_white");
 }

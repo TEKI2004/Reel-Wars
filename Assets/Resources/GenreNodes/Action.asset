@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GenreNode
   GenreName: Action
   RequiredTier: 3
+  Icon: {fileID: 21300000, guid: c2ead24111ff95a49a1ac841ba8db373, type: 3}
   MeleeUnit: {fileID: 11400000, guid: 7cff52efe4846234994a179cf93f0857, type: 2}
   RangedUnit: {fileID: 11400000, guid: 9e48c94a2c51d654184c6d597011c4db, type: 2}
   HeavyUnit: {fileID: 11400000, guid: 6741cf71f3eb9ae4fa3d52c41f1e93b2, type: 2}

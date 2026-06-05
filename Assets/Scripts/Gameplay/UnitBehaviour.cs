@@ -17,6 +17,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     [SerializeField] private BoxCollider attackRangeDetectorCollider;
     [SerializeField] private BoxCollider moveRangeDetectorCollider;
     [SerializeField] private AttackedShaker unitShaker;
+    [SerializeField] private FloatingHpBar hpBar;
 
     private Vector3 attackDefaultCenter;
     private Vector3 moveDefaultCenter;
@@ -123,6 +124,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         currentHealth -= amount;
 
         unitShaker.Shake();
+        hpBar.SetPercent((float)currentHealth / unitType.MaxHealth);
 
         if (currentHealth <= 0)
         {

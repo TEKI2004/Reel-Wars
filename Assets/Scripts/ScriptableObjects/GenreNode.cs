@@ -9,7 +9,7 @@ public class GenreNode : ScriptableObject
     public int RequiredTier;
 
     [Header("Visual")]
-    public Sprite Banner;
+    public Sprite Icon;
 
     [Header("Unit Types")]
     public UnitType MeleeUnit;

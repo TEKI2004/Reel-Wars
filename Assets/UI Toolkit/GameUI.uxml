@@ -7,22 +7,26 @@
                 <ui:Label name="LeftMeleeName" text="Chaplin" class="unit-name"/>
                 <ui:VisualElement name="LeftMeleeIcon" class="unit-icon"/>
                 <ui:Label name="LeftMeleeCost" text="10M $" class="unit-cost"/>
+                <ui:Label name="LeftMeleeKey" text="1" class="keybind-circle unit-keybind-circle" />
             </ui:Button>
             <ui:Button name="LeftButton2" class="unit-button">
                 <ui:Label name="LeftRangedName" text="Cameraman" class="unit-name"/>
                 <ui:VisualElement name="LeftRangedIcon" class="unit-icon"/>
                 <ui:Label name="LeftRangedCost" text="20M $" class="unit-cost"/>
+                <ui:Label name="LeftRangedKey" text="2" class="keybind-circle unit-keybind-circle" />
             </ui:Button>
             <ui:Button name="LeftButton3" class="unit-button">
                 <ui:Label name="LeftHeavyName" text="King Kong" class="unit-name"/>
                 <ui:VisualElement name="LeftHeavyIcon" class="unit-icon"/>
                 <ui:Label name="LeftHeavyCost" text="30M $" class="unit-cost"/>
+                <ui:Label name="LeftHeavyKey" text="3" class="keybind-circle unit-keybind-circle" />
             </ui:Button>
         </ui:VisualElement>
         <ui:Label name="LeftPassiveTitle" text="Passive" class="passive-title"/>
         <ui:Label name="LeftPassiveValue" text="Units cost less" class="passive-value"/>
         <ui:Label name="LeftGenreTitle" text="Genre" class="genre-title"/>
-        <ui:Label name="LeftGenreName" text="Psychological Thriller" class="genre-value"/>
+        <ui:VisualElement name="LeftCurrentGenreIcon" class="current-genre-icon"/>
+        <ui:Label name="LeftGenreName" text="Black &amp; White" class="genre-value"/>
         <ui:Label name="LeftBoxOfficeTitle" text="Box Office" class="boxoffice-title"/>
         <ui:Label name="LeftBoxOffice" text="50M $" class="boxoffice-value"/>
     </ui:VisualElement>
@@ -31,36 +35,47 @@
         <ui:VisualElement name="RightUnitRow" class="unit-row-right">
             <ui:Button name="RightButton1" class="unit-button">
                 <ui:Label name="RightMeleeName" text="Chaplin" class="unit-name"/>
-                <ui:VisualElement name="RightMeleeIcon" class="unit-icon"/>
+                <ui:VisualElement name="RightMeleeIcon" class="unit-icon" />
                 <ui:Label name="RightMeleeCost" text="10M $" class="unit-cost"/>
+                <ui:Label name="RightMeleeKey" text="&#x2190;" class="keybind-circle unit-keybind-circle" />
             </ui:Button>
             <ui:Button name="RightButton2" class="unit-button">
                 <ui:Label name="RightRangedName" text="Cameraman" class="unit-name"/>
                 <ui:VisualElement name="RightRangedIcon" class="unit-icon"/>
                 <ui:Label name="RightRangedCost" text="20M $" class="unit-cost"/>
+                <ui:Label name="RightRangedKey" text="&#x2193;" class="keybind-circle unit-keybind-circle" />
             </ui:Button>
             <ui:Button name="RightButton3" class="unit-button">
                 <ui:Label name="RightHeavyName" text="King Kong" class="unit-name"/>
                 <ui:VisualElement name="RightHeavyIcon" class="unit-icon"/>
                 <ui:Label name="RightHeavyCost" text="30M $" class="unit-cost"/>
+                <ui:Label name="RightHeavyKey" text="&#x2191;" class="keybind-circle unit-keybind-circle" />   
             </ui:Button>
         </ui:VisualElement>
         <ui:Label name="RightPassiveTitle" text="Passive" class="passive-title"/>
         <ui:Label name="RightPassiveValue" text="Units cost less" class="passive-value"/>
         <ui:Label name="RightGenreTitle" text="Genre" class="genre-title"/>
-        <ui:Label name="RightGenreName" text="Psychological Thriller" class="genre-value"/>
+        <ui:VisualElement name="RightCurrentGenreIcon" class="current-genre-icon"/>
+        <ui:Label name="RightGenreName" text="Black &amp; White" class="genre-value"/>
         <ui:Label name="RightBoxOfficeTitle" text="Box Office" class="boxoffice-title"/>
         <ui:Label name="RightBoxOffice" text="50M $" class="boxoffice-value"/>
     </ui:VisualElement>
     <ui:VisualElement name="LeftGenreChoiceFrame" class="genre-choice-frame genre-choice-frame-left">
-        <ui:VisualElement name="TopGenreIcon" class="genre-icon top-genre-icon"/>
-        <ui:VisualElement name="BottomGenreIcon" class="genre-icon bottom-genre-icon"/>
+        <ui:VisualElement name="LeftTopGenreIcon" class="genre-icon top-genre-icon">
+            <ui:Label name="LeftTopGenreKey" text="W" class="keybind-circle top-genre-keybind-circle" />
+        </ui:VisualElement>
+        <ui:VisualElement name="LeftBottomGenreIcon" class="genre-icon bottom-genre-icon">
+            <ui:Label name="LeftBottomGenreKey" text="S" class="keybind-circle bottom-genre-keybind-circle" />
+        </ui:VisualElement>
         <ui:VisualElement class="genre-divider"/>
     </ui:VisualElement>
     <ui:VisualElement name="RightGenreChoiceFrame" class="genre-choice-frame genre-choice-frame-right">
-        <ui:VisualElement name="TopGenreIcon" class="genre-icon top-genre-icon"/>
-        <ui:VisualElement name="BottomGenreIcon" class="genre-icon bottom-genre-icon"/>
+        <ui:VisualElement name="RightTopGenreIcon" class="genre-icon top-genre-icon">
+            <ui:Label name="RightTopGenreKey" text="R&#x21E7;" class="keybind-circle top-genre-keybind-circle" />
+        </ui:VisualElement>
+        <ui:VisualElement name="RightBottomGenreIcon" class="genre-icon bottom-genre-icon">
+            <ui:Label name="RightBottomGenreKey" text="Ctrl" class="keybind-circle bottom-genre-keybind-circle" />
+        </ui:VisualElement>
         <ui:VisualElement class="genre-divider"/>
     </ui:VisualElement>
-    <ui:Label name="SpawnKey" text="Q" class="keybind-circle"/>
 </ui:UXML>

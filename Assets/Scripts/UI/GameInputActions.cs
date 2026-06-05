@@ -145,6 +145,42 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChooseLeftTop"",
+                    ""type"": ""Button"",
+                    ""id"": ""22e1f6f1-dda4-41a7-98ed-67ccf6d89e65"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChooseLeftBottom"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b4afc11-59be-41ef-b034-f55fd9845c2f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChooseRightTop"",
+                    ""type"": ""Button"",
+                    ""id"": ""79a7a8b7-86d1-4d23-a22d-64fd4fd5fe96"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChooseRightBottom"",
+                    ""type"": ""Button"",
+                    ""id"": ""866415c3-a112-4836-8eab-472eb9a84bf7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -198,7 +234,7 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Gamepad"",
+                    ""groups"": """",
                     ""action"": ""SpawnRightRanged"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -209,8 +245,52 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Gamepad"",
+                    ""groups"": """",
                     ""action"": ""SpawnRightHeavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b690a361-37ca-4d81-87c9-a9d5a7d01cc0"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseLeftTop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3ef03df-d9f2-4326-a0d7-b17cfdda3e8b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseLeftBottom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""598bed03-37c8-476c-a332-e36f0d9eee48"",
+                    ""path"": ""<Keyboard>/rightShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseRightTop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4923f79-a98d-4a38-9ff2-bb9830af8d9a"",
+                    ""path"": ""<Keyboard>/rightCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChooseRightBottom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -288,6 +368,10 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_SpawnRightMelee = m_Gameplay.FindAction("SpawnRightMelee", throwIfNotFound: true);
         m_Gameplay_SpawnRightRanged = m_Gameplay.FindAction("SpawnRightRanged", throwIfNotFound: true);
         m_Gameplay_SpawnRightHeavy = m_Gameplay.FindAction("SpawnRightHeavy", throwIfNotFound: true);
+        m_Gameplay_ChooseLeftTop = m_Gameplay.FindAction("ChooseLeftTop", throwIfNotFound: true);
+        m_Gameplay_ChooseLeftBottom = m_Gameplay.FindAction("ChooseLeftBottom", throwIfNotFound: true);
+        m_Gameplay_ChooseRightTop = m_Gameplay.FindAction("ChooseRightTop", throwIfNotFound: true);
+        m_Gameplay_ChooseRightBottom = m_Gameplay.FindAction("ChooseRightBottom", throwIfNotFound: true);
     }
 
     ~@GameInputActions()
@@ -374,6 +458,10 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_SpawnRightMelee;
     private readonly InputAction m_Gameplay_SpawnRightRanged;
     private readonly InputAction m_Gameplay_SpawnRightHeavy;
+    private readonly InputAction m_Gameplay_ChooseLeftTop;
+    private readonly InputAction m_Gameplay_ChooseLeftBottom;
+    private readonly InputAction m_Gameplay_ChooseRightTop;
+    private readonly InputAction m_Gameplay_ChooseRightBottom;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -409,6 +497,22 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/SpawnRightHeavy".
         /// </summary>
         public InputAction @SpawnRightHeavy => m_Wrapper.m_Gameplay_SpawnRightHeavy;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/ChooseLeftTop".
+        /// </summary>
+        public InputAction @ChooseLeftTop => m_Wrapper.m_Gameplay_ChooseLeftTop;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/ChooseLeftBottom".
+        /// </summary>
+        public InputAction @ChooseLeftBottom => m_Wrapper.m_Gameplay_ChooseLeftBottom;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/ChooseRightTop".
+        /// </summary>
+        public InputAction @ChooseRightTop => m_Wrapper.m_Gameplay_ChooseRightTop;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/ChooseRightBottom".
+        /// </summary>
+        public InputAction @ChooseRightBottom => m_Wrapper.m_Gameplay_ChooseRightBottom;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -453,6 +557,18 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @SpawnRightHeavy.started += instance.OnSpawnRightHeavy;
             @SpawnRightHeavy.performed += instance.OnSpawnRightHeavy;
             @SpawnRightHeavy.canceled += instance.OnSpawnRightHeavy;
+            @ChooseLeftTop.started += instance.OnChooseLeftTop;
+            @ChooseLeftTop.performed += instance.OnChooseLeftTop;
+            @ChooseLeftTop.canceled += instance.OnChooseLeftTop;
+            @ChooseLeftBottom.started += instance.OnChooseLeftBottom;
+            @ChooseLeftBottom.performed += instance.OnChooseLeftBottom;
+            @ChooseLeftBottom.canceled += instance.OnChooseLeftBottom;
+            @ChooseRightTop.started += instance.OnChooseRightTop;
+            @ChooseRightTop.performed += instance.OnChooseRightTop;
+            @ChooseRightTop.canceled += instance.OnChooseRightTop;
+            @ChooseRightBottom.started += instance.OnChooseRightBottom;
+            @ChooseRightBottom.performed += instance.OnChooseRightBottom;
+            @ChooseRightBottom.canceled += instance.OnChooseRightBottom;
         }
 
         /// <summary>
@@ -482,6 +598,18 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
             @SpawnRightHeavy.started -= instance.OnSpawnRightHeavy;
             @SpawnRightHeavy.performed -= instance.OnSpawnRightHeavy;
             @SpawnRightHeavy.canceled -= instance.OnSpawnRightHeavy;
+            @ChooseLeftTop.started -= instance.OnChooseLeftTop;
+            @ChooseLeftTop.performed -= instance.OnChooseLeftTop;
+            @ChooseLeftTop.canceled -= instance.OnChooseLeftTop;
+            @ChooseLeftBottom.started -= instance.OnChooseLeftBottom;
+            @ChooseLeftBottom.performed -= instance.OnChooseLeftBottom;
+            @ChooseLeftBottom.canceled -= instance.OnChooseLeftBottom;
+            @ChooseRightTop.started -= instance.OnChooseRightTop;
+            @ChooseRightTop.performed -= instance.OnChooseRightTop;
+            @ChooseRightTop.canceled -= instance.OnChooseRightTop;
+            @ChooseRightBottom.started -= instance.OnChooseRightBottom;
+            @ChooseRightBottom.performed -= instance.OnChooseRightBottom;
+            @ChooseRightBottom.canceled -= instance.OnChooseRightBottom;
         }
 
         /// <summary>
@@ -629,5 +757,33 @@ public partial class @GameInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSpawnRightHeavy(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChooseLeftTop" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChooseLeftTop(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChooseLeftBottom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChooseLeftBottom(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChooseRightTop" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChooseRightTop(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChooseRightBottom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChooseRightBottom(InputAction.CallbackContext context);
     }
 }

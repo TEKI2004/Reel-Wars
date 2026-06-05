@@ -18,6 +18,19 @@ public class Player
     }
     public event Action<GenreNode> OnGenreChanged;
 
+    public event Action<Player> OnGenreChoiceAvailable;
+    public Player()
+    {
+        Popularity.OnTierChanged += _ =>
+        {
+            if (CurrentGenre.Children.Count > 0)
+            {
+                OnGenreChoiceAvailable?.Invoke(this);
+            }
+            Debug.Log($"Genre choice available: {CurrentGenre.Children.Count > 0}");
+        };
+    }
+
     public bool TryChooseGenre(GenreNode nextGenre)
     {
         if (nextGenre == null) return false;
