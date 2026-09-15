@@ -32,4 +32,4 @@ MonoBehaviour:
   BoxOffice:
     StartingMoney: 300
   Genre:
-    StartingGenre: {fileID: 11400000, guid: c6ca6e7541e17b548ad6b1d5a72d6aa9, type: 2}
+    StartingGenre: {fileID: 11400000, guid: 95b18529105db2e439f657f42ab909eb, type: 2}

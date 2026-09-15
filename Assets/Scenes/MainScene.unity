@@ -4588,10 +4588,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7158051d047cfb4fa3181a02f71191a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  leftTier1Limit: {fileID: 101828569}
+  leftTier1Limit: {fileID: 1076027144}
   leftTier2Limit: {fileID: 1345186210}
   rightTier1Limit: {fileID: 308457949}
-  rightTier2Limit: {fileID: 1076027144}
+  rightTier2Limit: {fileID: 101828569}
   leftFill: {fileID: 1538810761}
   rightFill: {fileID: 806519546}
   maxHeight: 6.3

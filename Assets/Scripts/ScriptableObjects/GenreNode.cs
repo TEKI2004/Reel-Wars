@@ -1,26 +1,84 @@
 ﻿using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Genre Node")]
+[CreateAssetMenu(fileName = "New Genre Node", menuName = "Game/Genre Node")]
 public class GenreNode : ScriptableObject
 {
-    [Header("Genre Info")]
-    public string GenreName;
-    public int RequiredTier;
+    // ─────────────────────────────────────────────
+    // Overview
+    // ─────────────────────────────────────────────
 
-    [Header("Visual")]
+    [BoxGroup("Overview")]
+    [HorizontalGroup("Overview/Layout", Width = 75)]
+    [AssetsOnly]
+    [Required]
+    [PreviewField(60, ObjectFieldAlignment.Center)]
+    [HideLabel]
     public Sprite Icon;
 
-    [Header("Unit Types")]
-    public UnitType MeleeUnit;
-    public UnitType RangedUnit;
-    public UnitType HeavyUnit;
+    [HorizontalGroup("Overview/Layout")]
+    [VerticalGroup("Overview/Layout/Info")]
+    [Required]
+    [LabelWidth(95)]
+    [LabelText("Genre Name")]
+    public string GenreName;
 
-    [Header("Passive")]
+    [VerticalGroup("Overview/Layout/Info")]
+    [MinValue(0)]
+    [LabelWidth(95)]
+    [LabelText("Required Tier")]
+    public int RequiredTier;
+
+    [VerticalGroup("Overview/Layout/Info")]
+    [LabelWidth(95)]
+    [LabelText("Passive")]
     public string PassiveDescription;
 
-    [Header("Children Genres")]
+
+    // ─────────────────────────────────────────────
+    // Units
+    // ─────────────────────────────────────────────
+
+    [BoxGroup("Units")]
+    [AssetsOnly]
+    [Required]
+    [LabelWidth(70)]
+    [LabelText("Melee")]
+    public UnitType MeleeUnit;
+
+    [BoxGroup("Units")]
+    [AssetsOnly]
+    [Required]
+    [LabelWidth(70)]
+    [LabelText("Ranged")]
+    public UnitType RangedUnit;
+
+    [BoxGroup("Units")]
+    [AssetsOnly]
+    [Required]
+    [LabelWidth(70)]
+    [LabelText("Heavy")]
+    public UnitType HeavyUnit;
+
+
+    // ─────────────────────────────────────────────
+    // Children Genres
+    // ─────────────────────────────────────────────
+
+    [BoxGroup("Children Genres")]
+    [AssetsOnly]
+    [ListDrawerSettings(
+        ShowFoldout = false,
+        ShowPaging = false
+    )]
+    [HideLabel]
     public List<GenreNode> Children = new();
+
+
+    // ─────────────────────────────────────────────
+    // Availability
+    // ─────────────────────────────────────────────
 
     public bool IsAvailableFor(Player player)
     {

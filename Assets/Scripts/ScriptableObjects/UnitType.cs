@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public enum UnitRole
@@ -7,26 +8,83 @@ public enum UnitRole
     Heavy
 }
 
-[CreateAssetMenu(menuName = "Game/Unit Type")]
+[CreateAssetMenu(fileName = "New Unit Type", menuName = "Game/Unit Type")]
 public class UnitType : ScriptableObject
 {
-    [Header("Identity")]
+    // ─────────────────────────────────────────────
+    // Overview
+    // ─────────────────────────────────────────────
+
+    [BoxGroup("Overview")]
+    [HorizontalGroup("Overview/Layout", Width = 90)]
+    [AssetsOnly]
+    [Required]
+    [PreviewField(70, ObjectFieldAlignment.Center)]
+    [HideLabel]
+    public Sprite Icon;
+
+    [HorizontalGroup("Overview/Layout")]
+    [VerticalGroup("Overview/Layout/Info")]
+    [Required]
+    [LabelWidth(80)]
+    [LabelText("Unit Name")]
     public string UnitName;
+
+    [VerticalGroup("Overview/Layout/Info")]
+    [EnumToggleButtons]
+    [LabelWidth(80)]
+    [LabelText("Role")]
     public UnitRole Role;
 
-    [Header("Visual")]
-    public Sprite Icon;
+    [VerticalGroup("Overview/Layout/Info")]
+    [AssetsOnly]
+    [Required]
+    [LabelWidth(80)]
+    [LabelText("Prefab")]
     public GameObject VisualPrefab;
 
-    [Header("Economy")]
+
+    // ─────────────────────────────────────────────
+    // Stats
+    // ─────────────────────────────────────────────
+
+    [HorizontalGroup("Stats")]
+    [BoxGroup("Stats/Core")]
+    [MinValue(0)]
+    [LabelWidth(85)]
     public int Cost;
 
-    [Header("Combat")]
-    public int Damage;
-    public int MaxHealth;
-    public float AttackRange;
-    public float AttackCooldown;
-
-    [Header("Movement")]
+    [BoxGroup("Stats/Core")]
+    [MinValue(0f)]
+    [LabelWidth(85)]
+    [LabelText("Move Speed")]
     public float MoveSpeed;
+
+
+    [HorizontalGroup("Stats")]
+    [BoxGroup("Stats/Power")]
+    [MinValue(0)]
+    [LabelWidth(85)]
+    public int Damage;
+
+    [BoxGroup("Stats/Power")]
+    [MinValue(1)]
+    [LabelWidth(85)]
+    [LabelText("Max Health")]
+    public int MaxHealth;
+
+
+    [HorizontalGroup("Stats")]
+    [BoxGroup("Stats/Attack")]
+    [MinValue(0f)]
+    [LabelWidth(85)]
+    [LabelText("Range")]
+    public float AttackRange;
+
+    [BoxGroup("Stats/Attack")]
+    [MinValue(0.01f)]
+    [LabelWidth(85)]
+    [LabelText("Cooldown")]
+    [SuffixLabel("s", Overlay = true)]
+    public float AttackCooldown;
 }
