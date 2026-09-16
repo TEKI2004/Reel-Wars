@@ -25,12 +25,6 @@ public class GenreNode : ScriptableObject
     public string GenreName;
 
     [VerticalGroup("Overview/Layout/Info")]
-    [MinValue(0)]
-    [LabelWidth(95)]
-    [LabelText("Required Tier")]
-    public int RequiredTier;
-
-    [VerticalGroup("Overview/Layout/Info")]
     [LabelWidth(95)]
     [LabelText("Passive")]
     public string PassiveDescription;
@@ -72,16 +66,19 @@ public class GenreNode : ScriptableObject
         ShowFoldout = false,
         ShowPaging = false
     )]
+    [ValidateInput(
+        nameof(HasValidChildCount),
+        "A GenreNode csak 0 vagy 2 childot tartalmazhat.",
+        InfoMessageType.Warning
+    )]
     [HideLabel]
     public List<GenreNode> Children = new();
 
-
-    // ─────────────────────────────────────────────
-    // Availability
-    // ─────────────────────────────────────────────
-
-    public bool IsAvailableFor(Player player)
+    private bool HasValidChildCount(List<GenreNode> children)
     {
-        return player.Popularity.CurrentTier >= RequiredTier;
+        return children == null ||
+               children.Count == 0 ||
+               children.Count == 2;
     }
+
 }

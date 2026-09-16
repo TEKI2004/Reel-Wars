@@ -45,6 +45,12 @@ public class GameManager : MonoBehaviour
         rightBase.Initialize(rightPlayerName, FacingDirection.Left);
     }
 
+    private void Start()
+    {
+        leftBase.Player.Popularity.CheckTierProgression();
+        rightBase.Player.Popularity.CheckTierProgression();
+    }
+
     public void GiveReward(string victimOwnerId, UnitRole victimRole, int victimCost)
     {
         if (victimOwnerId == leftPlayerName)

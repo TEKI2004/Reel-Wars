@@ -3,7 +3,7 @@ using System;
 public class BoxOffice
 {
     public event Action<int> OnMoneyChanged;
-    public int Money { get; private set; } = GameManager.Instance.Config.BoxOffice.StartingMoney;
+    public int Money { get; private set; } = GameManager.Instance.Config.StartingMoney;
 
     public void Add(int amount)
     {

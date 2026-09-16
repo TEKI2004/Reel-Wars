@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed413a9fe4d756d44b5efeb7252d7952, type: 3}
   m_Name: StatsConfig
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
-  BaseStats:
-    BaseHealth: 2000
+  BaseHealth: 2000
+  StartingMoney: 300
+  StartingGenre: {fileID: 11400000, guid: 95b18529105db2e439f657f42ab909eb, type: 2}
   Rewards:
     MeleeDeathPoints: 5
     RangedDeathPoints: 7
@@ -23,13 +24,6 @@ MonoBehaviour:
     StartingPoints: 0
     StartingTier: 1
     MaxTier: 3
-    MaxPoints: 100
-    BaseLimit: 16
-    LinearLimitGrowth: 25
-    QuadraticLimitGrowth: 1
-    tier1Limit: 42
-    tier2Limit: 70
-  BoxOffice:
-    StartingMoney: 300
-  Genre:
-    StartingGenre: {fileID: 11400000, guid: 95b18529105db2e439f657f42ab909eb, type: 2}
+    BaseLimit: 0
+    LinearLimitGrowth: 40
+    QuadraticLimitGrowth: 4

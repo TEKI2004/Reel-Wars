@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: ThrillerRanged
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
-  unitName: ThrillerRanged
-  cost: 3
-  damage: 50
-  maxHealth: 80
-  moveSpeed: 3
-  attackRange: 3
-  attackCooldown: 1
-  role: 1
+  Icon: {fileID: 0}
+  UnitName: 
+  Role: 0
+  VisualPrefab: {fileID: 0}
+  Cost: 0
+  MoveSpeed: 0
+  Damage: 0
+  MaxHealth: 0
+  AttackRange: 0
+  AttackCooldown: 0

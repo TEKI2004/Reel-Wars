@@ -16,10 +16,10 @@ public class UnitType : ScriptableObject
     // ─────────────────────────────────────────────
 
     [BoxGroup("Overview")]
-    [HorizontalGroup("Overview/Layout", Width = 90)]
+    [HorizontalGroup("Overview/Layout", Width = 75)]
     [AssetsOnly]
     [Required]
-    [PreviewField(70, ObjectFieldAlignment.Center)]
+    [PreviewField(60, ObjectFieldAlignment.Center)]
     [HideLabel]
     public Sprite Icon;
 

@@ -31,7 +31,7 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         gameObject.name = $"Base_{OwnerId}";
 
         facingDirection = direction;
-        maxHealth = GameManager.Instance.Config.BaseStats.BaseHealth;
+        maxHealth = GameManager.Instance.Config.BaseHealth;
         currentHealth = maxHealth;
 
         playerNameDisplay.SetName(OwnerId);

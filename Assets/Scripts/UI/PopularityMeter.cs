@@ -1,28 +1,173 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class PopularityMetersController : MonoBehaviour
 {
-    [Header("Tier limits (left)")]
-    [SerializeField] private Transform leftTier1Limit;
-    [SerializeField] private Transform leftTier2Limit;
-    
-    [Header("Tier limits (right)")]
-    [SerializeField] private Transform rightTier1Limit;
-    [SerializeField] private Transform rightTier2Limit;
+    // ─────────────────────────────────────────────
+    // Config
+    // ─────────────────────────────────────────────
 
-    [Header("Fill bars")]
-    [SerializeField] private Transform leftFill;
-    [SerializeField] private Transform rightFill;
+    [BoxGroup("Config")]
+    [AssetsOnly]
+    [Required]
+    [LabelText("Stats Config")]
+    [SerializeField]
+    private StatsConfig statsConfig;
 
-    [SerializeField] private float maxHeight = 6.3f;
-    [SerializeField] private float groundHeight = -3.5f;
+
+    // ─────────────────────────────────────────────
+    // Tier Limits
+    // ─────────────────────────────────────────────
+
+    [BoxGroup("Tier Limits")]
+    [AssetsOnly]
+    [Required]
+    [LabelText("Prefab")]
+    [SerializeField]
+    private Transform tierLimitPrefab;
+
+    [BoxGroup("Tier Limits")]
+    [Range(0f, 10f)]
+    [SuffixLabel("°", Overlay = true)]
+    [LabelText("Tilt")]
+    [SerializeField]
+    private float tierLimitTilt = 1.5f;
+
+    [HorizontalGroup("Tier Limits/Buttons")]
+    [Button("Rebuild Tier Limits", ButtonSizes.Medium)]
+    [EnableIf(nameof(CanRebuildTierLimits))]
+    private void CreateTierLimits()
+    {
+        CacheMeterGeometry();
+        ClearTierLimits();
+
+        for (int tier = 1; tier < Config.MaxTier; tier++)
+        {
+            int points = Config.GetTierLimit(tier);
+            float y = GetYPosition(points);
+
+            CreateTierLimit(
+                leftMaxTierLimit.parent,
+                $"LeftTier{tier}Limit",
+                y,
+                -tierLimitTilt
+            );
+
+            CreateTierLimit(
+                rightMaxTierLimit.parent,
+                $"RightTier{tier}Limit",
+                y,
+                tierLimitTilt
+            );
+        }
+    }
+
+    [HorizontalGroup("Tier Limits/Buttons")]
+    [Button("Clear Tier Limits", ButtonSizes.Medium)]
+    [EnableIf(nameof(CanClearTierLimits))]
+    private void ClearTierLimits()
+    {
+        ClearTierLimits(
+            leftMaxTierLimit.parent,
+            "LeftTier"
+        );
+
+        ClearTierLimits(
+            rightMaxTierLimit.parent,
+            "RightTier"
+        );
+    }
+
+
+    // ─────────────────────────────────────────────
+    // Meters
+    // ─────────────────────────────────────────────
+
+    [HorizontalGroup("Meters")]
+    [BoxGroup("Meters/Left Meter")]
+    [SceneObjectsOnly]
+    [Required]
+    [LabelText("Max Tier Limit")]
+    [SerializeField]
+    private Transform leftMaxTierLimit;
+
+    [BoxGroup("Meters/Left Meter")]
+    [SceneObjectsOnly]
+    [Required]
+    [LabelText("Fill")]
+    [SerializeField]
+    private Transform leftFill;
+
+
+    [HorizontalGroup("Meters")]
+    [BoxGroup("Meters/Right Meter")]
+    [SceneObjectsOnly]
+    [Required]
+    [LabelText("Max Tier Limit")]
+    [SerializeField]
+    private Transform rightMaxTierLimit;
+
+    [BoxGroup("Meters/Right Meter")]
+    [SceneObjectsOnly]
+    [Required]
+    [LabelText("Fill")]
+    [SerializeField]
+    private Transform rightFill;
+
+
+    // ─────────────────────────────────────────────
+    // Runtime Geometry
+    // ─────────────────────────────────────────────
+
+    [FoldoutGroup("Runtime Geometry")]
+    [ShowInInspector]
+    [ReadOnly]
+    [LabelText("Bottom Y")]
+    private float bottomY;
+
+    [FoldoutGroup("Runtime Geometry")]
+    [ShowInInspector]
+    [ReadOnly]
+    [LabelText("Top Y")]
+    private float topY;
+
+    [FoldoutGroup("Runtime Geometry")]
+    [ShowInInspector]
+    [ReadOnly]
+    [LabelText("Full Height")]
+    private float fullHeight;
+
+
+    // ─────────────────────────────────────────────
+    // Runtime
+    // ─────────────────────────────────────────────
 
     private Player leftPlayer;
     private Player rightPlayer;
 
+    private PopularityConfig Config =>
+        statsConfig.Popularity;
+
+    private bool CanRebuildTierLimits =>
+        statsConfig != null &&
+        tierLimitPrefab != null &&
+        leftMaxTierLimit != null &&
+        leftFill != null &&
+        rightMaxTierLimit != null &&
+        rightFill != null;
+
+    private bool CanClearTierLimits =>
+        leftMaxTierLimit != null &&
+        rightMaxTierLimit != null;
+
+
     private void OnEnable()
     {
-        ConfigureTierLimits();
+        if (!Application.isPlaying)
+            return;
+
+        CacheMeterGeometry();
+        CreateTierLimits();
 
         leftPlayer = GameManager.Instance.LeftBase.Player;
         rightPlayer = GameManager.Instance.RightBase.Player;
@@ -36,26 +181,93 @@ public class PopularityMetersController : MonoBehaviour
 
     private void OnDisable()
     {
+        if (!Application.isPlaying)
+            return;
+
         leftPlayer.Popularity.OnPointsChanged -= UpdateLeftMeter;
         rightPlayer.Popularity.OnPointsChanged -= UpdateRightMeter;
+
+        ClearTierLimits();
     }
 
-    private void ConfigureTierLimits()
+
+    // ─────────────────────────────────────────────
+    // Meter Geometry
+    // ─────────────────────────────────────────────
+
+    private void CacheMeterGeometry()
     {
-        int[] limits = Popularity.GetPopularityThresholds();
-        SetTierLimitPosition(leftTier1Limit, limits[0]);
-        SetTierLimitPosition(leftTier2Limit, limits[1]);
-        SetTierLimitPosition(rightTier1Limit, limits[0]);
-        SetTierLimitPosition(rightTier2Limit, limits[1]);
+        bottomY = leftFill.localPosition.y;
+        topY = leftMaxTierLimit.localPosition.y;
+
+        fullHeight = topY - bottomY;
     }
 
-    private void SetTierLimitPosition(Transform limit, int points)
+
+    // ─────────────────────────────────────────────
+    // Tier Limit Creation
+    // ─────────────────────────────────────────────
+
+    private void CreateTierLimit(
+        Transform parent,
+        string objectName,
+        float y,
+        float zRotation
+    )
     {
-        float t = Mathf.Clamp01((float) points / GameManager.Instance.Config.Popularity.MaxPoints);
+        Transform limit = Instantiate(
+            tierLimitPrefab,
+            parent,
+            false
+        );
+
+        limit.name = objectName;
+
         Vector3 position = limit.localPosition;
-        position.y = t * maxHeight + groundHeight;
+        position.y = y;
         limit.localPosition = position;
+
+        Vector3 rotation = limit.localEulerAngles;
+        rotation.z = zRotation;
+        limit.localEulerAngles = rotation;
     }
+
+    private float GetYPosition(int points)
+    {
+        float t = GetNormalizedPopularity(points);
+
+        return Mathf.Lerp(
+            bottomY,
+            topY,
+            t
+        );
+    }
+
+    private static void ClearTierLimits(
+        Transform parent,
+        string prefix)
+    {
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            Transform child = parent.GetChild(i);
+
+            if (!child.name.StartsWith(prefix) ||
+                !child.name.EndsWith("Limit"))
+            {
+                continue;
+            }
+
+            if (Application.isPlaying)
+                Destroy(child.gameObject);
+            else
+                DestroyImmediate(child.gameObject);
+        }
+    }
+
+
+    // ─────────────────────────────────────────────
+    // Fill
+    // ─────────────────────────────────────────────
 
     private void UpdateLeftMeter(int points)
     {
@@ -67,12 +279,30 @@ public class PopularityMetersController : MonoBehaviour
         UpdateFill(rightFill, points);
     }
 
-    private void UpdateFill(Transform fill, int points)
+    private void UpdateFill(
+        Transform fill,
+        int points)
     {
-        float t = Mathf.Clamp01((float)points / GameManager.Instance.Config.Popularity.MaxPoints);
+        float t = GetNormalizedPopularity(points);
 
         Vector3 scale = fill.localScale;
-        scale.y = t * maxHeight;
+        scale.y = fullHeight * t;
+
         fill.localScale = scale;
+    }
+
+
+    // ─────────────────────────────────────────────
+    // Helpers
+    // ─────────────────────────────────────────────
+
+    private float GetNormalizedPopularity(int points)
+    {
+        if (Config.MaxPoints <= 0)
+            return 0f;
+
+        return Mathf.Clamp01(
+            (float)points / Config.MaxPoints
+        );
     }
 }

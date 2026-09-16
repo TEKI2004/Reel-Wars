@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,25 +6,31 @@ using UnityEngine.UIElements;
 
 public class GenreChoiceUI : MonoBehaviour
 {
+    private class ChoiceSide
+    {
+        public Player Player;
+        public VisualElement Frame;
+        public VisualElement TopIcon;
+        public VisualElement BottomIcon;
+
+        public InputAction TopAction;
+        public InputAction BottomAction;
+
+        public GenreNode TopOption;
+        public GenreNode BottomOption;
+
+        public Action ShowAction;
+    }
+
     private GameInputActions inputActions;
+
     private readonly Dictionary<InputAction, Action<InputAction.CallbackContext>> actionCallbacks = new();
+
     private readonly Dictionary<InputAction, EventCallback<ClickEvent>> clickCallbacks = new();
 
-    private VisualElement leftGenreChoiceFrame;
-    private VisualElement rightGenreChoiceFrame;
+    private ChoiceSide left;
+    private ChoiceSide right;
 
-    private VisualElement leftTopGenreIcon;
-    private VisualElement leftBottomGenreIcon;
-    private VisualElement rightTopGenreIcon;
-    private VisualElement rightBottomGenreIcon;
-
-    private Player leftPlayer;
-    private Player rightPlayer;
-
-    private GenreNode leftTopOption;
-    private GenreNode leftBottomOption;
-    private GenreNode rightTopOption;
-    private GenreNode rightBottomOption;
 
     private void Awake()
     {
@@ -34,121 +39,148 @@ public class GenreChoiceUI : MonoBehaviour
 
     private void OnEnable()
     {
-        GetUIComponents();
+        var root = GetComponent<UIDocument>().rootVisualElement;
 
-        leftPlayer = GameManager.Instance.LeftBase.Player;
-        rightPlayer = GameManager.Instance.RightBase.Player;
+        left = CreateSide(
+            root,
+            "Left",
+            GameManager.Instance.LeftBase.Player,
+            inputActions.Gameplay.ChooseLeftTop,
+            inputActions.Gameplay.ChooseLeftBottom
+        );
+
+        right = CreateSide(
+            root,
+            "Right",
+            GameManager.Instance.RightBase.Player,
+            inputActions.Gameplay.ChooseRightTop,
+            inputActions.Gameplay.ChooseRightBottom
+        );
 
         inputActions.Gameplay.Enable();
 
-        leftPlayer.OnGenreChoiceAvailable += ShowLeftGenreChoice;
-        rightPlayer.OnGenreChoiceAvailable += ShowRightGenreChoice;
+        left.ShowAction = () => ShowGenreChoice(left);
+        right.ShowAction = () => ShowGenreChoice(right);
 
-        BindChoose(leftTopGenreIcon, inputActions.Gameplay.ChooseLeftTop, ChooseLeftTop);
-        BindChoose(leftBottomGenreIcon, inputActions.Gameplay.ChooseLeftBottom, ChooseLeftBottom);
-        BindChoose(rightTopGenreIcon, inputActions.Gameplay.ChooseRightTop, ChooseRightTop);
-        BindChoose(rightBottomGenreIcon, inputActions.Gameplay.ChooseRightBottom, ChooseRightBottom);
+        left.Player.OnGenreChoiceAvailable += left.ShowAction;
+        right.Player.OnGenreChoiceAvailable += right.ShowAction;
     }
 
     private void OnDisable()
     {
-        UnbindChoose(leftTopGenreIcon, inputActions.Gameplay.ChooseLeftTop);
-        UnbindChoose(leftBottomGenreIcon, inputActions.Gameplay.ChooseLeftBottom);
-        UnbindChoose(rightTopGenreIcon, inputActions.Gameplay.ChooseRightTop);
-        UnbindChoose(rightBottomGenreIcon, inputActions.Gameplay.ChooseRightBottom);
-        
-        leftPlayer.OnGenreChoiceAvailable -= ShowLeftGenreChoice;
-        rightPlayer.OnGenreChoiceAvailable -= ShowRightGenreChoice;
-        
+        UnbindSide(left);
+        UnbindSide(right);
+
+        left.Player.OnGenreChoiceAvailable -= left.ShowAction;
+        right.Player.OnGenreChoiceAvailable -= right.ShowAction;
+
         inputActions.Gameplay.Disable();
     }
 
-    private void BindChoose(VisualElement icon, InputAction action, Action spawnAction)
+
+    // ─────────────────────────────────────────────
+    // Setup
+    // ─────────────────────────────────────────────
+
+    private static ChoiceSide CreateSide(
+        VisualElement root,
+        string prefix,
+        Player player,
+        InputAction topAction,
+        InputAction bottomAction
+    )
     {
+        var frame = root.Q<VisualElement>($"{prefix}GenreChoiceFrame");
 
-        Action<InputAction.CallbackContext> inputCallback = _ => spawnAction();
-        EventCallback<ClickEvent> clickCallback = _ => spawnAction();
+        return new ChoiceSide
+        {
+            Player = player,
+            Frame = frame,
 
-        clickCallbacks[action] = clickCallback;
-        icon.RegisterCallback<ClickEvent>(clickCallback);
+            TopIcon = frame.Q<VisualElement>($"{prefix}TopGenreIcon"),
+
+            BottomIcon = frame.Q<VisualElement>($"{prefix}BottomGenreIcon"),
+
+            TopAction = topAction,
+            BottomAction = bottomAction
+        };
+    }
+
+
+    // ─────────────────────────────────────────────
+    // Show
+    // ─────────────────────────────────────────────
+
+    private void ShowGenreChoice(ChoiceSide side)
+    {
+        side.TopOption = side.Player.CurrentGenre.Children[0];
+        side.BottomOption = side.Player.CurrentGenre.Children[1];
+
+        side.TopIcon.style.backgroundImage = new StyleBackground(side.TopOption.Icon);
+
+        side.BottomIcon.style.backgroundImage = new StyleBackground(side.BottomOption.Icon);
+
+        BindChoose(side.TopIcon, side.TopAction, () => ChooseGenre(side, side.TopOption) );
+        BindChoose(side.BottomIcon, side.BottomAction, () => ChooseGenre(side, side.BottomOption));
+
+        side.Frame.style.display = DisplayStyle.Flex;
+    }
+
+
+    // ─────────────────────────────────────────────
+    // Choose
+    // ─────────────────────────────────────────────
+
+    private void ChooseGenre(
+        ChoiceSide side,
+        GenreNode option)
+    {
+        if (option == null)
+            return;
+
+        UnbindSide(side);
+
+        side.Frame.style.display = DisplayStyle.None;
+        side.Player.ChooseGenre(option);
+    }
+
+
+    // ─────────────────────────────────────────────
+    // Binding
+    // ─────────────────────────────────────────────
+
+    private void BindChoose(
+        VisualElement icon,
+        InputAction action,
+        Action chooseAction)
+    {
+        UnbindChoose(icon, action);
+
+        Action<InputAction.CallbackContext> inputCallback = _ => chooseAction();
+
+        EventCallback<ClickEvent> clickCallback = _ => chooseAction();
 
         actionCallbacks[action] = inputCallback;
+        clickCallbacks[action] = clickCallback;
+
         action.performed += inputCallback;
+        icon.RegisterCallback<ClickEvent>(clickCallback);
     }
 
-    private void UnbindChoose(VisualElement icon, InputAction action)
+    private void UnbindSide(ChoiceSide side)
     {
-        icon.UnregisterCallback<ClickEvent>(clickCallbacks[action]);
+        UnbindChoose(side.TopIcon, side.TopAction);
+        UnbindChoose(side.BottomIcon, side.BottomAction);
+    }
 
-        if (actionCallbacks.TryGetValue(action, out var inputCallback))
-        {
+    private void UnbindChoose(
+        VisualElement icon,
+        InputAction action)
+    {
+        if (clickCallbacks.Remove(action, out var clickCallback))
+            icon.UnregisterCallback<ClickEvent>(clickCallback);
+
+        if (actionCallbacks.Remove(action, out var inputCallback))
             action.performed -= inputCallback;
-            actionCallbacks.Remove(action);
-        }
-    }
-
-    private void GetUIComponents()
-    {
-        var root = GetComponent<UIDocument>().rootVisualElement;
-
-        leftGenreChoiceFrame = root.Q<VisualElement>("LeftGenreChoiceFrame");
-        rightGenreChoiceFrame = root.Q<VisualElement>("RightGenreChoiceFrame");
-
-        leftTopGenreIcon = leftGenreChoiceFrame.Q<VisualElement>("LeftTopGenreIcon");
-        leftBottomGenreIcon = leftGenreChoiceFrame.Q<VisualElement>("LeftBottomGenreIcon");
-
-        rightTopGenreIcon = rightGenreChoiceFrame.Q<VisualElement>("RightTopGenreIcon");
-        rightBottomGenreIcon = rightGenreChoiceFrame.Q<VisualElement>("RightBottomGenreIcon");
-    }
-
-    private void ShowLeftGenreChoice(Player player)
-    {
-        leftTopOption = player.CurrentGenre.Children[0];
-        leftBottomOption = player.CurrentGenre.Children[1];
-
-        leftTopGenreIcon.style.backgroundImage = new StyleBackground(leftTopOption.Icon);
-        leftBottomGenreIcon.style.backgroundImage = new StyleBackground(leftBottomOption.Icon);
-
-        leftGenreChoiceFrame.style.display = DisplayStyle.Flex;
-    }
-
-    private void ShowRightGenreChoice(Player player)
-    {
-        rightTopOption = player.CurrentGenre.Children[0];
-        rightBottomOption = player.CurrentGenre.Children[1];
-
-        rightTopGenreIcon.style.backgroundImage = new StyleBackground(rightTopOption.Icon);
-        rightBottomGenreIcon.style.backgroundImage = new StyleBackground(rightBottomOption.Icon);
-
-        rightGenreChoiceFrame.style.display = DisplayStyle.Flex;
-    }
-
-    private void ChooseLeftTop()
-    {
-        if (leftTopOption == null) return;
-        if (leftPlayer.TryChooseGenre(leftTopOption))
-            leftGenreChoiceFrame.style.display = DisplayStyle.None;
-    }
-
-    private void ChooseLeftBottom()
-    {
-        if (leftBottomOption == null) return;
-        if (leftPlayer.TryChooseGenre(leftBottomOption))
-            leftGenreChoiceFrame.style.display = DisplayStyle.None;
-    }
-
-    private void ChooseRightTop()
-    {
-        if (rightTopOption == null) return;
-        if (rightPlayer.TryChooseGenre(rightTopOption))
-            rightGenreChoiceFrame.style.display = DisplayStyle.None;
-    }
-
-    private void ChooseRightBottom()
-    {
-        if (rightBottomOption == null) return;
-        if (rightPlayer.TryChooseGenre(rightBottomOption))
-            rightGenreChoiceFrame.style.display = DisplayStyle.None;
     }
 }
-
