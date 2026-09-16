@@ -12,11 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8809ed0c30225c54e94606dfa93fc47f, type: 3}
   m_Name: Drama
   m_EditorClassIdentifier: Assembly-CSharp::GenreNode
-  GenreName: Drama
-  RequiredTier: 3
   Icon: {fileID: 21300000, guid: a097060447cea7a43bea74d7ed41c504, type: 3}
+  GenreName: Drama
+  PassiveDescription: Bonus attack speed
   MeleeUnit: {fileID: 11400000, guid: e7f76bbf0f2c55843a848a989f6f59a4, type: 2}
   RangedUnit: {fileID: 11400000, guid: 8f2d5a8d1de301f40b1458f85634ef31, type: 2}
   HeavyUnit: {fileID: 11400000, guid: eb912e704a6f39a4d8f4defa40140aca, type: 2}
-  PassiveDescription: Bonus attack speed
   Children: []

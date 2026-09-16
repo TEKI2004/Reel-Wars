@@ -21,9 +21,8 @@ MonoBehaviour:
     HeavyDeathPoints: 15
     CostMultiplier: 1.5
   Popularity:
-    StartingPoints: 0
-    StartingTier: 1
+    StartingPoints: 88
     MaxTier: 3
-    BaseLimit: 0
+    BaseLimit: 44
     LinearLimitGrowth: 40
     QuadraticLimitGrowth: 4
