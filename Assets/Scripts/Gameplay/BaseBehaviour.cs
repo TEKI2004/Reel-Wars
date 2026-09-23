@@ -81,6 +81,11 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         if (unit != null)
         {
             unit.Initialize(OwnerId, unitType);
+
+            if (facingDirection == FacingDirection.Left)
+            {
+                unit.MirrorVisual();
+            }
         }
 
         Debug.Log($"{OwnerId} Spawned {unitType.UnitName}");

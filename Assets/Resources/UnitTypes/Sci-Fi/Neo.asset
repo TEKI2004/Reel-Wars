@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Neo
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
-  unitName: ThrillerRanged
-  cost: 3
-  damage: 50
-  maxHealth: 80
-  moveSpeed: 3
-  attackRange: 3
-  attackCooldown: 1
-  role: 1
+  Icon: {fileID: 21300000, guid: 313e99523792ca84b8809b12b927739f, type: 3}
+  UnitName: Neo
+  Role: 1
+  VisualPrefab: {fileID: 187218633972683070, guid: 2cef8d5b2db2b55408c67a86ec1b1c17, type: 3}
+  Cost: 150
+  MoveSpeed: 3
+  Damage: 30
+  MaxHealth: 100
+  AttackRange: 3
+  AttackCooldown: 0.2

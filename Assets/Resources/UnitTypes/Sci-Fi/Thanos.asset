@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Thanos
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
-  unitName: ThrillerHeavy
-  cost: 15
-  damage: 70
-  maxHealth: 250
-  moveSpeed: 2
-  attackRange: 1.5
-  attackCooldown: 1.5
-  role: 2
+  Icon: {fileID: 21300000, guid: 29772b559fc1ef24fa1626978edce9a1, type: 3}
+  UnitName: Thanos
+  Role: 2
+  VisualPrefab: {fileID: 187218633972683070, guid: 30d3b96427076d548a51a259c83fd91c, type: 3}
+  Cost: 500
+  MoveSpeed: 1
+  Damage: 500
+  MaxHealth: 250
+  AttackRange: 2
+  AttackCooldown: 1

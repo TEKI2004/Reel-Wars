@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Darth Vader
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
-  unitName: ThrillerMelee
-  cost: 2
-  damage: 60
-  maxHealth: 100
-  moveSpeed: 3
-  attackRange: 1
-  attackCooldown: 1
-  role: 0
+  Icon: {fileID: 21300000, guid: 85bf9c95cc2768e418f414a5ee199ef3, type: 3}
+  UnitName: Darth Vader
+  Role: 0
+  VisualPrefab: {fileID: 187218633972683070, guid: bedb13a47bc4e4243aa10e7a99fb3bdc, type: 3}
+  Cost: 150
+  MoveSpeed: 3
+  Damage: 150
+  MaxHealth: 200
+  AttackRange: 1.2
+  AttackCooldown: 1.5

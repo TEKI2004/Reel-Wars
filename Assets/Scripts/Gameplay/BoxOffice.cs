@@ -3,6 +3,7 @@ using System;
 public class BoxOffice
 {
     public event Action<int> OnMoneyChanged;
+    public event Action<int> OnMoneySpent;
     public int Money { get; private set; } = GameManager.Instance.Config.StartingMoney;
 
     public void Add(int amount)
@@ -23,6 +24,7 @@ public class BoxOffice
 
         Money -= cost;
         OnMoneyChanged?.Invoke(Money);
+        OnMoneySpent?.Invoke(cost);
         return true;
     }
 }

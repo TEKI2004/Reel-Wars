@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Forrest Gump
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
-  unitName: ThrillerRanged
-  cost: 3
-  damage: 50
-  maxHealth: 80
-  moveSpeed: 3
-  attackRange: 3
-  attackCooldown: 1
-  role: 1
+  Icon: {fileID: 21300000, guid: 222fa12aaec8e744399a9cd2fbd90549, type: 3}
+  UnitName: Forrest Gump
+  Role: 0
+  VisualPrefab: {fileID: 187218633972683070, guid: d0e9bdf209a4dff4bb862e73e40d53dd, type: 3}
+  Cost: 75
+  MoveSpeed: 5
+  Damage: 75
+  MaxHealth: 75
+  AttackRange: 1
+  AttackCooldown: 3

@@ -8,6 +8,11 @@ public class AttackedShaker : MonoBehaviour
 
     private Coroutine shakeCoroutine;
 
+    private void OnDisable()
+    {
+        shakeCoroutine = null;
+    }
+
     public void Shake()
     {
         if (shakeCoroutine != null)

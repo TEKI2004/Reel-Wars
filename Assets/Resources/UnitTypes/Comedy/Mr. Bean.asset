@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Mr. Bean
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
-  unitName: ThrillerMelee
-  cost: 2
-  damage: 60
-  maxHealth: 100
-  moveSpeed: 3
-  attackRange: 1
-  attackCooldown: 1
-  role: 0
+  Icon: {fileID: 21300000, guid: ed897548ec53f9d4799f6ca6c370a863, type: 3}
+  UnitName: Mr. Bean
+  Role: 0
+  VisualPrefab: {fileID: 187218633972683070, guid: 295a29c8b25ee764ab19d31f9bdb7d25, type: 3}
+  Cost: 75
+  MoveSpeed: 4
+  Damage: 40
+  MaxHealth: 120
+  AttackRange: 1
+  AttackCooldown: 1

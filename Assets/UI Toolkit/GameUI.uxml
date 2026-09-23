@@ -29,6 +29,7 @@
         <ui:Label name="LeftGenreName" text="Black &amp; White" class="genre-value"/>
         <ui:Label name="LeftBoxOfficeTitle" text="Box Office" class="boxoffice-title"/>
         <ui:Label name="LeftBoxOffice" text="50M $" class="boxoffice-value"/>
+        <ui:VisualElement name="LeftMoneySpentContainer" class="money-spent-container"/>
     </ui:VisualElement>
     <ui:VisualElement name="RightClapperPanel" class="clapper-panel right-clapper">
         <ui:Label name="RightPlayerName" text="PLAYER2" class="player-name"/>
@@ -59,6 +60,7 @@
         <ui:Label name="RightGenreName" text="Black &amp; White" class="genre-value"/>
         <ui:Label name="RightBoxOfficeTitle" text="Box Office" class="boxoffice-title"/>
         <ui:Label name="RightBoxOffice" text="50M $" class="boxoffice-value"/>
+        <ui:VisualElement name="RightMoneySpentContainer" class="money-spent-container"/>
     </ui:VisualElement>
     <ui:VisualElement name="LeftGenreChoiceFrame" class="genre-choice-frame genre-choice-frame-left">
         <ui:VisualElement name="LeftTopGenreIcon" class="genre-icon top-genre-icon">

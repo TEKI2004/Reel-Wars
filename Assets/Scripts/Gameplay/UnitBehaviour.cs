@@ -14,6 +14,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     public int UnitId { get; private set; }
     private UnitType unitType;
 
+    [SerializeField] private Transform visualRoot;
     [SerializeField] private BoxCollider attackRangeDetectorCollider;
     [SerializeField] private BoxCollider moveRangeDetectorCollider;
     [SerializeField] private AttackedShaker unitShaker;
@@ -121,10 +122,10 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
 
-        unitShaker.Shake();
-        hpBar.SetPercent((float)currentHealth / unitType.MaxHealth);
+        if (currentHealth <= 0) return;
+
+        currentHealth -= amount;
 
         if (currentHealth <= 0)
         {
@@ -137,6 +138,11 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
             NotifyDeath();
             Destroy(gameObject);
+        }
+        else
+        {
+            unitShaker.Shake();
+            hpBar.SetPercent((float)currentHealth / unitType.MaxHealth);
         }
 
         Debug.Log($"{OwnerId}:U{UnitId}({unitType.UnitName}) took {amount} damage, current health: {currentHealth}");
@@ -221,5 +227,12 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         blockingEntitiesInRange.Remove(entity);
         var observable = entity as IAttackableObserver;
         observable?.UnregisterObserver(this);
+    }
+
+    public void MirrorVisual()
+    {
+        Vector3 scale = visualRoot.localScale;
+        scale.z *= -1f;
+        visualRoot.localScale = scale;
     }
 }
