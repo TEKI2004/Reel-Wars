@@ -4842,6 +4842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe8d5949f8ae24e459549971b9283904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatsUI
+  moneySpentAnimation: {fileID: 11400000, guid: ebbbd7df76741b946bfe852062e81169, type: 2}
 --- !u!114 &1853227123
 MonoBehaviour:
   m_ObjectHideFlags: 0

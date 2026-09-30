@@ -3,6 +3,7 @@
     width: 512px;
     height: 448px;
     -unity-background-scale-mode: stretch-to-fill;
+    overflow: visible;
 }
 
 .left-clapper {
@@ -147,10 +148,7 @@
     right: 23px;
     width: 141px;
     height: 28px;
-    font-size: 22px;
     color: white;
-    -unity-font-style: bold;
-    -unity-text-align: middle-center;
 }
 
 .unit-name {
@@ -278,4 +276,30 @@
     height: 35px;
     -unity-background-scale-mode: scale-to-fit;
     background-image: resource("GenreBanners/black_n_white");
+}
+
+.money-spent-container {
+    position: absolute;
+    top: 441px;
+    right: 23px;
+    width: 141px;
+    height: 28px;
+    overflow: visible;
+}
+
+.money-value {
+    font-size: 22px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.money-spent-tag {
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    width: 141px;
+    height: 28px;
+
+    color: rgb(196, 147, 63);
 }

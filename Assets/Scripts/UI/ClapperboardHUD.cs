@@ -1,136 +1,125 @@
-using GLTFast.Schema;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-
-
 public class ClapperboardHUD : MonoBehaviour
 {
+    private class SideUI
+    {
+        private Player player;
+
+        private readonly Label playerName;
+        private readonly VisualElement genreIcon;
+        private readonly Label genreName;
+        private readonly Label boxOffice;
+
+        private readonly UnitSlotUI melee;
+        private readonly UnitSlotUI ranged;
+        private readonly UnitSlotUI heavy;
+
+        private readonly MoneySpentFeedback moneySpentFeedback;
+
+        public SideUI(VisualElement root, string prefix, MoneySpentAnimationConfig moneySpentAnimation)
+        {
+            playerName = root.Q<Label>($"{prefix}PlayerName");
+            genreIcon = root.Q<VisualElement>($"{prefix}CurrentGenreIcon");
+            genreName = root.Q<Label>($"{prefix}GenreName");
+            boxOffice = root.Q<Label>($"{prefix}BoxOffice");
+
+            VisualElement moneySpentContainer = root.Q<VisualElement>($"{prefix}MoneySpentContainer");
+            moneySpentFeedback = new MoneySpentFeedback(moneySpentContainer, moneySpentAnimation);
+
+            melee = new UnitSlotUI(root, $"{prefix}Melee");
+            ranged = new UnitSlotUI(root, $"{prefix}Ranged");
+            heavy = new UnitSlotUI(root, $"{prefix}Heavy");
+        }
+
+        public void Bind(Player player, string ownerId)
+        {
+            this.player = player;
+
+            player.BoxOffice.OnMoneyChanged += UpdateBoxOffice;
+            player.BoxOffice.OnMoneySpent += moneySpentFeedback.Show;
+            player.OnGenreChanged += UpdateGenre;
+
+            playerName.text = ownerId;
+
+            UpdateBoxOffice(player.BoxOffice.Money);
+            UpdateGenre(player.CurrentGenre);
+        }
+
+        public void Unbind()
+        {
+            player.BoxOffice.OnMoneyChanged -= UpdateBoxOffice;
+            player.BoxOffice.OnMoneySpent -= moneySpentFeedback.Show;
+            player.OnGenreChanged -= UpdateGenre;
+
+            moneySpentFeedback.Clear();
+        }
+
+        private void UpdateGenre(GenreNode genre)
+        {
+            genreName.text = genre.GenreName;
+            genreIcon.style.backgroundImage = new StyleBackground(genre.Icon);
+
+            melee.SetUnit(genre.MeleeUnit);
+            ranged.SetUnit(genre.RangedUnit);
+            heavy.SetUnit(genre.HeavyUnit);
+        }
+
+        private void UpdateBoxOffice(int value)
+        {
+            boxOffice.text = $"{value:N0}M $";
+        }
+    }
+
     private class UnitSlotUI
     {
-        public Label Name;
-        public VisualElement Icon;
-        public Label Cost;
+        private readonly Label name;
+        private readonly VisualElement icon;
+        private readonly Label cost;
 
         public UnitSlotUI(VisualElement root, string prefix)
         {
-            Name = root.Q<Label>($"{prefix}Name");
-            Icon = root.Q<VisualElement>($"{prefix}Icon");
-            Cost = root.Q<Label>($"{prefix}Cost");
+            name = root.Q<Label>($"{prefix}Name");
+            icon = root.Q<VisualElement>($"{prefix}Icon");
+            cost = root.Q<Label>($"{prefix}Cost");
         }
 
         public void SetUnit(UnitType unitType)
         {
-            Name.text = unitType.UnitName;
-            Cost.text = $"{unitType.Cost}M $";
-            Icon.style.backgroundImage = new StyleBackground(unitType.Icon);
+            name.text = unitType.UnitName;
+            cost.text = $"{unitType.Cost:N0}M $";
+            icon.style.backgroundImage = new StyleBackground(unitType.Icon);
         }
     }
 
-    Label leftPlayerName;
-    Label rightPlayerName;
+    [SerializeField] private MoneySpentAnimationConfig moneySpentAnimation;
 
-    private VisualElement leftCurrentGenreIcon;
-    private VisualElement rightCurrentGenreIcon;
-
-    private Label leftGenreName;
-    private Label rightGenreName;
-
-    private Label leftBoxOffice;
-    private Label rightBoxOffice;
-
-    private UnitSlotUI leftMelee;
-    private UnitSlotUI leftRanged;
-    private UnitSlotUI leftHeavy;
-
-    private UnitSlotUI rightMelee;
-    private UnitSlotUI rightRanged;
-    private UnitSlotUI rightHeavy;
-
-    private Player leftPlayer;
-    private Player rightPlayer;
+    private SideUI leftUI;
+    private SideUI rightUI;
 
     private void OnEnable()
     {
         GetUIComponents();
 
-        leftPlayer = GameManager.Instance.LeftBase.Player;
-        rightPlayer = GameManager.Instance.RightBase.Player;
+        BaseBehaviour leftBase = GameManager.Instance.LeftBase;
+        BaseBehaviour rightBase = GameManager.Instance.RightBase;
 
-        // Subscribe to UI update events
-        leftPlayer.BoxOffice.OnMoneyChanged += UpdateLeftBoxOffice;
-        rightPlayer.BoxOffice.OnMoneyChanged += UpdateRightBoxOffice;
-        leftPlayer.OnGenreChanged += UpdateLeftGenre;
-        rightPlayer.OnGenreChanged += UpdateRightGenre;
-
-        // Initial UI update
-        leftPlayerName.text = GameManager.Instance.LeftBase.OwnerId;
-        rightPlayerName.text = GameManager.Instance.RightBase.OwnerId;
-
-        UpdateLeftBoxOffice(leftPlayer.BoxOffice.Money);
-        UpdateRightBoxOffice(rightPlayer.BoxOffice.Money);
-        UpdateLeftGenre(leftPlayer.CurrentGenre);
-        UpdateRightGenre(rightPlayer.CurrentGenre);
+        leftUI.Bind(leftBase.Player, leftBase.OwnerId);
+        rightUI.Bind(rightBase.Player, rightBase.OwnerId);
     }
 
     private void OnDisable()
     {
-        // Unsubscribe from UI update events
-        leftPlayer.BoxOffice.OnMoneyChanged -= UpdateLeftBoxOffice;
-        rightPlayer.BoxOffice.OnMoneyChanged -= UpdateRightBoxOffice;
-        leftPlayer.OnGenreChanged -= UpdateLeftGenre;
-        rightPlayer.OnGenreChanged -= UpdateRightGenre;
+        leftUI.Unbind();
+        rightUI.Unbind();
     }
 
     private void GetUIComponents()
     {
-        var root = GetComponent<UIDocument>().rootVisualElement;
+        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
-        leftPlayerName = root.Q<Label>("LeftPlayerName");
-        rightPlayerName = root.Q<Label>("RightPlayerName");
-
-        leftBoxOffice = root.Q<Label>("LeftBoxOffice");
-        rightBoxOffice = root.Q<Label>("RightBoxOffice");
-
-        leftCurrentGenreIcon = root.Q<VisualElement>("LeftCurrentGenreIcon");
-        rightCurrentGenreIcon = root.Q<VisualElement>("RightCurrentGenreIcon");
-
-        leftGenreName = root.Q<Label>("LeftGenreName");
-        rightGenreName = root.Q<Label>("RightGenreName");
-
-        leftMelee = new UnitSlotUI(root, "LeftMelee");
-        leftRanged = new UnitSlotUI(root, "LeftRanged");
-        leftHeavy = new UnitSlotUI(root, "LeftHeavy");
-
-        rightMelee = new UnitSlotUI(root, "RightMelee");
-        rightRanged = new UnitSlotUI(root, "RightRanged");
-        rightHeavy = new UnitSlotUI(root, "RightHeavy");
-
+        leftUI = new SideUI(root, "Left", moneySpentAnimation);
+        rightUI = new SideUI(root, "Right", moneySpentAnimation);
     }
-
-    private void UpdateLeftGenre(GenreNode genre)
-    {
-        leftGenreName.text = genre.GenreName;
-
-        leftCurrentGenreIcon.style.backgroundImage = new StyleBackground(genre.Icon);
-
-        leftMelee.SetUnit(genre.MeleeUnit);
-        leftRanged.SetUnit(genre.RangedUnit);
-        leftHeavy.SetUnit(genre.HeavyUnit);
-    }
-
-    private void UpdateRightGenre(GenreNode genre)
-    {
-        rightGenreName.text = genre.GenreName;
-
-        rightCurrentGenreIcon.style.backgroundImage = new StyleBackground(genre.Icon);
-
-        rightMelee.SetUnit(genre.MeleeUnit);
-        rightRanged.SetUnit(genre.RangedUnit);
-        rightHeavy.SetUnit(genre.HeavyUnit);
-    }
-
-    private void UpdateLeftBoxOffice(int value) => leftBoxOffice.text = $"{value:N0}M $";
-    private void UpdateRightBoxOffice(int value) => rightBoxOffice.text = $"{value:N0}M $";
-
 }

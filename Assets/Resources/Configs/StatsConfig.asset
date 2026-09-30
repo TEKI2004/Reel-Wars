@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
   BaseHealth: 2000
   StartingMoney: 1000
-  StartingGenre: {fileID: 11400000, guid: 72739437c4a5f80449a0eb5f6b3e3f14, type: 2}
+  StartingGenre: {fileID: 11400000, guid: 95b18529105db2e439f657f42ab909eb, type: 2}
   Rewards:
     MeleeDeathPoints: 5
     RangedDeathPoints: 7
