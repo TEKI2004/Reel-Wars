@@ -303,3 +303,7 @@
 
     color: rgb(196, 147, 63);
 }
+
+.insufficient-funds {
+    color: rgb(220, 60, 60);
+}

@@ -17,6 +17,8 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
     [SerializeField] private AttackedShaker baseShaker;
     [SerializeField] private BaseEmissionFader baseEmissionFader;
 
+    [SerializeField] private SpawnAreaBlocked spawnAreaBlocked;
+
     public string OwnerId { get; private set; }
     public Player Player { get; private set; }
 
@@ -64,13 +66,18 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
 
         if (IsSpawnAreaBlocked())
         {
-            Debug.LogWarning($"{OwnerId}'s spawn area is occupied. Cannot spawn unit.");
+            int penalty = GameManager.Instance.Config.SpamPenaltyPerTier * Player.Popularity.CurrentTier;
+
+            Player.BoxOffice.ApplyPenalty(penalty);
+            spawnAreaBlocked.Flash();
+
+            Debug.Log($"{OwnerId}'s spawn area is occupied. Spam penalty: {penalty}M $");
             return;
         }
 
         if (!Player.BuyUnit(unitType))
         {
-            Debug.LogWarning($"{OwnerId} cannot buy unit.");
+            Debug.Log($"{OwnerId} cannot buy {unitType.UnitName} for {unitType.Cost}M $.");
             return;
         }
 

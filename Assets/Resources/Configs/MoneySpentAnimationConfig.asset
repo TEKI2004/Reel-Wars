@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoneySpentAnimationConfig
   EndOffset: {x: 12, y: 35}
   EndRotation: -6
-  Duration: 0.7
-  FadeStart: 0.25
-  StartOpacity: 0.85
+  Duration: 0.6
+  FadeStart: 0.3
+  StartOpacity: 0.75
   Color: {r: 0.76862746, g: 0.5764706, b: 0.24705882, a: 1}

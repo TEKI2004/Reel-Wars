@@ -16,9 +16,9 @@ public class ClapperboardHUD : MonoBehaviour
         private readonly UnitSlotUI ranged;
         private readonly UnitSlotUI heavy;
 
-        private readonly MoneySpentFeedback moneySpentFeedback;
+        private readonly MoneySpentTag moneySpentTag;
 
-        public SideUI(VisualElement root, string prefix, MoneySpentAnimationConfig moneySpentAnimation)
+        public SideUI(VisualElement root, string prefix)
         {
             playerName = root.Q<Label>($"{prefix}PlayerName");
             genreIcon = root.Q<VisualElement>($"{prefix}CurrentGenreIcon");
@@ -26,7 +26,7 @@ public class ClapperboardHUD : MonoBehaviour
             boxOffice = root.Q<Label>($"{prefix}BoxOffice");
 
             VisualElement moneySpentContainer = root.Q<VisualElement>($"{prefix}MoneySpentContainer");
-            moneySpentFeedback = new MoneySpentFeedback(moneySpentContainer, moneySpentAnimation);
+            moneySpentTag = new MoneySpentTag(moneySpentContainer);
 
             melee = new UnitSlotUI(root, $"{prefix}Melee");
             ranged = new UnitSlotUI(root, $"{prefix}Ranged");
@@ -38,8 +38,10 @@ public class ClapperboardHUD : MonoBehaviour
             this.player = player;
 
             player.BoxOffice.OnMoneyChanged += UpdateBoxOffice;
-            player.BoxOffice.OnMoneySpent += moneySpentFeedback.Show;
+            player.BoxOffice.OnMoneySpent += moneySpentTag.Show;
+            player.BoxOffice.OnMoneyPenalty += moneySpentTag.ShowPenalty;
             player.OnGenreChanged += UpdateGenre;
+            player.OnUnitPurchaseFailed += FlashUnitPurchaseFailed;
 
             playerName.text = ownerId;
 
@@ -50,10 +52,12 @@ public class ClapperboardHUD : MonoBehaviour
         public void Unbind()
         {
             player.BoxOffice.OnMoneyChanged -= UpdateBoxOffice;
-            player.BoxOffice.OnMoneySpent -= moneySpentFeedback.Show;
+            player.BoxOffice.OnMoneySpent -= moneySpentTag.Show;
+            player.BoxOffice.OnMoneyPenalty -= moneySpentTag.ShowPenalty;
             player.OnGenreChanged -= UpdateGenre;
+            player.OnUnitPurchaseFailed -= FlashUnitPurchaseFailed;
 
-            moneySpentFeedback.Clear();
+            moneySpentTag.Clear();
         }
 
         private void UpdateGenre(GenreNode genre)
@@ -70,6 +74,21 @@ public class ClapperboardHUD : MonoBehaviour
         {
             boxOffice.text = $"{value:N0}M $";
         }
+
+        private void FlashUnitPurchaseFailed(UnitType unitType)
+        {
+            GetUnitSlot(unitType.Role)?.FlashInsufficientFunds();
+        }
+        private UnitSlotUI GetUnitSlot(UnitRole role)
+        {
+            return role switch
+            {
+                UnitRole.Melee => melee,
+                UnitRole.Ranged => ranged,
+                UnitRole.Heavy => heavy,
+                _ => null
+            };
+        }
     }
 
     private class UnitSlotUI
@@ -77,6 +96,8 @@ public class ClapperboardHUD : MonoBehaviour
         private readonly Label name;
         private readonly VisualElement icon;
         private readonly Label cost;
+
+        private IVisualElementScheduledItem insufficientFundsAnimation;
 
         public UnitSlotUI(VisualElement root, string prefix)
         {
@@ -91,16 +112,55 @@ public class ClapperboardHUD : MonoBehaviour
             cost.text = $"{unitType.Cost:N0}M $";
             icon.style.backgroundImage = new StyleBackground(unitType.Icon);
         }
-    }
 
-    [SerializeField] private MoneySpentAnimationConfig moneySpentAnimation;
+
+        public void FlashInsufficientFunds()
+        {
+            insufficientFundsAnimation?.Pause();
+
+            SetInsufficientFunds(true);
+
+            int step = 0;
+
+            insufficientFundsAnimation = name.schedule.Execute(() =>
+            {
+                step++;
+
+                SetInsufficientFunds(step % 2 == 0);
+
+                if (step >= 3)
+                {
+                    SetInsufficientFunds(false);
+                    insufficientFundsAnimation.Pause();
+                    insufficientFundsAnimation = null;
+                }
+            }).StartingIn(120).Every(120);
+        }
+
+        private void SetInsufficientFunds(bool active)
+        {
+            if (active)
+            {
+                name.AddToClassList("insufficient-funds");
+                cost.AddToClassList("insufficient-funds");
+            }
+            else
+            {
+                name.RemoveFromClassList("insufficient-funds");
+                cost.RemoveFromClassList("insufficient-funds");
+            }
+        }
+    }
 
     private SideUI leftUI;
     private SideUI rightUI;
 
     private void OnEnable()
     {
-        GetUIComponents();
+        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+
+        leftUI = new SideUI(root, "Left");
+        rightUI = new SideUI(root, "Right");
 
         BaseBehaviour leftBase = GameManager.Instance.LeftBase;
         BaseBehaviour rightBase = GameManager.Instance.RightBase;
@@ -113,13 +173,5 @@ public class ClapperboardHUD : MonoBehaviour
     {
         leftUI.Unbind();
         rightUI.Unbind();
-    }
-
-    private void GetUIComponents()
-    {
-        VisualElement root = GetComponent<UIDocument>().rootVisualElement;
-
-        leftUI = new SideUI(root, "Left", moneySpentAnimation);
-        rightUI = new SideUI(root, "Right", moneySpentAnimation);
     }
 }

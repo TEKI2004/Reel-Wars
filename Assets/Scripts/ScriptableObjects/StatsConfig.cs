@@ -42,6 +42,15 @@ public class StatsConfig : ScriptableObject
     [HideLabel]
     public RewardConfig Rewards;
 
+    // ─────────────────────────────────────────────
+    // Spam Punishment
+    // ─────────────────────────────────────────────
+
+    [BoxGroup("Spam Punishment")]
+    [MinValue(0)]
+    [LabelText("Penalty Per Tier")]
+    public int SpamPenaltyPerTier;
+
 
     // ─────────────────────────────────────────────
     // Popularity

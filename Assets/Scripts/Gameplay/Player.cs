@@ -25,6 +25,7 @@ public class Player
     private int pendingGenreChoices;
     private bool genreChoiceActive;
 
+    public event Action<UnitType> OnUnitPurchaseFailed;
 
     public Player()
     {
@@ -68,7 +69,11 @@ public class Player
 
     public bool BuyUnit(UnitType unitType)
     {
-        return BoxOffice.Spend(unitType.Cost);
+        if (BoxOffice.Spend(unitType.Cost))
+            return true;
+
+        OnUnitPurchaseFailed?.Invoke(unitType);
+        return false;
     }
 
     public void ClaimReward(UnitRole victimRole, int victimCost)
