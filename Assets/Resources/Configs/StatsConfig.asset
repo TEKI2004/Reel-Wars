@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StatsConfig
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
   BaseHealth: 2000
-  StartingMoney: 200
+  StartingMoney: 30
   StartingGenre: {fileID: 11400000, guid: 95b18529105db2e439f657f42ab909eb, type: 2}
   Rewards:
     MeleeDeathPoints: 5
@@ -22,7 +22,7 @@ MonoBehaviour:
     CostMultiplier: 1.5
   SpamPenaltyPerTier: 50
   Popularity:
-    StartingPoints: 0
+    StartingPoints: 50
     MaxTier: 3
     BaseLimit: 44
     LinearLimitGrowth: 40

@@ -38,7 +38,7 @@ public class ClapperboardHUD : MonoBehaviour
             this.player = player;
 
             player.BoxOffice.OnMoneyChanged += UpdateBoxOffice;
-            player.BoxOffice.OnMoneySpent += moneySpentTag.Show;
+            player.BoxOffice.OnMoneySpent += moneySpentTag.ShowCost;
             player.BoxOffice.OnMoneyPenalty += moneySpentTag.ShowPenalty;
             player.OnGenreChanged += UpdateGenre;
             player.OnUnitPurchaseFailed += FlashUnitPurchaseFailed;
@@ -52,7 +52,7 @@ public class ClapperboardHUD : MonoBehaviour
         public void Unbind()
         {
             player.BoxOffice.OnMoneyChanged -= UpdateBoxOffice;
-            player.BoxOffice.OnMoneySpent -= moneySpentTag.Show;
+            player.BoxOffice.OnMoneySpent -= moneySpentTag.ShowCost;
             player.BoxOffice.OnMoneyPenalty -= moneySpentTag.ShowPenalty;
             player.OnGenreChanged -= UpdateGenre;
             player.OnUnitPurchaseFailed -= FlashUnitPurchaseFailed;

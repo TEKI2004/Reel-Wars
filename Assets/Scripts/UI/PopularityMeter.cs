@@ -114,6 +114,22 @@ public class PopularityMetersController : MonoBehaviour
     [SerializeField]
     private Transform rightFill;
 
+    // ─────────────────────────────────────────────
+    // Animation
+    // ─────────────────────────────────────────────
+
+    [BoxGroup("Animation")]
+    [MinValue(0.01f)]
+    [SuffixLabel("s", Overlay = true)]
+    [LabelText("Smooth Time")]
+    [SerializeField] private float fillSmoothTime = 0.35f;
+
+    private float leftTargetScaleY;
+    private float rightTargetScaleY;
+
+    private float leftFillVelocity;
+    private float rightFillVelocity;
+
 
     // ─────────────────────────────────────────────
     // Runtime Geometry
@@ -175,8 +191,8 @@ public class PopularityMetersController : MonoBehaviour
         leftPlayer.Popularity.OnPointsChanged += UpdateLeftMeter;
         rightPlayer.Popularity.OnPointsChanged += UpdateRightMeter;
 
-        UpdateLeftMeter(leftPlayer.Popularity.CurrentPoints);
-        UpdateRightMeter(rightPlayer.Popularity.CurrentPoints);
+        SetFillImmediate(leftFill, leftPlayer.Popularity.CurrentPoints, ref leftTargetScaleY);
+        SetFillImmediate(rightFill, rightPlayer.Popularity.CurrentPoints, ref rightTargetScaleY);
     }
 
     private void OnDisable()
@@ -269,26 +285,41 @@ public class PopularityMetersController : MonoBehaviour
     // Fill
     // ─────────────────────────────────────────────
 
+    private void Update()
+    {
+        AnimateFill(leftFill, leftTargetScaleY, ref leftFillVelocity);
+        AnimateFill(rightFill, rightTargetScaleY, ref rightFillVelocity);
+    }
+
     private void UpdateLeftMeter(int points)
     {
-        UpdateFill(leftFill, points);
+        leftTargetScaleY = GetFillScaleY(points);
     }
 
     private void UpdateRightMeter(int points)
     {
-        UpdateFill(rightFill, points);
+        rightTargetScaleY = GetFillScaleY(points);
     }
 
-    private void UpdateFill(
-        Transform fill,
-        int points)
+    private void AnimateFill(Transform fill, float targetScaleY, ref float velocity)
     {
-        float t = GetNormalizedPopularity(points);
+        Vector3 scale = fill.localScale;
+        scale.y = Mathf.SmoothDamp(scale.y, targetScaleY, ref velocity, fillSmoothTime);
+        fill.localScale = scale;
+    }
+
+    private void SetFillImmediate(Transform fill, int points, ref float targetScaleY)
+    {
+        targetScaleY = GetFillScaleY(points);
 
         Vector3 scale = fill.localScale;
-        scale.y = fullHeight * t;
-
+        scale.y = targetScaleY;
         fill.localScale = scale;
+    }
+
+    private float GetFillScaleY(int points)
+    {
+        return fullHeight * GetNormalizedPopularity(points);
     }
 
 

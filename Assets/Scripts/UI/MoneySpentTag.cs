@@ -21,7 +21,7 @@ public class MoneySpentTag
         this.container = container;
     }
 
-    public void Show(int amount)
+    public void ShowCost(int amount)
     {
         ShowTag(amount, spentColor);
     }
