@@ -60,6 +60,15 @@ public class StatsConfig : ScriptableObject
     [InlineProperty]
     [HideLabel]
     public PopularityConfig Popularity;
+
+    // ─────────────────────────────────────────────
+    // Oscar Season
+    // ─────────────────────────────────────────────
+
+    [BoxGroup("Oscar Season")]
+    [InlineProperty]
+    [HideLabel]
+    public OscarSeasonConfig OscarSeason;
 }
 
 
@@ -185,4 +194,22 @@ public class PopularityConfig
 
         return string.Join("     ", limits);
     }
+}
+
+
+
+[Serializable]
+public class OscarSeasonConfig
+{
+    [MinValue(0.1f)]
+    [SuffixLabel("s", Overlay = true)]
+    public float Duration = 10f;
+
+    [MinValue(1f)]
+    [SuffixLabel("×", Overlay = true)]
+    public float MoveSpeedMultiplier = 1.5f;
+
+    [MinValue(1f)]
+    [SuffixLabel("×", Overlay = true)]
+    public float AttackSpeedMultiplier = 1.5f;
 }

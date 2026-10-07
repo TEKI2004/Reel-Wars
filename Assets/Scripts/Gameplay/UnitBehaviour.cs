@@ -32,15 +32,19 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     private readonly HashSet<IAttackableObserver> observers = new();
 
     public string OwnerId { get; private set; }
+
+    private OscarSeasonController oscarSeason;
+
     public void Initialize(string ownerId, UnitType unitType)
     {
         OwnerId = ownerId;
         UnitId = unitNumber++;
 
         this.unitType = unitType;
+        oscarSeason = GameManager.Instance.GetOscarSeason(ownerId);
 
         gameObject.name = $"{OwnerId}:U{UnitId}({unitType.UnitName})";
-        
+
         currentHealth = unitType.MaxHealth;
         lastAttackTime = -unitType.AttackCooldown;
 
@@ -98,7 +102,8 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     private void MoveForward()
     {
-        transform.Translate(unitType.MoveSpeed * Time.deltaTime * Vector3.right);
+        float moveSpeed = unitType.MoveSpeed * oscarSeason.MoveSpeedMultiplier;
+        transform.Translate(moveSpeed * Time.deltaTime * Vector3.right);
     }
 
     private IAttackable GetNextTarget()
@@ -114,7 +119,9 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
             return;
         }
 
-        if (Time.time < lastAttackTime + unitType.AttackCooldown) return;
+        float attackCooldown = unitType.AttackCooldown / oscarSeason.AttackSpeedMultiplier;
+
+        if (Time.time < lastAttackTime + attackCooldown) return;
 
         lastAttackTime = Time.time;
         currentTarget.TakeDamage(unitType.Damage);

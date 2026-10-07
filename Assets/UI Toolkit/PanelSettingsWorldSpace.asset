@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19101, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: PanelSettings
+  m_Name: PanelSettingsWorldSpace
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.PanelSettings
   themeUss: {fileID: -4733365628477956816, guid: deac51aebfbcb8b4aadbba1ae4e5bb03, type: 3}
   m_DisableNoThemeWarning: 0
   m_TargetTexture: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_ColliderUpdateMode: 0
   m_ColliderIsTrigger: 0
   m_ScaleMode: 2
   m_ReferenceSpritePixelsPerUnit: 100
-  m_PixelsPerUnit: 100
+  m_PixelsPerUnit: 200
   m_Scale: 1
   m_ReferenceDpi: 96
   m_FallbackDpi: 96

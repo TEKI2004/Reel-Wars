@@ -22,8 +22,12 @@ MonoBehaviour:
     CostMultiplier: 1.5
   SpamPenaltyPerTier: 50
   Popularity:
-    StartingPoints: 50
+    StartingPoints: 0
     MaxTier: 3
     BaseLimit: 44
     LinearLimitGrowth: 40
     QuadraticLimitGrowth: 4
+  OscarSeason:
+    Duration: 10
+    MoveSpeedMultiplier: 2
+    AttackSpeedMultiplier: 2

@@ -32,7 +32,7 @@ public class Player
         Popularity.OnTierChanged += HandleTierChanged;
     }
 
-    private void HandleTierChanged(int tier)
+    private void HandleTierChanged()
     {
         pendingGenreChoices++;
         TryOpenGenreChoice();

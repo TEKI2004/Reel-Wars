@@ -14,6 +14,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private BaseBehaviour leftBase;
     [SerializeField] private BaseBehaviour rightBase;
 
+    [Header("Oscar Season Controllers")]
+    [SerializeField] private OscarSeasonController leftOscarSeason;
+    [SerializeField] private OscarSeasonController rightOscarSeason;
+
     public BaseBehaviour LeftBase => leftBase;
     public BaseBehaviour RightBase => rightBase;
 
@@ -67,4 +71,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public OscarSeasonController GetOscarSeason(string ownerId)
+    {
+        if (ownerId == leftBase.OwnerId) return leftOscarSeason;
+        if (ownerId == rightBase.OwnerId) return rightOscarSeason;
+
+        Debug.LogError($"Oscar Season controller not found for owner ID: {ownerId}");
+        return null;
+    }
 }
