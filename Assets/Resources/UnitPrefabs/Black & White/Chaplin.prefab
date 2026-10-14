@@ -65,6 +65,9 @@ MonoBehaviour:
   moveRangeDetectorCollider: {fileID: 4466963664906640443}
   unitShaker: {fileID: 3855080032318725900}
   hpBar: {fileID: 6350801643818981336}
+  rewardTagPrefab: {fileID: 5266329344428490568, guid: f698fff105e991e4db4a2ecb38683c9f, type: 3}
+  moneyRewardSpawnPoint: {fileID: 5460019652242778323}
+  popularityRewardSpawnPoint: {fileID: 4163499068326398988}
 --- !u!114 &3855080032318725900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +312,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1611002140785970034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4163499068326398988}
+  m_Layer: 3
+  m_Name: PopularityRewardSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4163499068326398988
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611002140785970034}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.25, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8074326650366200377}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6944090317188621928
 GameObject:
   m_ObjectHideFlags: 0
@@ -430,6 +464,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5196646060448553944}
+  - {fileID: 5460019652242778323}
+  - {fileID: 4163499068326398988}
   m_Father: {fileID: 5545551502273422819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7908456812997627264
@@ -566,6 +602,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   ownerUnit: {fileID: 6799871862351974249}
+--- !u!1 &9134105523322301909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5460019652242778323}
+  m_Layer: 3
+  m_Name: MoneyRewardSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5460019652242778323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9134105523322301909}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.25, y: 1.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8074326650366200377}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9207767815885642978
 GameObject:
   m_ObjectHideFlags: 0

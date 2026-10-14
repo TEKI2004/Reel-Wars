@@ -19,13 +19,20 @@ public class Popularity
         CanGainPoints = true;
     }
 
-    public void Add(int points)
+    public int Add(int points)
     {
-        if (!CanGainPoints) return;
+        if (!CanGainPoints) return 0;
 
-        CurrentPoints += points;
-        OnPointsChanged?.Invoke(CurrentPoints);
+        int previousPoints = CurrentPoints;
+        CurrentPoints = Mathf.Clamp(CurrentPoints + points, 0, Config.MaxPoints);
+
+        int appliedPoints = CurrentPoints - previousPoints;
+        if (appliedPoints == 0) return 0;
+
         CheckTierProgression();
+        OnPointsChanged?.Invoke(CurrentPoints);
+
+        return appliedPoints;
     }
 
     public void SetGainEnabled(bool enabled)

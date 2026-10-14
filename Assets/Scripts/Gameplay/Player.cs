@@ -76,9 +76,9 @@ public class Player
         return false;
     }
 
-    public void ClaimReward(UnitRole victimRole, int victimCost)
+    public RewardResult ClaimReward(UnitRole victimRole, int victimCost)
     {
-        int popularityPoints = victimRole switch
+        int popularity = victimRole switch
         {
             UnitRole.Melee => Config.Rewards.MeleeDeathPoints,
             UnitRole.Ranged => Config.Rewards.RangedDeathPoints,
@@ -86,10 +86,10 @@ public class Player
             _ => throw new ArgumentOutOfRangeException(nameof(victimRole))
         };
 
-        Popularity.Add(popularityPoints);
+        int awardedPopularity = Popularity.Add(popularity);
+        int money = Mathf.RoundToInt(victimCost * Config.Rewards.CostMultiplier);
+        BoxOffice.Add(money);
 
-        BoxOffice.Add(
-            Mathf.RoundToInt(victimCost * Config.Rewards.CostMultiplier)
-        );
+        return new RewardResult(awardedPopularity, money);
     }
 }

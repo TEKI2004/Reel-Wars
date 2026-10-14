@@ -16,6 +16,7 @@ public class OscarSeasonController : MonoBehaviour
     [Required][SerializeField] private BaseBehaviour playerBase;
     [Required][SerializeField] private OscarSeasonView oscarView;
     [Required][SerializeField] private OscarSeasonTimerView timerView;
+    [Required][SerializeField] private PopularityMetersController popularityMeters;
 
     [Title("Settings")]
     [MinValue(0.1f)][SerializeField] private float duration = 10f;
@@ -63,6 +64,7 @@ public class OscarSeasonController : MonoBehaviour
     {
         state = OscarSeasonState.Intro;
         Popularity.SetGainEnabled(false);
+        popularityMeters.SetOscarStatus(playerBase.OwnerId, true);
 
         yield return oscarView.PlayIntro();
         yield return timerView.PlayIntro();
@@ -82,6 +84,7 @@ public class OscarSeasonController : MonoBehaviour
 
         Popularity.ResetAfterOscarSeason();
         Popularity.SetGainEnabled(true);
+        popularityMeters.SetOscarStatus(playerBase.OwnerId, false);
 
         state = OscarSeasonState.Idle;
     }

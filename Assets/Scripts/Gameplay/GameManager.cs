@@ -55,20 +55,13 @@ public class GameManager : MonoBehaviour
         rightBase.Player.Popularity.CheckTierProgression();
     }
 
-    public void GiveReward(string victimOwnerId, UnitRole victimRole, int victimCost)
+    public BaseBehaviour GetRewardedBase(string victimOwnerId)
     {
-        if (victimOwnerId == leftPlayerName)
-        {
-            rightBase.ClaimReward(victimRole, victimCost);
-        }
-        else if (victimOwnerId == rightPlayerName)
-        {
-            leftBase.ClaimReward(victimRole, victimCost);
-        }
-        else
-        {
-            Debug.LogError($"Invalid victim owner ID: {victimOwnerId}");
-        }
+        if (victimOwnerId == leftBase.OwnerId) return rightBase;
+        if (victimOwnerId == rightBase.OwnerId) return leftBase;
+
+        Debug.LogError($"Invalid victim owner ID: {victimOwnerId}");
+        return null;
     }
 
     public OscarSeasonController GetOscarSeason(string ownerId)

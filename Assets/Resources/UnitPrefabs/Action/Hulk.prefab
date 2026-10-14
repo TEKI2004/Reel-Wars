@@ -65,6 +65,9 @@ MonoBehaviour:
   moveRangeDetectorCollider: {fileID: 4466963664906640443}
   unitShaker: {fileID: -8224123245445264667}
   hpBar: {fileID: 8785867529565988804}
+  rewardTagPrefab: {fileID: 5266329344428490568, guid: f698fff105e991e4db4a2ecb38683c9f, type: 3}
+  moneyRewardSpawnPoint: {fileID: 3679404950793863246}
+  popularityRewardSpawnPoint: {fileID: 5032064331664863389}
 --- !u!114 &-8224123245445264667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +360,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &5101036891292808226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3679404950793863246}
+  m_Layer: 3
+  m_Name: MoneyRewardSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3679404950793863246
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5101036891292808226}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.25, y: 2.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8074326650366200377}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6127543342807509136
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +512,40 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 387930278506562447}
+  - {fileID: 3679404950793863246}
+  - {fileID: 5032064331664863389}
   m_Father: {fileID: 5545551502273422819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7352568816413253669
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5032064331664863389}
+  m_Layer: 3
+  m_Name: PopularityRewardSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5032064331664863389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7352568816413253669}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.75, y: 1.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8074326650366200377}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7908456812997627264
 GameObject:

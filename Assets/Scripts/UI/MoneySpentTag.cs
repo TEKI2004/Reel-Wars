@@ -5,16 +5,15 @@ public class MoneySpentTag
 {
     private readonly VisualElement container;
 
-    private readonly Vector2 endOffset = new(12f, 35f);
-    private readonly float endRotation = -6f;
+    private static readonly Vector2 endOffset = new(12f, 35f);
+    private const float endRotation = -6f;
 
-    private readonly float duration = 0.6f;
-    private readonly float fadeStart = 0.3f;
+    private const float duration = 0.6f;
+    private const float fadeStart = 0.3f;
+    private const float startOpacity = 0.75f;
 
-    private readonly float startOpacity = 0.75f;
-
-    private readonly Color spentColor = new Color32(196, 147, 63, 255);
-    private readonly Color penaltyColor = new Color32(220, 60, 60, 255);
+    private static readonly Color spentColor = new Color32(196, 147, 63, 255);
+    private static readonly Color penaltyColor = new Color32(220, 60, 60, 255);
 
     public MoneySpentTag(VisualElement container)
     {

@@ -7,11 +7,15 @@ public class NeonPlayerName : MonoBehaviour
     [SerializeField] private TextMeshPro letterPrefab;
     [SerializeField] private int maxLetters = 7;
     [SerializeField] private float letterSpacing = 0.05f;
-
-    [SerializeField] private Material neonOnMaterial;
-    [SerializeField] private Material neonOffMaterial;
-
     private readonly List<TextMeshPro> letters = new();
+    private Material neonOnMaterial;
+    private Material neonOffMaterial;
+
+    public void Initialize(Material onMaterial, Material offMaterial)
+    {
+        neonOnMaterial = onMaterial;
+        neonOffMaterial = offMaterial;
+    }
 
     public void SetName(string playerName)
     {

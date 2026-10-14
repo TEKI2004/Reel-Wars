@@ -1,11 +1,13 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class BaseBehaviour : MonoBehaviour, IAttackable
 {
-    [Header("Neon Display")]
+    [Header("Neon")]
+    [SerializeField] private Material neonOnMaterial;
+    [SerializeField] private Material neonOffMaterial;
     [SerializeField] private NeonPlayerName playerNameDisplay;
+    [SerializeField] private Material rewardNeonMaterial;
+    public Material NeonMaterial => rewardNeonMaterial;
 
     [Header("Spawn Settings")]
     [SerializeField] private BoxCollider spawnArea;
@@ -36,8 +38,10 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         maxHealth = GameManager.Instance.Config.BaseHealth;
         currentHealth = maxHealth;
 
+        playerNameDisplay.Initialize(neonOnMaterial, neonOffMaterial);
         playerNameDisplay.SetName(OwnerId);
     }
+
 
     public void TakeDamage(int amount)
     {
@@ -119,8 +123,8 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         return false;
     }
 
-    public void ClaimReward(UnitRole victimRole, int victimCost)
+    public RewardResult ClaimReward(UnitRole victimRole, int victimCost)
     {
-        Player.ClaimReward(victimRole, victimCost);
+        return Player.ClaimReward(victimRole, victimCost);
     }
 }

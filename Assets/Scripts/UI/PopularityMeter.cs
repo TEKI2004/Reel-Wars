@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 public class PopularityMetersController : MonoBehaviour
@@ -98,6 +99,13 @@ public class PopularityMetersController : MonoBehaviour
     [SerializeField]
     private Transform leftFill;
 
+    [BoxGroup("Meters/Left Meter")]
+    [SceneObjectsOnly]
+    [Required]
+    [LabelText("Status")]
+    [SerializeField] 
+    private TextMeshPro leftStatus;
+
 
     [HorizontalGroup("Meters")]
     [BoxGroup("Meters/Right Meter")]
@@ -113,6 +121,27 @@ public class PopularityMetersController : MonoBehaviour
     [LabelText("Fill")]
     [SerializeField]
     private Transform rightFill;
+
+    [BoxGroup("Meters/Right Meter")]
+    [SceneObjectsOnly]
+    [Required]
+    [LabelText("Status")]
+    [SerializeField] 
+    private TextMeshPro rightStatus;
+
+    [BoxGroup("Status Materials")]
+    [AssetsOnly]
+    [Required]
+    [LabelText("Default")]
+    [SerializeField] private Material statusBlackMaterial;
+
+    [BoxGroup("Status Materials")]
+    [AssetsOnly]
+    [Required]
+    [LabelText("Oscar Season")]
+    [SerializeField] private Material statusWhiteMaterial;
+
+    private const float statusTopOffset = 0.1f;
 
     // ─────────────────────────────────────────────
     // Animation
@@ -191,8 +220,14 @@ public class PopularityMetersController : MonoBehaviour
         leftPlayer.Popularity.OnPointsChanged += UpdateLeftMeter;
         rightPlayer.Popularity.OnPointsChanged += UpdateRightMeter;
 
-        SetFillImmediate(leftFill, leftPlayer.Popularity.CurrentPoints, ref leftTargetScaleY);
-        SetFillImmediate(rightFill, rightPlayer.Popularity.CurrentPoints, ref rightTargetScaleY);
+        leftPlayer.Popularity.OnTierChanged += UpdateLeftStatus;
+        rightPlayer.Popularity.OnTierChanged += UpdateRightStatus;
+
+        SetFillImmediate(leftFill, leftStatus, leftPlayer.Popularity.CurrentPoints, ref leftTargetScaleY);
+        SetFillImmediate(rightFill, rightStatus, rightPlayer.Popularity.CurrentPoints, ref rightTargetScaleY);
+
+        UpdateStatus(leftStatus, leftPlayer.Popularity);
+        UpdateStatus(rightStatus, rightPlayer.Popularity);
     }
 
     private void OnDisable()
@@ -202,6 +237,9 @@ public class PopularityMetersController : MonoBehaviour
 
         leftPlayer.Popularity.OnPointsChanged -= UpdateLeftMeter;
         rightPlayer.Popularity.OnPointsChanged -= UpdateRightMeter;
+
+        leftPlayer.Popularity.OnTierChanged -= UpdateLeftStatus;
+        rightPlayer.Popularity.OnTierChanged -= UpdateRightStatus;
 
         ClearTierLimits();
     }
@@ -289,16 +327,9 @@ public class PopularityMetersController : MonoBehaviour
     {
         AnimateFill(leftFill, leftTargetScaleY, ref leftFillVelocity);
         AnimateFill(rightFill, rightTargetScaleY, ref rightFillVelocity);
-    }
 
-    private void UpdateLeftMeter(int points)
-    {
-        leftTargetScaleY = GetFillScaleY(points);
-    }
-
-    private void UpdateRightMeter(int points)
-    {
-        rightTargetScaleY = GetFillScaleY(points);
+        UpdateStatusPosition(leftFill, leftStatus);
+        UpdateStatusPosition(rightFill, rightStatus);
     }
 
     private void AnimateFill(Transform fill, float targetScaleY, ref float velocity)
@@ -308,13 +339,50 @@ public class PopularityMetersController : MonoBehaviour
         fill.localScale = scale;
     }
 
-    private void SetFillImmediate(Transform fill, int points, ref float targetScaleY)
+    private void UpdateStatusPosition(Transform fill, TextMeshPro status)
+    {
+        Vector3 position = status.transform.localPosition;
+        position.y = fill.localPosition.y + fill.localScale.y - statusTopOffset;
+        status.transform.localPosition = position;
+    }
+
+    private void UpdateLeftMeter(int points)
+    {
+        leftTargetScaleY = GetFillScaleY(points);
+        UpdateLeftStatus();
+    }
+
+    private void UpdateRightMeter(int points)
+    {
+        rightTargetScaleY = GetFillScaleY(points);
+        UpdateRightStatus();
+    }
+
+    private void UpdateLeftStatus()
+    {
+        UpdateStatus(leftStatus, leftPlayer.Popularity);
+    }
+
+    private void UpdateRightStatus()
+    {
+        UpdateStatus(rightStatus, rightPlayer.Popularity);
+    }
+
+    private void UpdateStatus(TextMeshPro status, Popularity popularity)
+    {
+        int target = Config.GetTierLimit(popularity.CurrentTier);
+        status.text = $"{popularity.CurrentPoints} / {target}";
+    }
+
+    private void SetFillImmediate(Transform fill, TextMeshPro status, int points, ref float targetScaleY)
     {
         targetScaleY = GetFillScaleY(points);
 
         Vector3 scale = fill.localScale;
         scale.y = targetScaleY;
         fill.localScale = scale;
+
+        UpdateStatusPosition(fill, status);
     }
 
     private float GetFillScaleY(int points)
@@ -335,5 +403,22 @@ public class PopularityMetersController : MonoBehaviour
         return Mathf.Clamp01(
             (float)points / Config.MaxPoints
         );
+    }
+
+    public void SetOscarStatus(string ownerId, bool active)
+    {
+        TextMeshPro status;
+
+        if (ownerId == GameManager.Instance.LeftBase.OwnerId)
+            status = leftStatus;
+        else if (ownerId == GameManager.Instance.RightBase.OwnerId)
+            status = rightStatus;
+        else
+        {
+            Debug.LogError($"Popularity status not found for owner ID: {ownerId}");
+            return;
+        }
+
+        status.fontSharedMaterial = active ? statusWhiteMaterial : statusBlackMaterial;
     }
 }

@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,11 +15,17 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     public int UnitId { get; private set; }
     private UnitType unitType;
 
-    [SerializeField] private Transform visualRoot;
-    [SerializeField] private BoxCollider attackRangeDetectorCollider;
-    [SerializeField] private BoxCollider moveRangeDetectorCollider;
-    [SerializeField] private AttackedShaker unitShaker;
-    [SerializeField] private FloatingHpBar hpBar;
+    [Title("References")]
+    [Required][SerializeField] private Transform visualRoot;
+    [Required][SerializeField] private BoxCollider attackRangeDetectorCollider;
+    [Required][SerializeField] private BoxCollider moveRangeDetectorCollider;
+    [Required][SerializeField] private AttackedShaker unitShaker;
+    [Required][SerializeField] private FloatingHpBar hpBar;
+
+    [Title("Reward Tag")]
+    [Required][SerializeField] private FloatingRewardTag rewardTagPrefab;
+    [Required][SerializeField] private Transform moneyRewardSpawnPoint;
+    [Required][SerializeField] private Transform popularityRewardSpawnPoint;
 
     private Vector3 attackDefaultCenter;
     private Vector3 moveDefaultCenter;
@@ -137,7 +144,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            GameManager.Instance.GiveReward(OwnerId, unitType.Role, unitType.Cost);
+            HandleReward();
 
             currentTarget = null;
             enemiesInRange.Clear();
@@ -153,6 +160,23 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         }
 
         Debug.Log($"{OwnerId}:U{UnitId}({unitType.UnitName}) took {amount} damage, current health: {currentHealth}");
+    }
+
+    private void HandleReward()
+    {
+        BaseBehaviour rewardedBase = GameManager.Instance.GetRewardedBase(OwnerId);
+        if (rewardedBase == null) return;
+
+        RewardResult reward = rewardedBase.ClaimReward(unitType.Role, unitType.Cost);
+
+        FloatingRewardTag rewardTag = Instantiate(rewardTagPrefab);
+        rewardTag.Show(
+            reward, 
+            moneyRewardSpawnPoint.position, 
+            popularityRewardSpawnPoint.position, 
+            transform.right, 
+            rewardedBase.NeonMaterial
+        );
     }
 
     private void NotifyDeath()
