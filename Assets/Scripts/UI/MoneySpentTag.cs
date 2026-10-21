@@ -10,7 +10,8 @@ public class MoneySpentTag
 
     private const float duration = 0.6f;
     private const float fadeStart = 0.3f;
-    private const float startOpacity = 0.75f;
+    private const float spentStartOpacity = 0.75f;
+    private const float penaltyStartOpacity = 1f;
 
     private static readonly Color spentColor = new Color32(196, 147, 63, 255);
     private static readonly Color penaltyColor = new Color32(220, 60, 60, 255);
@@ -22,12 +23,12 @@ public class MoneySpentTag
 
     public void ShowCost(int amount)
     {
-        ShowTag(amount, spentColor);
+        ShowTag(amount, spentColor, spentStartOpacity);
     }
 
     public void ShowPenalty(int amount)
     {
-        ShowTag(amount, penaltyColor);
+        ShowTag(amount, penaltyColor, penaltyStartOpacity);
     }
 
     public void Clear()
@@ -35,7 +36,7 @@ public class MoneySpentTag
         container.Clear();
     }
 
-    private void ShowTag(int amount, Color color)
+    private void ShowTag(int amount, Color color, float startOpacity)
     {
         Label tag = new($"-{amount:N0}M $");
 
@@ -56,10 +57,10 @@ public class MoneySpentTag
 
         container.Add(tag);
 
-        Animate(tag);
+        Animate(tag, startOpacity);
     }
 
-    private void Animate(Label tag)
+    private void Animate(Label tag, float startOpacity)
     {
         float startTime = Time.unscaledTime;
         IVisualElementScheduledItem animation = null;

@@ -319,3 +319,46 @@ GenreChoiceUI
 - vizuális effektek
 - hanghatások
 - animációk
+
+---
+
+## Configs
+
+### Game
+
+- `BaseHealth`
+- `StartingMoney`
+
+### Rewards
+
+- `MeleeDeathPoints`
+- `RangedDeathPoints`
+- `HeavyDeathPoints`
+- `CostMultiplier`
+
+### SpamPunishment
+
+- `PenaltyPerTier`
+
+### Popularity
+
+- `StartingPoints`
+- `MaxTier`
+- `BaseLimit`
+- `LinearLimitGrowth`
+- `QuadraticLimitGrowth`
+
+### OscarSeason
+
+- `Duration`
+- `MoveSpeedMultiplier`
+- `AttackSpeedMultiplier`
+
+### Units[*]
+
+- `Cost`
+- `Damage`
+- `MaxHealth`
+- `AttackRange`
+- `AttackCooldown`
+- `MoveSpeed`

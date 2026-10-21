@@ -304,6 +304,12 @@
     color: rgb(196, 147, 63);
 }
 
-.insufficient-funds {
-    color: rgb(220, 60, 60);
+.negative-feedback {
+    color: rgba(220, 60, 60, 255);
+}
+
+.genre-flying-icon {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
 }

@@ -11,6 +11,7 @@ public class ClapperboardHUD : MonoBehaviour
         private readonly VisualElement genreIcon;
         private readonly Label genreName;
         private readonly Label boxOffice;
+        private IVisualElementScheduledItem boxOfficePenaltyAnimation;
 
         private readonly UnitSlotUI melee;
         private readonly UnitSlotUI ranged;
@@ -40,6 +41,7 @@ public class ClapperboardHUD : MonoBehaviour
             player.BoxOffice.OnMoneyChanged += UpdateBoxOffice;
             player.BoxOffice.OnMoneySpent += moneySpentTag.ShowCost;
             player.BoxOffice.OnMoneyPenalty += moneySpentTag.ShowPenalty;
+            player.BoxOffice.OnMoneyPenalty += FlashBoxOfficePenalty;
             player.OnGenreChanged += UpdateGenre;
             player.OnUnitPurchaseFailed += FlashUnitPurchaseFailed;
 
@@ -54,6 +56,11 @@ public class ClapperboardHUD : MonoBehaviour
             player.BoxOffice.OnMoneyChanged -= UpdateBoxOffice;
             player.BoxOffice.OnMoneySpent -= moneySpentTag.ShowCost;
             player.BoxOffice.OnMoneyPenalty -= moneySpentTag.ShowPenalty;
+
+            player.BoxOffice.OnMoneyPenalty -= FlashBoxOfficePenalty;
+            boxOfficePenaltyAnimation?.Pause();
+            boxOffice.RemoveFromClassList("penalty-flash");
+
             player.OnGenreChanged -= UpdateGenre;
             player.OnUnitPurchaseFailed -= FlashUnitPurchaseFailed;
 
@@ -89,6 +96,48 @@ public class ClapperboardHUD : MonoBehaviour
                 _ => null
             };
         }
+        private void FlashBoxOfficePenalty(int _)
+        {
+            boxOfficePenaltyAnimation = ClapperboardHUD.FlashElements(boxOfficePenaltyAnimation, "negative-feedback", boxOffice);
+        }
+    }
+
+    private static IVisualElementScheduledItem FlashElements(IVisualElementScheduledItem currentAnimation, string className, params VisualElement[] elements)
+    {
+        currentAnimation?.Pause();
+
+        foreach (VisualElement element in elements)
+            element.AddToClassList(className);
+
+        bool active = true;
+        int toggles = 0;
+
+        IVisualElementScheduledItem animation = null;
+
+        animation = elements[0].schedule.Execute(() =>
+        {
+            active = !active;
+
+            foreach (VisualElement element in elements)
+            {
+                if (active)
+                    element.AddToClassList(className);
+                else
+                    element.RemoveFromClassList(className);
+            }
+
+            toggles++;
+
+            if (toggles >= 4)
+            {
+                foreach (VisualElement element in elements)
+                    element.RemoveFromClassList(className);
+
+                animation.Pause();
+            }
+        }).StartingIn(120).Every(120);
+
+        return animation;
     }
 
     private class UnitSlotUI
@@ -113,42 +162,9 @@ public class ClapperboardHUD : MonoBehaviour
             icon.style.backgroundImage = new StyleBackground(unitType.Icon);
         }
 
-
         public void FlashInsufficientFunds()
         {
-            insufficientFundsAnimation?.Pause();
-
-            SetInsufficientFunds(true);
-
-            int step = 0;
-
-            insufficientFundsAnimation = name.schedule.Execute(() =>
-            {
-                step++;
-
-                SetInsufficientFunds(step % 2 == 0);
-
-                if (step >= 3)
-                {
-                    SetInsufficientFunds(false);
-                    insufficientFundsAnimation.Pause();
-                    insufficientFundsAnimation = null;
-                }
-            }).StartingIn(120).Every(120);
-        }
-
-        private void SetInsufficientFunds(bool active)
-        {
-            if (active)
-            {
-                name.AddToClassList("insufficient-funds");
-                cost.AddToClassList("insufficient-funds");
-            }
-            else
-            {
-                name.RemoveFromClassList("insufficient-funds");
-                cost.RemoveFromClassList("insufficient-funds");
-            }
+            insufficientFundsAnimation = ClapperboardHUD.FlashElements(insufficientFundsAnimation, "negative-feedback", name, cost);
         }
     }
 
