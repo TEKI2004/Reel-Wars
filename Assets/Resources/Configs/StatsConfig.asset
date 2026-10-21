@@ -22,7 +22,7 @@ MonoBehaviour:
     CostMultiplier: 1.5
   SpamPenaltyPerTier: 50
   Popularity:
-    StartingPoints: 180
+    StartingPoints: 140
     MaxTier: 3
     BaseLimit: 44
     LinearLimitGrowth: 40

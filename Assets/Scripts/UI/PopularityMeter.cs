@@ -104,7 +104,7 @@ public class PopularityMetersController : MonoBehaviour
     [Required]
     [LabelText("Status")]
     [SerializeField] 
-    private TextMeshPro leftStatus;
+    private PopularityStatus leftStatus;
 
 
     [HorizontalGroup("Meters")]
@@ -127,21 +127,11 @@ public class PopularityMetersController : MonoBehaviour
     [Required]
     [LabelText("Status")]
     [SerializeField] 
-    private TextMeshPro rightStatus;
+    private PopularityStatus rightStatus;
 
-    [BoxGroup("Status Materials")]
-    [AssetsOnly]
-    [Required]
-    [LabelText("Default")]
-    [SerializeField] private Material statusBlackMaterial;
+    private const float statusTopOffset = 0.15f;
 
-    [BoxGroup("Status Materials")]
-    [AssetsOnly]
-    [Required]
-    [LabelText("Oscar Season")]
-    [SerializeField] private Material statusWhiteMaterial;
-
-    private const float statusTopOffset = 0.1f;
+    private const float statusHeight = 0.3f;
 
     // ─────────────────────────────────────────────
     // Animation
@@ -339,10 +329,16 @@ public class PopularityMetersController : MonoBehaviour
         fill.localScale = scale;
     }
 
-    private void UpdateStatusPosition(Transform fill, TextMeshPro status)
+    private void UpdateStatusPosition(Transform fill, PopularityStatus status)
     {
+        float fillHeight = fill.localScale.y;
+        bool shouldBeVisible = fillHeight >= statusHeight + statusTopOffset;
+
+        if (status.gameObject.activeSelf != shouldBeVisible)
+            status.gameObject.SetActive(shouldBeVisible);
+
         Vector3 position = status.transform.localPosition;
-        position.y = fill.localPosition.y + fill.localScale.y - statusTopOffset;
+        position.y = fill.localPosition.y + fillHeight - statusTopOffset;
         status.transform.localPosition = position;
     }
 
@@ -368,13 +364,13 @@ public class PopularityMetersController : MonoBehaviour
         UpdateStatus(rightStatus, rightPlayer.Popularity);
     }
 
-    private void UpdateStatus(TextMeshPro status, Popularity popularity)
+    private void UpdateStatus(PopularityStatus status, Popularity popularity)
     {
         int target = Config.GetTierLimit(popularity.CurrentTier);
-        status.text = $"{popularity.CurrentPoints} / {target}";
+        status.SetValue(popularity.CurrentPoints, target);
     }
 
-    private void SetFillImmediate(Transform fill, TextMeshPro status, int points, ref float targetScaleY)
+    private void SetFillImmediate(Transform fill, PopularityStatus status, int points, ref float targetScaleY)
     {
         targetScaleY = GetFillScaleY(points);
 
@@ -407,7 +403,7 @@ public class PopularityMetersController : MonoBehaviour
 
     public void SetOscarStatus(string ownerId, bool active)
     {
-        TextMeshPro status;
+        PopularityStatus status;
 
         if (ownerId == GameManager.Instance.LeftBase.OwnerId)
             status = leftStatus;
@@ -419,6 +415,6 @@ public class PopularityMetersController : MonoBehaviour
             return;
         }
 
-        status.fontSharedMaterial = active ? statusWhiteMaterial : statusBlackMaterial;
+        status.SetOscarSeason(active);
     }
 }
