@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+
+  "stats": {
+    "startingMoney": 1200,
+
+    "rewards": {
+      "meleeDeathPoints": 6,
+      "rangedDeathPoints": 9,
+      "heavyDeathPoints": 16,
+      "costMultiplier": -1.5
+    },
+
+    "spamPunishment": {
+      "penaltyPerTier": 50
+    },
+
+    "oscarSeason": {
+      "duration": 2.0,
+      "moveSpeedMultiplier": 2.0,
+      "attackSpeedMultiplier": 2.0
+    }
+  },
+
+  "units": [
+    {
+      "id": "chaplin",
+      "cost": 55,
+      "attackCooldown": 1.0
+    },
+    {
+      "id": "cameraman",
+      "cost": 80,
+      "attackRange": 4.5
+    },
+    {
+      "id": "king-kong",
+      "cost": 255,
+      "maxHealth": 350
+    }
+  ]
+}

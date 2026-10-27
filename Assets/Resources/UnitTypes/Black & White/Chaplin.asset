@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Chaplin
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
+  id: chaplin
   Icon: {fileID: 21300000, guid: 0727554d88fc0964a882d535342d771f, type: 3}
   UnitName: Chaplin
   Role: 0

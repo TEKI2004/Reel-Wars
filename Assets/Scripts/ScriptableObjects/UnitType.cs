@@ -15,11 +15,19 @@ public class UnitType : ScriptableObject
     // Overview
     // ─────────────────────────────────────────────
 
+    [VerticalGroup("Overview/Layout/Info")]
+    [ReadOnly]
+    [LabelWidth(80)]
+    [LabelText("ID")]
+    [SerializeField] private string id;
+
+    public string Id => id;
+
     [BoxGroup("Overview")]
-    [HorizontalGroup("Overview/Layout", Width = 75)]
+    [HorizontalGroup("Overview/Layout", Width = 100)]
     [AssetsOnly]
     [Required]
-    [PreviewField(60, ObjectFieldAlignment.Center)]
+    [PreviewField(100, ObjectFieldAlignment.Center)]
     [HideLabel]
     public Sprite Icon;
 
@@ -87,4 +95,17 @@ public class UnitType : ScriptableObject
     [LabelText("Cooldown")]
     [SuffixLabel("s", Overlay = true)]
     public float AttackCooldown;
+
+    [VerticalGroup("Overview/Layout/Info")]
+    [Button("Regenerate ID", ButtonSizes.Small)]
+    private void RegenerateId()
+    {
+        id = ConfigIdUtility.ToKebabCase(UnitName);
+    }
+
+    private void OnValidate()
+    {
+        if (string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(UnitName))
+            RegenerateId();
+    }
 }

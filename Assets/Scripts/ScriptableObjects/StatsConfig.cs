@@ -203,13 +203,13 @@ public class OscarSeasonConfig
 {
     [MinValue(0.1f)]
     [SuffixLabel("s", Overlay = true)]
-    public float Duration = 10f;
+    public float Duration;
 
     [MinValue(1f)]
     [SuffixLabel("×", Overlay = true)]
-    public float MoveSpeedMultiplier = 1.5f;
+    public float MoveSpeedMultiplier;
 
     [MinValue(1f)]
     [SuffixLabel("×", Overlay = true)]
-    public float AttackSpeedMultiplier = 1.5f;
+    public float AttackSpeedMultiplier;
 }

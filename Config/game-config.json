@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+
+  "stats": {
+    "baseHealth": 1000,
+    "startingMoney": 1500,
+    "startingGenreId": "black-white",
+
+    "rewards": {
+      "meleeDeathPoints": 6,
+      "rangedDeathPoints": 8,
+      "heavyDeathPoints": 16,
+      "costMultiplier": 1.5
+    },
+
+    "spamPunishment": {
+      "penaltyPerTier": 55
+    },
+
+    "popularity": {
+      "maxTier": 3,
+      "baseLimit": 16,
+      "linearLimitGrowth": 25,
+      "quadraticLimitGrowth": 1
+    },
+
+    "oscarSeason": {
+      "duration": 5.0,
+      "moveSpeedMultiplier": 1.5,
+      "attackSpeedMultiplier": 1.5
+    }
+  },
+
+  "units": [
+    {
+      "id": "chaplin",
+      "cost": 55,
+      "damage": 20,
+      "maxHealth": 100,
+      "attackRange": 1.0,
+      "attackCooldown": 1.0,
+      "moveSpeed": 3.0
+    },
+
+    {
+      "id": "cameraman",
+      "cost": 75,
+      "damage": 30,
+      "maxHealth": 80,
+      "attackRange": 5.0,
+      "attackCooldown": 1,
+      "moveSpeed": 3
+    },
+
+    {
+      "id": "king-kong",
+      "cost": 205,
+      "damage": 50,
+      "maxHealth": 250,
+      "attackRange": 1.2,
+      "attackCooldown": 1.2,
+      "moveSpeed": 2.5
+    }
+  ]
+}

@@ -9,11 +9,19 @@ public class GenreNode : ScriptableObject
     // Overview
     // ─────────────────────────────────────────────
 
+    [VerticalGroup("Overview/Layout/Info")]
+    [ReadOnly]
+    [LabelWidth(95)]
+    [LabelText("ID")]
+    [SerializeField] private string id;
+
+    public string Id => id;
+
     [BoxGroup("Overview")]
-    [HorizontalGroup("Overview/Layout", Width = 75)]
+    [HorizontalGroup("Overview/Layout", Width = 80)]
     [AssetsOnly]
     [Required]
-    [PreviewField(60, ObjectFieldAlignment.Center)]
+    [PreviewField(80, ObjectFieldAlignment.Center)]
     [HideLabel]
     public Sprite Icon;
 
@@ -55,6 +63,18 @@ public class GenreNode : ScriptableObject
     [LabelText("Heavy")]
     public UnitType HeavyUnit;
 
+    [VerticalGroup("Overview/Layout/Info")]
+    [Button("Regenerate ID", ButtonSizes.Small)]
+    private void RegenerateId()
+    {
+        id = ConfigIdUtility.ToKebabCase(GenreName);
+    }
+
+    private void OnValidate()
+    {
+        if (string.IsNullOrWhiteSpace(id) && !string.IsNullOrWhiteSpace(GenreName))
+            RegenerateId();
+    }
 
     // ─────────────────────────────────────────────
     // Children Genres

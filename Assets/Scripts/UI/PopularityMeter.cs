@@ -11,9 +11,14 @@ public class PopularityMetersController : MonoBehaviour
     [BoxGroup("Config")]
     [AssetsOnly]
     [Required]
-    [LabelText("Stats Config")]
-    [SerializeField]
-    private StatsConfig statsConfig;
+    [LabelText("Editor Stats Config")]
+    [SerializeField] private StatsConfig statsConfig;
+
+    private StatsConfig ActiveStatsConfig => Application.isPlaying
+        ? GameManager.Instance?.Config
+        : statsConfig;
+
+    private PopularityConfig Config => ActiveStatsConfig?.Popularity;
 
 
     // ─────────────────────────────────────────────
@@ -180,11 +185,8 @@ public class PopularityMetersController : MonoBehaviour
     private Player leftPlayer;
     private Player rightPlayer;
 
-    private PopularityConfig Config =>
-        statsConfig.Popularity;
-
     private bool CanRebuildTierLimits =>
-        statsConfig != null &&
+        ActiveStatsConfig != null &&
         tierLimitPrefab != null &&
         leftMaxTierLimit != null &&
         leftFill != null &&

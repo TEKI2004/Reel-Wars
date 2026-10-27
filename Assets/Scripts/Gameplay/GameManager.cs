@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
-{   
+{
     [Header("Config")]
     [SerializeField] private StatsConfig defaultStatsConfig;
 
@@ -21,9 +20,10 @@ public class GameManager : MonoBehaviour
     public BaseBehaviour LeftBase => leftBase;
     public BaseBehaviour RightBase => rightBase;
 
-    public StatsConfig Config => defaultStatsConfig;
+    private RuntimeGameConfig runtimeConfig;
+    public StatsConfig Config => runtimeConfig?.Stats;
 
-    public static GameManager Instance { get; private set; } 
+    public static GameManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -36,14 +36,19 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         if (defaultStatsConfig == null)
-        { 
             defaultStatsConfig = Resources.Load<StatsConfig>("StatsConfig");
+
+        if (defaultStatsConfig == null)
+        {
+            Debug.LogError("Default StatsConfig could not be found.");
+            enabled = false;
+            return;
         }
 
+        BuildRuntimeConfig();
+
         if (leftPlayerName == rightPlayerName)
-        {
             Debug.LogError("Player names must be unique.");
-        }
 
         leftBase.Initialize(leftPlayerName, FacingDirection.Right);
         rightBase.Initialize(rightPlayerName, FacingDirection.Left);
@@ -53,6 +58,36 @@ public class GameManager : MonoBehaviour
     {
         leftBase.Player.Popularity.CheckTierProgression();
         rightBase.Player.Popularity.CheckTierProgression();
+    }
+
+    private void BuildRuntimeConfig()
+    {
+        GameConfigLoadResult loadResult = GameConfigLoader.Load(out GameConfigData configData, out string error);
+
+        if (loadResult == GameConfigLoadResult.Missing)
+        {
+            Debug.Log($"No external game config found. Using defaults.\n{GameConfigLoader.ConfigPath}");
+            runtimeConfig = GameConfigBuilder.Build(defaultStatsConfig, null);
+            return;
+        }
+
+        if (loadResult == GameConfigLoadResult.Failed)
+        {
+            Debug.LogError($"{error}\nFalling back to default configuration.");
+            runtimeConfig = GameConfigBuilder.Build(defaultStatsConfig, null);
+            return;
+        }
+
+        if (!GameConfigValidator.Validate(configData, defaultStatsConfig, out var errors))
+        {
+            Debug.LogError($"Game config validation failed:\n- {string.Join("\n- ", errors)}\nFalling back to default configuration.");
+            runtimeConfig = GameConfigBuilder.Build(defaultStatsConfig, null);
+            return;
+        }
+
+        runtimeConfig = GameConfigBuilder.Build(defaultStatsConfig, configData);
+
+        Debug.Log($"External game config loaded successfully.\n{GameConfigLoader.ConfigPath}");
     }
 
     public BaseBehaviour GetRewardedBase(string victimOwnerId)

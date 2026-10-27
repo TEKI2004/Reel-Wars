@@ -18,14 +18,12 @@ public class OscarSeasonController : MonoBehaviour
     [Required][SerializeField] private OscarSeasonTimerView timerView;
     [Required][SerializeField] private PopularityMetersController popularityMeters;
 
-    [Title("Settings")]
-    [MinValue(0.1f)][SerializeField] private float duration = 10f;
-
     [ShowInInspector, ReadOnly]
     private OscarSeasonState state = OscarSeasonState.Idle;
 
     private Popularity Popularity => playerBase.Player.Popularity;
-    private PopularityConfig Config => GameManager.Instance.Config.Popularity;
+    private PopularityConfig PopularityConfig => GameManager.Instance.Config.Popularity;
+    private OscarSeasonConfig OscarConfig => GameManager.Instance.Config.OscarSeason;
 
     public float MoveSpeedMultiplier { get; private set; } = 1f;
     public float AttackSpeedMultiplier { get; private set; } = 1f;
@@ -55,7 +53,7 @@ public class OscarSeasonController : MonoBehaviour
     private void HandlePopularityChanged(int points)
     {
         if (state != OscarSeasonState.Idle) return;
-        if (points < Config.MaxPoints) return;
+        if (points < PopularityConfig.MaxPoints) return;
 
         StartCoroutine(OscarSeasonRoutine());
     }
@@ -73,7 +71,7 @@ public class OscarSeasonController : MonoBehaviour
 
         EnableBuff();
 
-        yield return timerView.PlayTimer(duration);
+        yield return timerView.PlayTimer(OscarConfig.Duration);
 
         DisableBuff();
 
