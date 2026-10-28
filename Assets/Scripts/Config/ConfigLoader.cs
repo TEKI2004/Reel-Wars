@@ -3,14 +3,14 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public enum GameConfigLoadResult
+public enum ConfigLoadResult
 {
     Missing,
     Success,
     Failed
 }
 
-public static class GameConfigLoader
+public static class ConfigLoader
 {
     private const string ConfigDirectoryName = "Config";
     private const string ConfigFileName = "game-config.json";
@@ -22,36 +22,36 @@ public static class GameConfigLoader
 
     public static string ConfigPath => Path.GetFullPath(Path.Combine(Application.dataPath, "..", ConfigDirectoryName, ConfigFileName));
 
-    public static GameConfigLoadResult Load(out GameConfigData config, out string error)
+    public static ConfigLoadResult Load(out ConfigData config, out string error)
     {
         config = null;
         error = null;
 
         if (!File.Exists(ConfigPath))
-            return GameConfigLoadResult.Missing;
+            return ConfigLoadResult.Missing;
 
         try
         {
             string json = File.ReadAllText(ConfigPath);
-            config = JsonConvert.DeserializeObject<GameConfigData>(json, SerializerSettings);
+            config = JsonConvert.DeserializeObject<ConfigData>(json, SerializerSettings);
 
             if (config == null)
             {
                 error = $"Config file contains no configuration data: {ConfigPath}";
-                return GameConfigLoadResult.Failed;
+                return ConfigLoadResult.Failed;
             }
 
-            return GameConfigLoadResult.Success;
+            return ConfigLoadResult.Success;
         }
         catch (JsonException exception)
         {
             error = $"Failed to parse game config '{ConfigPath}':\n{exception.Message}";
-            return GameConfigLoadResult.Failed;
+            return ConfigLoadResult.Failed;
         }
         catch (Exception exception)
         {
             error = $"Failed to read game config '{ConfigPath}':\n{exception.Message}";
-            return GameConfigLoadResult.Failed;
+            return ConfigLoadResult.Failed;
         }
     }
 }

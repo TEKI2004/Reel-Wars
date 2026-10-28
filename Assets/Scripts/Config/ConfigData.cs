@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 
-public class GameConfigData
+public class ConfigData
 {
     public int? SchemaVersion { get; set; }
 
     public StatsConfigData Stats { get; set; }
     public List<UnitConfigData> Units { get; set; }
+    public List<GenreConfigData> Genres { get; set; }
 }
 
 public class StatsConfigData
@@ -61,4 +62,15 @@ public class UnitConfigData
     public float? AttackRange { get; set; }
     public float? AttackCooldown { get; set; }
     public float? MoveSpeed { get; set; }
+}
+
+public class GenreConfigData
+{
+    public string Id { get; set; }
+
+    public string MeleeUnitId { get; set; }
+    public string RangedUnitId { get; set; }
+    public string HeavyUnitId { get; set; }
+
+    public List<string> Children { get; set; }
 }

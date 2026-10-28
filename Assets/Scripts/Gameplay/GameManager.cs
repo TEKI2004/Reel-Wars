@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public BaseBehaviour LeftBase => leftBase;
     public BaseBehaviour RightBase => rightBase;
 
-    private RuntimeGameConfig runtimeConfig;
+    private RuntimeConfig runtimeConfig;
     public StatsConfig Config => runtimeConfig?.Stats;
 
     public static GameManager Instance { get; private set; }
@@ -62,32 +62,32 @@ public class GameManager : MonoBehaviour
 
     private void BuildRuntimeConfig()
     {
-        GameConfigLoadResult loadResult = GameConfigLoader.Load(out GameConfigData configData, out string error);
+        ConfigLoadResult loadResult = ConfigLoader.Load(out ConfigData configData, out string error);
 
-        if (loadResult == GameConfigLoadResult.Missing)
+        if (loadResult == ConfigLoadResult.Missing)
         {
-            Debug.Log($"No external game config found. Using defaults.\n{GameConfigLoader.ConfigPath}");
-            runtimeConfig = GameConfigBuilder.Build(defaultStatsConfig, null);
+            Debug.Log($"No external game config found. Using defaults.\n{ConfigLoader.ConfigPath}");
+            runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, null);
             return;
         }
 
-        if (loadResult == GameConfigLoadResult.Failed)
+        if (loadResult == ConfigLoadResult.Failed)
         {
             Debug.LogError($"{error}\nFalling back to default configuration.");
-            runtimeConfig = GameConfigBuilder.Build(defaultStatsConfig, null);
+            runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, null);
             return;
         }
 
-        if (!GameConfigValidator.Validate(configData, defaultStatsConfig, out var errors))
+        if (!ConfigValidator.Validate(configData, defaultStatsConfig, out var errors))
         {
             Debug.LogError($"Game config validation failed:\n- {string.Join("\n- ", errors)}\nFalling back to default configuration.");
-            runtimeConfig = GameConfigBuilder.Build(defaultStatsConfig, null);
+            runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, null);
             return;
         }
 
-        runtimeConfig = GameConfigBuilder.Build(defaultStatsConfig, configData);
+        runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, configData);
 
-        Debug.Log($"External game config loaded successfully.\n{GameConfigLoader.ConfigPath}");
+        Debug.Log($"External game config loaded successfully.\n{ConfigLoader.ConfigPath}");
     }
 
     public BaseBehaviour GetRewardedBase(string victimOwnerId)

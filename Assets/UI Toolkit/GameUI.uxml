@@ -51,7 +51,7 @@
                 <ui:Label name="RightHeavyName" text="King Kong" class="unit-name"/>
                 <ui:VisualElement name="RightHeavyIcon" class="unit-icon"/>
                 <ui:Label name="RightHeavyCost" text="30M $" class="unit-cost"/>
-                <ui:Label name="RightHeavyKey" text="&#x2191;" class="keybind-circle unit-keybind-circle" />   
+                <ui:Label name="RightHeavyKey" text="&#x2192;" class="keybind-circle unit-keybind-circle" />   
             </ui:Button>
         </ui:VisualElement>
         <ui:Label name="RightPassiveTitle" text="Passive" class="passive-title"/>

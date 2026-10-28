@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+
+  "genres": [
+    {
+      "id": "black-white",
+      "meleeUnitId": "chaplin",
+      "rangedUnitId": "cameraman",
+      "heavyUnitId": "king-kong",
+      "children": [
+        "action",
+        "comedy"
+      ]
+    },
+
+    {
+      "id": "action",
+      "rangedUnitId": "rambo"
+    },
+
+    {
+      "id": "comedy",
+      "children": ["action","action"]
+    }
+  ]
+}

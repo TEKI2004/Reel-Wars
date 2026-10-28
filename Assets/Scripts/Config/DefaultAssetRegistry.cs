@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class GameConfigAssetRegistry
+public class DefaultAssetRegistry
 {
     private readonly Dictionary<string, GenreNode> genres = new();
     private readonly Dictionary<string, UnitType> units = new();
@@ -10,33 +10,17 @@ public class GameConfigAssetRegistry
     public IReadOnlyDictionary<string, UnitType> Units => units;
     public IReadOnlyList<string> Errors => errors;
 
-    public int MaxDepth { get; private set; }
-
-    public static GameConfigAssetRegistry Build(GenreNode startingGenre)
+    public static DefaultAssetRegistry Build(GenreNode startingGenre, int maxTier)
     {
-        GameConfigAssetRegistry registry = new();
-
-        HashSet<GenreNode> currentPath = new();
-        Dictionary<GenreNode, int> visitedDepths = new();
-
-        registry.CollectGenre(startingGenre, 1, currentPath, visitedDepths);
-
+        DefaultAssetRegistry registry = new();
+        registry.CollectGenre(startingGenre, 1, maxTier);
         return registry;
     }
 
-    private void CollectGenre(GenreNode genre, int depth, HashSet<GenreNode> currentPath, Dictionary<GenreNode, int> visitedDepths)
+    private void CollectGenre(GenreNode genre, int depth, int maxTier)
     {
-        if (genre == null)
+        if (genre == null || depth > maxTier)
             return;
-
-        if (depth > MaxDepth)
-            MaxDepth = depth;
-
-        if (!currentPath.Add(genre))
-        {
-            errors.Add($"Cycle detected in genre tree at genre '{genre.GenreName}'.");
-            return;
-        }
 
         RegisterGenre(genre);
 
@@ -44,18 +28,8 @@ public class GameConfigAssetRegistry
         RegisterUnit(genre.RangedUnit);
         RegisterUnit(genre.HeavyUnit);
 
-        if (visitedDepths.TryGetValue(genre, out int previousDepth) && previousDepth >= depth)
-        {
-            currentPath.Remove(genre);
-            return;
-        }
-
-        visitedDepths[genre] = depth;
-
         foreach (GenreNode child in genre.Children)
-            CollectGenre(child, depth + 1, currentPath, visitedDepths);
-
-        currentPath.Remove(genre);
+            CollectGenre(child, depth + 1, maxTier);
     }
 
     private void RegisterGenre(GenreNode genre)
