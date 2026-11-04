@@ -26,7 +26,7 @@ public static class ConfigValidator
         errors.AddRange(registry.Errors);
 
         ValidateSchema(config, errors);
-        ValidateStats(config.Stats, errors);
+        ValidateStats(config.Stats, defaultConfig, errors);
         ValidateUnits(config.Units, registry, errors);
         ValidateGenres(config.Genres, registry, errors);
 
@@ -44,7 +44,7 @@ public static class ConfigValidator
             errors.Add($"Unsupported schema version '{config.SchemaVersion}'. Expected '{CurrentSchemaVersion}'.");
     }
 
-    private static void ValidateStats(StatsConfigData stats, List<string> errors)
+    private static void ValidateStats(StatsConfigData stats, StatsConfig defaults, List<string> errors)
     {
         if (stats == null)
             return;
@@ -54,7 +54,7 @@ public static class ConfigValidator
 
         ValidateRewards(stats.Rewards, errors);
         ValidateSpamPunishment(stats.SpamPunishment, errors);
-        ValidatePopularity(stats.Popularity, errors);
+        ValidatePopularity(stats.Popularity, defaults.Popularity, errors);
         ValidateOscarSeason(stats.OscarSeason, errors);
     }
 
@@ -77,16 +77,34 @@ public static class ConfigValidator
         ValidateMin(spamPunishment.PenaltyPerTier, 0, "Stats.SpamPunishment.PenaltyPerTier cannot be negative.", errors);
     }
 
-    private static void ValidatePopularity(PopularityConfigData popularity, List<string> errors)
+    private static void ValidatePopularity(
+        PopularityConfigData overrides,
+        PopularityConfig defaults,
+        List<string> errors
+    )
     {
-        if (popularity == null)
+        if (overrides == null)
             return;
 
-        ValidateMin(popularity.StartingPoints, 0, "Stats.Popularity.StartingPoints cannot be negative.", errors);
-        ValidateMin(popularity.MaxTier, 1, "Stats.Popularity.MaxTier must be at least 1.", errors);
-        ValidateMin(popularity.BaseLimit, 0, "Stats.Popularity.BaseLimit cannot be negative.", errors);
-        ValidateMin(popularity.LinearLimitGrowth, 0, "Stats.Popularity.LinearLimitGrowth cannot be negative.", errors);
-        ValidateMin(popularity.QuadraticLimitGrowth, 0, "Stats.Popularity.QuadraticLimitGrowth cannot be negative.", errors);
+        ValidateMin(overrides.StartingPoints, 0, "Stats.Popularity.StartingPoints cannot be negative.", errors);
+        ValidateMin(overrides.MaxTier, 1, "Stats.Popularity.MaxTier must be at least 1.", errors);
+        ValidateMin(overrides.BaseLimit, 0, "Stats.Popularity.BaseLimit cannot be negative.", errors);
+        ValidateMin(overrides.LinearLimitGrowth, 0, "Stats.Popularity.LinearLimitGrowth cannot be negative.", errors);
+        ValidateMin(overrides.QuadraticLimitGrowth, 0, "Stats.Popularity.QuadraticLimitGrowth cannot be negative.", errors);
+
+        int startingPoints = overrides.StartingPoints ?? defaults.StartingPoints;
+        int maxTier = overrides.MaxTier ?? defaults.MaxTier;
+        int baseLimit = overrides.BaseLimit ?? defaults.BaseLimit;
+        int linearGrowth = overrides.LinearLimitGrowth ?? defaults.LinearLimitGrowth;
+        int quadraticGrowth = overrides.QuadraticLimitGrowth ?? defaults.QuadraticLimitGrowth;
+
+        int maxPoints =
+            baseLimit
+            + maxTier * linearGrowth
+            + maxTier * maxTier * quadraticGrowth;
+
+        if (startingPoints > maxPoints)
+            errors.Add($"Stats.Popularity.StartingPoints ({startingPoints}) cannot exceed MaxPoints ({maxPoints}).");
     }
 
     private static void ValidateOscarSeason(OscarSeasonConfigData oscarSeason, List<string> errors)

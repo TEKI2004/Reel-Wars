@@ -14,7 +14,7 @@ public class Popularity
 
     public Popularity()
     {
-        CurrentPoints = Config.StartingPoints;
+        CurrentPoints = Mathf.Clamp(Config.StartingPoints, 0, Config.MaxPoints);
         CurrentTier = 1;
         CanGainPoints = true;
     }
