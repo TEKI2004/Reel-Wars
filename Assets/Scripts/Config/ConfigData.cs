@@ -55,6 +55,8 @@ public class UnitConfigData
 {
     public string Id { get; set; }
 
+    public string Visual { get; set; }
+
     public int? Cost { get; set; }
     public int? Damage { get; set; }
     public int? MaxHealth { get; set; }
@@ -62,6 +64,12 @@ public class UnitConfigData
     public float? AttackRange { get; set; }
     public float? AttackCooldown { get; set; }
     public float? MoveSpeed { get; set; }
+}
+
+public class UnitVisualConfigData
+{
+    public string Type { get; set; }
+    public string Id { get; set; }
 }
 
 public class GenreConfigData

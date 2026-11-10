@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class ConfigBuilder
 {
-    public static RuntimeConfig Build(StatsConfig defaultConfig, ConfigData config)
+    public static RuntimeConfig Build(StatsConfig defaultConfig, ConfigData config, PrefabRegistry prefabRegistry)
     {
         StatsConfig stats = BuildStats(defaultConfig, config?.Stats);
 
@@ -12,7 +12,7 @@ public static class ConfigBuilder
             stats.Popularity.MaxTier
         );
 
-        Dictionary<string, UnitType> units = BuildUnits(registry.Units, config?.Units);
+        Dictionary<string, UnitType> units = BuildUnits(registry.Units, config?.Units, prefabRegistry); ;
         Dictionary<string, GenreNode> genres = BuildGenres(registry.Genres, units, config?.Genres);
 
         string startingGenreId = config?.Stats?.StartingGenreId ?? defaultConfig.StartingGenre.Id;
@@ -133,7 +133,8 @@ public static class ConfigBuilder
 
     private static Dictionary<string, UnitType> BuildUnits(
         IReadOnlyDictionary<string, UnitType> defaults,
-        List<UnitConfigData> overrides
+        List<UnitConfigData> overrides,
+        PrefabRegistry prefabRegistry
     )
     {
         Dictionary<string, UnitConfigData> overrideLookup = new();
@@ -152,7 +153,7 @@ public static class ConfigBuilder
             unit.name = $"{pair.Value.name} (Runtime)";
 
             if (overrideLookup.TryGetValue(pair.Key, out UnitConfigData unitOverride))
-                ApplyUnit(unit, unitOverride);
+                ApplyUnit(unit, unitOverride, prefabRegistry);
 
             units.Add(pair.Key, unit);
         }
@@ -160,8 +161,15 @@ public static class ConfigBuilder
         return units;
     }
 
-    private static void ApplyUnit(UnitType target, UnitConfigData overrides)
+    private static void ApplyUnit(UnitType target, UnitConfigData overrides, PrefabRegistry prefabRegistry)
     {
+        if (overrides.Visual == "prefab" && prefabRegistry.TryGet(overrides.Id, out GameObject prefab))
+            target.VisualPrefab = prefab;
+        else if (overrides.Visual == "glb")
+        {
+            // Models/{overrides.Id}.glb
+        }
+
         if (overrides.Cost.HasValue)
             target.Cost = overrides.Cost.Value;
 

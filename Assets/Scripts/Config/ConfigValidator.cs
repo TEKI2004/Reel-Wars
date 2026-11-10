@@ -4,7 +4,7 @@ public static class ConfigValidator
 {
     private const int CurrentSchemaVersion = 1;
 
-    public static bool Validate(ConfigData config, StatsConfig defaultConfig, out List<string> errors)
+    public static bool Validate(ConfigData config, StatsConfig defaultConfig, PrefabRegistry prefabRegistry, out List<string> errors)
     {
         errors = new List<string>();
 
@@ -24,10 +24,11 @@ public static class ConfigValidator
         DefaultAssetRegistry registry = DefaultAssetRegistry.Build(defaultConfig.StartingGenre, maxTier);
 
         errors.AddRange(registry.Errors);
+        errors.AddRange(prefabRegistry.Errors);
 
         ValidateSchema(config, errors);
         ValidateStats(config.Stats, defaultConfig, errors);
-        ValidateUnits(config.Units, registry, errors);
+        ValidateUnits(config.Units, registry, prefabRegistry, errors);
         ValidateGenres(config.Genres, registry, errors);
 
         string startingGenreId = config.Stats?.StartingGenreId;
@@ -117,7 +118,12 @@ public static class ConfigValidator
         ValidateMin(oscarSeason.AttackSpeedMultiplier, 1f, "Stats.OscarSeason.AttackSpeedMultiplier must be at least 1.", errors);
     }
 
-    private static void ValidateUnits(List<UnitConfigData> units, DefaultAssetRegistry registry, List<string> errors)
+    private static void ValidateUnits(
+        List<UnitConfigData> units,
+        DefaultAssetRegistry registry,
+        PrefabRegistry prefabRegistry,
+        List<string> errors
+    )
     {
         if (units == null)
             return;
@@ -143,6 +149,18 @@ public static class ConfigValidator
 
             if (!registry.Units.ContainsKey(unit.Id))
                 errors.Add($"Unknown unit ID '{unit.Id}'.");
+
+            if (unit.Visual != null)
+            {
+                if (unit.Visual != "prefab")
+                {
+                    errors.Add($"Unit '{unit.Id}': Unknown visual type '{unit.Visual}'.");
+                }
+                else if (!prefabRegistry.Prefabs.ContainsKey(unit.Id))
+                {
+                    errors.Add($"Unit '{unit.Id}': No matching prefab found.");
+                }
+            }
 
             ValidateMin(unit.Cost, 0, $"Unit '{unit.Id}': Cost cannot be negative.", errors);
             ValidateMin(unit.Damage, 0, $"Unit '{unit.Id}': Damage cannot be negative.", errors);

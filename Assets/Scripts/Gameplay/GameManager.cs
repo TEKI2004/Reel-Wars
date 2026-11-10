@@ -63,29 +63,30 @@ public class GameManager : MonoBehaviour
     private void BuildRuntimeConfig()
     {
         ConfigLoadResult loadResult = ConfigLoader.Load(out ConfigData configData, out string error);
+        PrefabRegistry prefabRegistry = PrefabRegistry.Build();
 
         if (loadResult == ConfigLoadResult.Missing)
         {
             Debug.Log($"No external game config found. Using defaults.\n{ConfigLoader.ConfigPath}");
-            runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, null);
+            runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, null, prefabRegistry);
             return;
         }
 
         if (loadResult == ConfigLoadResult.Failed)
         {
             Debug.LogError($"{error}\nFalling back to default configuration.");
-            runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, null);
+            runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, null, prefabRegistry);
             return;
         }
 
-        if (!ConfigValidator.Validate(configData, defaultStatsConfig, out var errors))
+        if (!ConfigValidator.Validate(configData, defaultStatsConfig, prefabRegistry, out var errors))
         {
             Debug.LogError($"Game config validation failed:\n- {string.Join("\n- ", errors)}\nFalling back to default configuration.");
-            runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, null);
+            runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, null, prefabRegistry);
             return;
         }
 
-        runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, configData);
+        runtimeConfig = ConfigBuilder.Build(defaultStatsConfig, configData, prefabRegistry);
 
         Debug.Log($"External game config loaded successfully.\n{ConfigLoader.ConfigPath}");
     }
