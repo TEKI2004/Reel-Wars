@@ -83,13 +83,23 @@ public class GenreChoiceUI : MonoBehaviour
 
     private void OnDisable()
     {
-        UnbindSide(left);
-        UnbindSide(right);
+        if (left != null)
+        {
+            UnbindSide(left);
 
-        left.Player.OnGenreChoiceAvailable -= left.ShowAction;
-        right.Player.OnGenreChoiceAvailable -= right.ShowAction;
+            if (left.Player != null && left.ShowAction != null)
+                left.Player.OnGenreChoiceAvailable -= left.ShowAction;
+        }
 
-        inputActions.Gameplay.Disable();
+        if (right != null)
+        {
+            UnbindSide(right);
+
+            if (right.Player != null && right.ShowAction != null)
+                right.Player.OnGenreChoiceAvailable -= right.ShowAction;
+        }
+
+        inputActions?.Gameplay.Disable();
     }
 
 

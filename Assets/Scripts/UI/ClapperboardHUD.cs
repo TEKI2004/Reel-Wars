@@ -10,6 +10,7 @@ public class ClapperboardHUD : MonoBehaviour
         private readonly Label playerName;
         private readonly VisualElement genreIcon;
         private readonly Label genreName;
+        private readonly Label passiveDescription;
         private readonly Label boxOffice;
         private IVisualElementScheduledItem boxOfficePenaltyAnimation;
 
@@ -24,6 +25,7 @@ public class ClapperboardHUD : MonoBehaviour
             playerName = root.Q<Label>($"{prefix}PlayerName");
             genreIcon = root.Q<VisualElement>($"{prefix}CurrentGenreIcon");
             genreName = root.Q<Label>($"{prefix}GenreName");
+            passiveDescription = root.Q<Label>($"{prefix}PassiveValue");
             boxOffice = root.Q<Label>($"{prefix}BoxOffice");
 
             VisualElement moneySpentContainer = root.Q<VisualElement>($"{prefix}MoneySpentContainer");
@@ -71,6 +73,7 @@ public class ClapperboardHUD : MonoBehaviour
         {
             genreName.text = genre.GenreName;
             genreIcon.style.backgroundImage = new StyleBackground(genre.Icon);
+            passiveDescription.text = genre.PassiveDescription;
 
             melee.SetUnit(genre.MeleeUnit);
             ranged.SetUnit(genre.RangedUnit);
@@ -187,7 +190,7 @@ public class ClapperboardHUD : MonoBehaviour
 
     private void OnDisable()
     {
-        leftUI.Unbind();
-        rightUI.Unbind();
+        leftUI?.Unbind();
+        rightUI?.Unbind();
     }
 }

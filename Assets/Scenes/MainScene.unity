@@ -691,6 +691,7 @@ MonoBehaviour:
   rewardNeonMaterial: {fileID: 2100000, guid: d0f83024f9377df4db1bbe17b671d28f, type: 2}
   spawnArea: {fileID: 891579596}
   spawnPoint: {fileID: 891579595}
+  unitTemplate: {fileID: 6799871862351974249, guid: 61d6f87e7fdfdb344836e9552ecd5eac, type: 3}
   unitLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -1607,6 +1608,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   defaultStatsConfig: {fileID: 11400000, guid: e528f888c7c3d75448c13068c72a4a2c, type: 2}
+  unitTemplate: {fileID: 6799871862351974249, guid: 61d6f87e7fdfdb344836e9552ecd5eac, type: 3}
+  gameRuntimeRoot: {fileID: 997939373}
   leftPlayerName: Egyes
   rightPlayerName: Kettes
   leftBase: {fileID: 237540033}
@@ -2182,7 +2185,6 @@ MonoBehaviour:
   oscarView: {fileID: 455691205}
   timerView: {fileID: 455691206}
   popularityMeters: {fileID: 1802972332}
-  duration: 10
 --- !u!4 &468909505 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2774220344278030320, guid: 32dd4d5a454d12447a80ce6324febb21, type: 3}
@@ -4405,6 +4407,7 @@ MonoBehaviour:
   rewardNeonMaterial: {fileID: 2100000, guid: dbd153d643f487c47958017fcb89d4e2, type: 2}
   spawnArea: {fileID: 1376713138}
   spawnPoint: {fileID: 1376713137}
+  unitTemplate: {fileID: 6799871862351974249, guid: 61d6f87e7fdfdb344836e9552ecd5eac, type: 3}
   unitLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -5319,6 +5322,40 @@ Transform:
   - {fileID: 1203864152}
   - {fileID: 819742278}
   m_Father: {fileID: 455691204}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &997939373
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 997939374}
+  m_Layer: 0
+  m_Name: GameRuntime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &997939374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997939373}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1802972333}
+  - {fileID: 1456828000}
+  - {fileID: 1853227120}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1007395578
 GameObject:
@@ -6951,14 +6988,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1456827999}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1742667907}
   - {fileID: 455691204}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 997939374}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1468805410
 PrefabInstance:
@@ -8165,7 +8202,6 @@ MonoBehaviour:
   oscarView: {fileID: 1742667908}
   timerView: {fileID: 1742667909}
   popularityMeters: {fileID: 1802972332}
-  duration: 10
 --- !u!1001 &1762322417
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8733,14 +8769,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1802972331}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1344969451}
   - {fileID: 523111413}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 997939374}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1806856968
 PrefabInstance:
@@ -9465,12 +9501,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853227118}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.026176924, y: 0, z: 0, w: 0.99965733}
+  m_LocalRotation: {x: -0.026176924, y: -0, z: -0, w: 0.99965733}
   m_LocalPosition: {x: 0, y: 11.15, z: -4}
   m_LocalScale: {x: 4.36, y: 4.36, z: 4.36}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 997939374}
   m_LocalEulerAnglesHint: {x: -3, y: 0, z: 0}
 --- !u!114 &1853227121
 MonoBehaviour:
@@ -11129,7 +11165,5 @@ SceneRoots:
   - {fileID: 636442755}
   - {fileID: 1507498064}
   - {fileID: 1861540277}
-  - {fileID: 1802972333}
   - {fileID: 638199820}
-  - {fileID: 1456828000}
-  - {fileID: 1853227120}
+  - {fileID: 997939374}

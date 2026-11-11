@@ -17,6 +17,11 @@ public class GenreNode : ScriptableObject
 
     public string Id => id;
 
+    internal void SetRuntimeId(string id)
+    {
+        this.id = id;
+    }
+
     [BoxGroup("Overview")]
     [HorizontalGroup("Overview/Layout", Width = 80)]
     [AssetsOnly]

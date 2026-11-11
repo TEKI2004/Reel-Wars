@@ -64,7 +64,13 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
     {
         if (unitType == null)
         {
-            Debug.LogError("UnitType is null!");
+            Debug.LogError("UnitType is null.");
+            return;
+        }
+
+        if (unitType.UnitPrefab == null)
+        {
+            Debug.LogError($"Unit '{unitType.Id}' has no UnitPrefab.");
             return;
         }
 
@@ -85,21 +91,25 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
             return;
         }
 
+        CreateUnit(unitType);
+
+        Debug.Log($"{OwnerId} spawned {unitType.UnitName}.");
+    }
+
+    private UnitBehaviour CreateUnit(UnitType unitType)
+    {
         Quaternion rotation = facingDirection == FacingDirection.Right ? Quaternion.identity : Quaternion.Euler(0f, 180f, 0f);
 
-        GameObject unitObject = Instantiate(unitType.VisualPrefab, spawnPoint.position, rotation);
+        GameObject unitObject = Instantiate(unitType.UnitPrefab, spawnPoint.position, rotation);
+
         UnitBehaviour unit = unitObject.GetComponent<UnitBehaviour>();
-        if (unit != null)
-        {
-            unit.Initialize(OwnerId, unitType);
 
-            if (facingDirection == FacingDirection.Left)
-            {
-                unit.MirrorVisual();
-            }
-        }
+        unit.Initialize(OwnerId, unitType);
 
-        Debug.Log($"{OwnerId} Spawned {unitType.UnitName}");
+        if (facingDirection == FacingDirection.Left)
+            unit.MirrorVisual();
+
+        return unit;
     }
 
     public bool IsSpawnAreaBlocked()

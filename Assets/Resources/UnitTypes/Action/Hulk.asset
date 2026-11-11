@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Hulk
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
+  id: hulk
   Icon: {fileID: 21300000, guid: ff81e4593c831974fbeda2843795a2a8, type: 3}
   UnitName: Hulk
   Role: 2
-  VisualPrefab: {fileID: 187218633972683070, guid: a95266d25bdad4d468c17aaf358ff598, type: 3}
+  UnitPrefab: {fileID: 187218633972683070, guid: a95266d25bdad4d468c17aaf358ff598, type: 3}
   Cost: 300
   MoveSpeed: 3
   Damage: 200

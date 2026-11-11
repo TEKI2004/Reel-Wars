@@ -463,7 +463,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5196646060448553944}
+  - {fileID: 6106015478996128537}
   - {fileID: 5460019652242778323}
   - {fileID: 4163499068326398988}
   m_Father: {fileID: 5545551502273422819}
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloatingHpBar
   fill: {fileID: 1709501691029024987}
---- !u!1001 &8893646541137533399
+--- !u!1001 &7479998346850177302
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -707,7 +707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3707208406773940751, guid: 2f4a2ba310f26a647a85a5051f7cac5c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3707208406773940751, guid: 2f4a2ba310f26a647a85a5051f7cac5c, type: 3}
       propertyPath: m_LocalRotation.y
@@ -738,8 +738,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f4a2ba310f26a647a85a5051f7cac5c, type: 3}
---- !u!4 &5196646060448553944 stripped
+--- !u!4 &6106015478996128537 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3707208406773940751, guid: 2f4a2ba310f26a647a85a5051f7cac5c, type: 3}
-  m_PrefabInstance: {fileID: 8893646541137533399}
+  m_PrefabInstance: {fileID: 7479998346850177302}
   m_PrefabAsset: {fileID: 0}

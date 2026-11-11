@@ -72,4 +72,14 @@ public class DefaultAssetRegistry
 
         units.Add(unit.Id, unit);
     }
+
+    public Dictionary<string, UnitRole> CreateUnitRoleLookup()
+    {
+        Dictionary<string, UnitRole> result = new();
+
+        foreach (KeyValuePair<string, UnitType> pair in units)
+            result.Add(pair.Key, pair.Value.Role);
+
+        return result;
+    }
 }

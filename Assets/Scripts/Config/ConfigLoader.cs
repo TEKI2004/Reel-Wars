@@ -20,7 +20,23 @@ public static class ConfigLoader
         MissingMemberHandling = MissingMemberHandling.Error
     };
 
-    public static string ConfigPath => Path.GetFullPath(Path.Combine(Application.dataPath, "..", ConfigDirectoryName, ConfigFileName));
+    public static string ConfigDirectoryPath => Path.GetFullPath(Path.Combine(Application.dataPath, "..", ConfigDirectoryName));
+    public static string ConfigPath => Path.Combine(ConfigDirectoryPath, ConfigFileName);
+
+    public static string GetModelPath(string unitId)
+    {
+        return Path.Combine(ConfigDirectoryPath, "Models", $"{unitId}.glb");
+    }
+
+    public static string GetUnitIconPath(string unitId)
+    {
+        return Path.Combine(ConfigDirectoryPath, "Icons", "Units", $"{unitId}.png");
+    }
+
+    public static string GetGenreIconPath(string genreId)
+    {
+        return Path.Combine(ConfigDirectoryPath, "Icons", "Genres", $"{genreId}.png");
+    }
 
     public static ConfigLoadResult Load(out ConfigData config, out string error)
     {

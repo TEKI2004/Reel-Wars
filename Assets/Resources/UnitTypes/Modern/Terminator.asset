@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Terminator
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
+  id: terminator
+  Icon: {fileID: 21300000, guid: b46ec57ff2acd6b4dab8a079cb1a5adf, type: 3}
   UnitName: Terminator
   Role: 2
-  Icon: {fileID: 21300000, guid: b46ec57ff2acd6b4dab8a079cb1a5adf, type: 3}
-  VisualPrefab: {fileID: 187218633972683070, guid: fbcfd2218f4ac624bad4f408a13b75c2, type: 3}
+  UnitPrefab: {fileID: 187218633972683070, guid: fbcfd2218f4ac624bad4f408a13b75c2, type: 3}
   Cost: 200
+  MoveSpeed: 2.5
   Damage: 20
   MaxHealth: 300
   AttackRange: 3
   AttackCooldown: 0.5
-  MoveSpeed: 2.5

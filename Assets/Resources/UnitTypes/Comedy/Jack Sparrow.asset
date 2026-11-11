@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44dbc60b957a564d90202deeaab7d97, type: 3}
   m_Name: Jack Sparrow
   m_EditorClassIdentifier: Assembly-CSharp::UnitType
+  id: jack-sparrow
   Icon: {fileID: 21300000, guid: 6bf51e1dcde90e749a91256a6beaf0b9, type: 3}
   UnitName: Jack Sparrow
   Role: 1
-  VisualPrefab: {fileID: 187218633972683070, guid: c81a0ecdb66236344a8af34dc75a392d, type: 3}
+  UnitPrefab: {fileID: 187218633972683070, guid: c81a0ecdb66236344a8af34dc75a392d, type: 3}
   Cost: 125
   MoveSpeed: 3
   Damage: 150

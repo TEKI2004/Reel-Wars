@@ -23,6 +23,11 @@ public class UnitType : ScriptableObject
 
     public string Id => id;
 
+    internal void SetRuntimeId(string id)
+    {
+        this.id = id;
+    }
+
     [BoxGroup("Overview")]
     [HorizontalGroup("Overview/Layout", Width = 100)]
     [AssetsOnly]
@@ -49,7 +54,7 @@ public class UnitType : ScriptableObject
     [Required]
     [LabelWidth(80)]
     [LabelText("Prefab")]
-    public GameObject VisualPrefab;
+    public GameObject UnitPrefab;
 
 
     // ─────────────────────────────────────────────

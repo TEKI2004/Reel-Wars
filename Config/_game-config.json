@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+
+  "stats": {
+    "startingGenreId": "horror",
+    "startingMoney": 1500
+  },
+
+  "units": [
+    {
+      "id": "chucky",
+      "name": "Chucky",
+      "role": "Melee",
+      "cost": 100,
+      "damage": 60,
+      "maxHealth": 100,
+      "attackRange": 1.0,
+      "attackCooldown": 0.8,
+      "moveSpeed": 3.5
+    },
+    {
+      "id": "ghostface",
+      "name": "Ghostface",
+      "role": "Ranged",
+      "cost": 150,
+      "damage": 80,
+      "maxHealth": 100,
+      "attackRange": 5.0,
+      "attackCooldown": 1.0,
+      "moveSpeed": 3.0
+    },
+    {
+      "id": "pennywise",
+      "name": "Pennywise",
+      "role": "Heavy",
+      "cost": 300,
+      "damage": 150,
+      "maxHealth": 350,
+      "attackRange": 1.5,
+      "attackCooldown": 1.5,
+      "moveSpeed": 2.5
+    }
+  ],
+
+  "genres": [
+    {
+      "id": "horror",
+      "name": "Horror",
+      "passiveDescription": "Fear units away",
+      "meleeUnitId": "chucky",
+      "rangedUnitId": "ghostface",
+      "heavyUnitId": "pennywise",
+      "children": ["horror", "horror"]
+    }
+  ]
+}

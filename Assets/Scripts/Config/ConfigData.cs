@@ -54,8 +54,10 @@ public class OscarSeasonConfigData
 public class UnitConfigData
 {
     public string Id { get; set; }
+    public string Name { get; set; }
+    public UnitRole? Role { get; set; }
 
-    public string Visual { get; set; }
+    public UnitModelConfigData Model { get; set; }
 
     public int? Cost { get; set; }
     public int? Damage { get; set; }
@@ -66,15 +68,18 @@ public class UnitConfigData
     public float? MoveSpeed { get; set; }
 }
 
-public class UnitVisualConfigData
+public class UnitModelConfigData
 {
-    public string Type { get; set; }
-    public string Id { get; set; }
+    public float? Height { get; set; }
+    public float? RotationY { get; set; }
+    public float? GroundOffset { get; set; }
 }
 
 public class GenreConfigData
 {
     public string Id { get; set; }
+    public string Name { get; set; }
+    public string PassiveDescription { get; set; }
 
     public string MeleeUnitId { get; set; }
     public string RangedUnitId { get; set; }

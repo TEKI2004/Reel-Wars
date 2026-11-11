@@ -13,12 +13,8 @@ public class PopularityStatus : MonoBehaviour
     [AssetsOnly][Required][SerializeField] private Material defaultMaterial;
     [AssetsOnly][Required][SerializeField] private Material oscarSeasonMaterial;
 
-    private Vector3 dividerBaseScale;
+    private Vector3 dividerBaseScale = Vector3.one;
 
-    private void Awake()
-    {
-        dividerBaseScale = Vector3.one;
-    }
 
     public void SetValue(int current, int target)
     {

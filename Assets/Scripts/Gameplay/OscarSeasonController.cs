@@ -49,7 +49,8 @@ public class OscarSeasonController : MonoBehaviour
 
     private void OnDisable()
     {
-        Popularity.OnPointsChanged -= HandlePopularityChanged;
+        if (playerBase != null && playerBase.Player != null)
+            Popularity.OnPointsChanged -= HandlePopularityChanged;
     }
 
     private void HandlePopularityChanged(int points)

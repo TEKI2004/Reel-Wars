@@ -17,6 +17,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
 
     [Title("References")]
     [Required][SerializeField] private Transform visualRoot;
+    internal Transform VisualRoot => visualRoot;
     [Required][SerializeField] private BoxCollider attackRangeDetectorCollider;
     [Required][SerializeField] private BoxCollider moveRangeDetectorCollider;
     [Required][SerializeField] private AttackedShaker unitShaker;
