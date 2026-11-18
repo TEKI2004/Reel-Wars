@@ -61,7 +61,7 @@ public static class ExternalAssetLoader
         runtimeUnit.gameObject.SetActive(true);
 
         Transform modelRoot = new GameObject("ModelRoot").transform;
-        modelRoot.SetParent(runtimeUnit.VisualRoot, false);
+        modelRoot.SetParent(runtimeUnit.Presentation.VisualRoot, false);
 
         GltfImport gltfImport = new();
 
@@ -88,7 +88,7 @@ public static class ExternalAssetLoader
             float groundY = runtimeUnit.transform.position.y + UnitRootGroundOffset;
             Bounds modelBounds = NormalizeModel(modelRoot, groundY, modelSettings);
 
-            runtimeUnit.CalibrateVisualAnchors(modelBounds);
+            runtimeUnit.Presentation.CalibrateAnchors(modelBounds);
 
             loadedImports.Add(gltfImport);
 
@@ -106,7 +106,6 @@ public static class ExternalAssetLoader
     {
         modelRoot.localPosition = Vector3.zero;
         modelRoot.localRotation = Quaternion.Euler(0f, settings.RotationY ?? 0f, 0f);
-
         modelRoot.localScale = Vector3.one;
 
         Bounds bounds = CalculateBounds(modelRoot);
@@ -118,7 +117,7 @@ public static class ExternalAssetLoader
 
         float targetHeight = settings.Height.Value;
         float scale = targetHeight / bounds.size.y;
-        modelRoot.localScale = Vector3.one * scale;
+        modelRoot.localScale = new Vector3(scale, scale, settings.MirrorZ ? -scale : scale);
 
         bounds = CalculateBounds(modelRoot);
 

@@ -98,7 +98,7 @@
 
 .passive-value {
     position: absolute;
-    top: 366px;
+    top: 363px;
     left: 176px;
     right: 22px;
     height: 26px;

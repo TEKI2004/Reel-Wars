@@ -11,29 +11,32 @@ public class MoveRangeDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (ownerUnit == null) return;
+        if (!TryGetBlockingEntity(other, out IAttackable entity))
+            return;
 
-        IAttackable attackable = other.GetComponent<IAttackable>();
-        if (attackable == null) return;
-        if (other.transform.root == ownerUnit.transform.root) return;
-
-        var baseBehaviour = other.GetComponent<BaseBehaviour>();
-        if (baseBehaviour != null && baseBehaviour.OwnerId == ownerUnit.OwnerId) return;
-
-        ownerUnit.HandleBlockEnter(attackable);
+        ownerUnit.Targeting.HandleBlockEnter(entity);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (ownerUnit == null) return;
+        if (!TryGetBlockingEntity(other, out IAttackable entity))
+            return;
 
-        IAttackable attackable = other.GetComponent<IAttackable>();
-        if (attackable == null) return;
-        if (other.transform.root == ownerUnit.transform.root) return;
+        ownerUnit.Targeting.HandleBlockExit(entity);
+    }
 
-        var baseBehaviour = other.GetComponent<BaseBehaviour>();
-        if (baseBehaviour != null && baseBehaviour.OwnerId == ownerUnit.OwnerId) return;
+    private bool TryGetBlockingEntity(Collider other, out IAttackable entity)
+    {
+        entity = null;
 
-        ownerUnit.HandleBlockExit(attackable);
+        if (ownerUnit == null || other.transform.root == ownerUnit.transform.root)
+            return false;
+
+        entity = other.GetComponent<IAttackable>();
+
+        if (entity == null)
+            return false;
+
+        return entity is not BaseBehaviour playerBase || playerBase.OwnerId != ownerUnit.OwnerId;
     }
 }

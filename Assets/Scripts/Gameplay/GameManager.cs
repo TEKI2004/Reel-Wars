@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
 
         if (loadResult == ConfigLoadResult.Missing)
         {
-            Debug.Log($"No external game config found. Using defaults.\n{ConfigLoader.ConfigPath}");
+            Debug.Log($"No external game config found. Using defaults.\nExpected path: \"{ConfigLoader.ConfigPath}\"");
             return await ConfigBuilder.BuildAsync(defaultStatsConfig, null, unitTemplate);
         }
 

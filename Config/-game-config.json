@@ -237,7 +237,8 @@
       "role": "Ranged",
       "model": {
         "height": 1.85,
-        "rotationY": 140
+        "rotationY": -40,
+        "mirrorZ": true
       },
       "cost": 150,
       "damage": 80,
@@ -252,8 +253,9 @@
       "role": "Heavy",
       "model": {
         "height": 2.5,
-        "rotationY": 140,
-        "groundOffset": -0.13
+        "rotationY": -40,
+        "groundOffset": -0.13,
+        "mirrorZ": true
       },
       "cost": 300,
       "damage": 150,

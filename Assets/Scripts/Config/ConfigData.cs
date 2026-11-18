@@ -73,6 +73,7 @@ public class UnitModelConfigData
     public float? Height { get; set; }
     public float? RotationY { get; set; }
     public float? GroundOffset { get; set; }
+    public bool MirrorZ { get; set; }
 }
 
 public class GenreConfigData

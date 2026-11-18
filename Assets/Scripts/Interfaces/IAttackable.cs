@@ -1,5 +1,8 @@
+using UnityEngine;
+
 public interface IAttackable 
 {
     string OwnerId { get; }
-    void TakeDamage(int amount);
+    int TakeDamage(int amount);
+    Vector3 FeedbackPosition { get; }
 }

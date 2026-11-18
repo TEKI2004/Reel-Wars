@@ -42,6 +42,10 @@ public class GenreNode : ScriptableObject
     [LabelText("Passive")]
     public string PassiveDescription;
 
+    [BoxGroup("Passive")]
+    [HideLabel]
+    public GenrePassive Passive;
+
 
     // ─────────────────────────────────────────────
     // Units

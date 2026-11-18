@@ -1,31 +1,38 @@
-﻿using System.Collections;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class FloatingRewardTag : MonoBehaviour
+public class FloatingUnitTag : MonoBehaviour
 {
     [Title("References")]
     [Required][SerializeField] private TextMeshPro moneyText;
     [Required][SerializeField] private TextMeshPro popularityText;
+    [Required][SerializeField] private TextMeshPro feedbackText;
 
-    private const float moneyDuration = 0.6f;
+    private const float moneyDuration = 0.9f;
     private const float moneyUpDistance = 1f;
     private const float moneyForwardDistance = 0.34f;
     private const float moneyFadeStart = 0.3f;
     private const float moneyStartOpacity = 0.75f;
     private const float moneyEndRotation = 6f;
 
-    private const float popularityDuration = 0.6f;
+    private const float popularityDuration = 0.9f;
     private const float popularityUpDistance = 1f;
     private const float popularityFadeStart = 0.3f;
 
-    public void Show(RewardResult reward, Vector3 moneySpawnPosition, Vector3 popularitySpawnPosition, Vector3 moveDirection, Material popularityMaterial)
+    private const float feedbackDuration = 0.9f;
+    private const float feedbackUpDistance = 0.8f;
+    private const float feedbackFadeStart = 0.3f;
+
+    public void ShowReward(RewardResult reward, Vector3 moneySpawnPosition, Vector3 popularitySpawnPosition, Vector3 moveDirection, Material popularityMaterial)
     {
-        if (Camera.main != null) transform.rotation = Camera.main.transform.rotation;
+        FaceCamera();
 
         moneyText.gameObject.SetActive(reward.Money > 0);
         popularityText.gameObject.SetActive(reward.Popularity > 0);
+        feedbackText.gameObject.SetActive(false);
 
         if (reward.Money > 0)
         {
@@ -39,10 +46,44 @@ public class FloatingRewardTag : MonoBehaviour
             popularityText.text = $"+{reward.Popularity:N0}";
             popularityText.fontSharedMaterial = popularityMaterial;
             popularityText.transform.position = popularitySpawnPosition;
-            StartCoroutine(AnimatePopularity());
+            StartCoroutine(AnimateVertical(popularityText, popularityDuration, popularityUpDistance, popularityFadeStart));
         }
 
         Destroy(gameObject, Mathf.Max(moneyDuration, popularityDuration) + 0.1f);
+    }
+
+    public void ShowFeedback(GenrePassiveType passiveType, Vector3 spawnPosition, int amount = 0)
+    {
+        FaceCamera();
+
+        moneyText.gameObject.SetActive(false);
+        popularityText.gameObject.SetActive(false);
+        feedbackText.gameObject.SetActive(true);
+
+        (string text, Color color) = passiveType switch
+        {
+            GenrePassiveType.DodgeChance => ("MISS", new Color32(220, 232, 242, 255)),
+            GenrePassiveType.CriticalHitChance => ("CRIT", new Color32(255, 70, 70, 255)),
+            GenrePassiveType.FirstAttackBonus => ("FIRST\nHIT", new Color32(180, 120, 255, 255)),
+            GenrePassiveType.Lifesteal => ("LIFE\nSTEAL", new Color32(110, 165, 125, 255)),
+            GenrePassiveType.LastStand => ("LAST\nSTAND", new Color32(100, 160, 155, 255)),
+            GenrePassiveType.DeathRefund => ($"REFUND\n+{amount:N0}M $", new Color32(55, 125, 75, 255)),
+            _ => throw new ArgumentOutOfRangeException(nameof(passiveType), passiveType, null)
+        };
+
+        feedbackText.text = text;
+        feedbackText.color = color;
+        feedbackText.transform.position = spawnPosition;
+
+        StartCoroutine(AnimateVertical(feedbackText, feedbackDuration, feedbackUpDistance, feedbackFadeStart));
+
+        Destroy(gameObject, feedbackDuration + 0.1f);
+    }
+
+    private void FaceCamera()
+    {
+        if (Camera.main != null)
+            transform.rotation = Camera.main.transform.rotation;
     }
 
     private IEnumerator AnimateMoney(Vector3 moveDirection)
@@ -63,6 +104,7 @@ public class FloatingRewardTag : MonoBehaviour
         while (elapsed < moneyDuration)
         {
             elapsed += Time.deltaTime;
+
             float t = Mathf.Clamp01(elapsed / moneyDuration);
             float movementT = 1f - Mathf.Pow(1f - t, 3f);
 
@@ -85,36 +127,37 @@ public class FloatingRewardTag : MonoBehaviour
         }
     }
 
-    private IEnumerator AnimatePopularity()
+    private static IEnumerator AnimateVertical(TextMeshPro text, float duration, float upDistance, float fadeStart)
     {
-        Vector3 startPosition = popularityText.transform.position;
-        Vector3 endPosition = startPosition + Vector3.up * popularityUpDistance;
+        Vector3 startPosition = text.transform.position;
+        Vector3 endPosition = startPosition + Vector3.up * upDistance;
 
-        Color baseColor = popularityText.color;
+        Color baseColor = text.color;
         baseColor.a = 1f;
-        popularityText.color = baseColor;
+        text.color = baseColor;
 
         float elapsed = 0f;
 
-        while (elapsed < popularityDuration)
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / popularityDuration);
+
+            float t = Mathf.Clamp01(elapsed / duration);
             float movementT = 1f - Mathf.Pow(1f - t, 3f);
 
-            popularityText.transform.position = Vector3.Lerp(startPosition, endPosition, movementT);
+            text.transform.position = Vector3.Lerp(startPosition, endPosition, movementT);
 
             float opacity = 1f;
 
-            if (t >= popularityFadeStart)
+            if (t >= fadeStart)
             {
-                float fadeT = Mathf.InverseLerp(popularityFadeStart, 1f, t);
+                float fadeT = Mathf.InverseLerp(fadeStart, 1f, t);
                 opacity = Mathf.Pow(1f - fadeT, 2f);
             }
 
-            Color color = popularityText.color;
+            Color color = text.color;
             color.a = opacity;
-            popularityText.color = color;
+            text.color = color;
 
             yield return null;
         }

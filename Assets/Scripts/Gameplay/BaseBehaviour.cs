@@ -21,6 +21,10 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
 
     [SerializeField] private SpawnAreaBlocked spawnAreaBlocked;
 
+    [Header("Feedback")]
+    [SerializeField] private Transform hitFeedbackPoint;
+    public Vector3 FeedbackPosition => hitFeedbackPoint.position;
+
     public string OwnerId { get; private set; }
     public Player Player { get; private set; }
 
@@ -43,9 +47,13 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
     }
 
 
-    public void TakeDamage(int amount)
+    public int TakeDamage(int amount)
     {
-        currentHealth -= amount;
+        if (currentHealth <= 0)
+            return 0;
+
+        int appliedDamage = Mathf.Min(amount, currentHealth);
+        currentHealth -= appliedDamage;
 
         playerNameDisplay.SetLitPercent((float)currentHealth / maxHealth);
         baseEmissionFader.SetLitPercent((float)currentHealth / maxHealth);
@@ -58,6 +66,7 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         }
 
         Debug.Log($"{gameObject.name} took {amount} damage. Current health: {currentHealth}/{maxHealth}");
+        return appliedDamage;
     }
 
     public void SpawnUnit(UnitType unitType)
@@ -104,7 +113,8 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
 
         UnitBehaviour unit = unitObject.GetComponent<UnitBehaviour>();
 
-        unit.Initialize(OwnerId, unitType);
+        unit.Initialize(OwnerId, unitType, Player.CurrentGenre.Passive);
+        unit.OnDeathRefund += Player.BoxOffice.Add;
 
         if (facingDirection == FacingDirection.Left)
             unit.MirrorVisual();
