@@ -3,7 +3,7 @@
   "stats": {
     "baseHealth": 1000,
     "startingMoney": 1500,
-    "startingGenreId": "black-white",
+    "startingGenreId": "horror",
     "rewards": {
       "meleeDeathPoints": 6,
       "rangedDeathPoints": 8,
@@ -14,8 +14,8 @@
       "penaltyPerTier": 55
     },
     "popularity": {
-      "startingPoints": 25,
-      "maxTier": 3,
+      "startingPoints": 100,
+      "maxTier": 4,
       "baseLimit": 16,
       "linearLimitGrowth": 25,
       "quadraticLimitGrowth": 1
@@ -220,6 +220,10 @@
       "id": "chucky",
       "name": "Chucky",
       "role": "Melee",
+      "model": {
+        "height": 1.2,
+        "groundOffset": -0.05
+      },
       "cost": 100,
       "damage": 60,
       "maxHealth": 100,
@@ -231,6 +235,10 @@
       "id": "ghostface",
       "name": "Ghostface",
       "role": "Ranged",
+      "model": {
+        "height": 1.85,
+        "rotationY": 140
+      },
       "cost": 150,
       "damage": 80,
       "maxHealth": 100,
@@ -242,6 +250,11 @@
       "id": "pennywise",
       "name": "Pennywise",
       "role": "Heavy",
+      "model": {
+        "height": 2.5,
+        "rotationY": 140,
+        "groundOffset": -0.13
+      },
       "cost": 300,
       "damage": 150,
       "maxHealth": 350,

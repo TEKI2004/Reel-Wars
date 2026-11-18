@@ -175,7 +175,8 @@ public static class ConfigBuilder
         unit.UnitPrefab = await ExternalAssetLoader.CreateUnitPrefabAsync(
             unitTemplate,
             ConfigLoader.GetModelPath(definition.Id),
-            definition.Id
+            definition.Id,
+            definition.Model
         );
 
         unit.name = $"{unit.UnitName} (Runtime)";

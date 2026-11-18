@@ -691,7 +691,6 @@ MonoBehaviour:
   rewardNeonMaterial: {fileID: 2100000, guid: d0f83024f9377df4db1bbe17b671d28f, type: 2}
   spawnArea: {fileID: 891579596}
   spawnPoint: {fileID: 891579595}
-  unitTemplate: {fileID: 6799871862351974249, guid: 61d6f87e7fdfdb344836e9552ecd5eac, type: 3}
   unitLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -4407,7 +4406,6 @@ MonoBehaviour:
   rewardNeonMaterial: {fileID: 2100000, guid: dbd153d643f487c47958017fcb89d4e2, type: 2}
   spawnArea: {fileID: 1376713138}
   spawnPoint: {fileID: 1376713137}
-  unitTemplate: {fileID: 6799871862351974249, guid: 61d6f87e7fdfdb344836e9552ecd5eac, type: 3}
   unitLayer:
     serializedVersion: 2
     m_Bits: 8

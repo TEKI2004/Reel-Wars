@@ -221,6 +221,15 @@ public static class ConfigValidator
         if (!unit.MoveSpeed.HasValue)
             errors.Add($"{prefix}: MoveSpeed is required.");
 
+        if (unit.Model == null)
+        {
+            errors.Add($"{prefix}: Model settings are required.");
+        }
+        else if (!unit.Model.Height.HasValue || unit.Model.Height.Value <= 0f)
+        {
+            errors.Add($"{prefix}: Model.Height must be greater than 0.");
+        }
+
         ValidateRequiredFile(ConfigLoader.GetModelPath(unit.Id), $"{prefix}: GLB model", errors);
         ValidateRequiredFile(ConfigLoader.GetUnitIconPath(unit.Id), $"{prefix}: Icon", errors);
     }

@@ -267,4 +267,29 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         scale.z *= -1f;
         visualRoot.localScale = scale;
     }
+
+    internal void CalibrateVisualAnchors(Bounds modelBounds)
+    {
+        SetWorldY(
+            popularityRewardSpawnPoint,
+            Mathf.Lerp(modelBounds.min.y, modelBounds.max.y, 0.65f)
+        );
+
+        SetWorldY(
+            moneyRewardSpawnPoint,
+            Mathf.Lerp(modelBounds.min.y, modelBounds.max.y, 0.85f)
+        );
+
+        SetWorldY(
+            hpBar.transform,
+            modelBounds.max.y + 0.2f
+        );
+    }
+
+    private static void SetWorldY(Transform target, float y)
+    {
+        Vector3 position = target.position;
+        position.y = y;
+        target.position = position;
+    }
 }

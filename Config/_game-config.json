@@ -11,6 +11,9 @@
       "id": "chucky",
       "name": "Chucky",
       "role": "Melee",
+      "model": {
+        "height": 1.2
+      },
       "cost": 100,
       "damage": 60,
       "maxHealth": 100,
@@ -19,9 +22,14 @@
       "moveSpeed": 3.5
     },
     {
-      "id": "ghostface",
-      "name": "Ghostface",
+      "id": "freddy",
+      "name": "Freddy",
       "role": "Ranged",
+      "model": {
+        "height": 1.85,
+        "rotationY": 140,
+        "groundOffset": -0.15
+      },
       "cost": 150,
       "damage": 80,
       "maxHealth": 100,
@@ -33,6 +41,11 @@
       "id": "pennywise",
       "name": "Pennywise",
       "role": "Heavy",
+      "model": {
+        "height": 2.5,
+        "rotationY": 140,
+        "groundOffset": -0.1
+      },
       "cost": 300,
       "damage": 150,
       "maxHealth": 350,
@@ -48,7 +61,7 @@
       "name": "Horror",
       "passiveDescription": "Fear units away",
       "meleeUnitId": "chucky",
-      "rangedUnitId": "ghostface",
+      "rangedUnitId": "freddy",
       "heavyUnitId": "pennywise",
       "children": ["horror", "horror"]
     }
