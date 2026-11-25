@@ -772,13 +772,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bff314a1ebfcaa4d8a3b671b6ed55e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasePresentation
+  shaker: {fileID: 237540035}
+  floatingTagPrefab: {fileID: 5266329344428490568, guid: f698fff105e991e4db4a2ecb38683c9f, type: 3}
   neonOnMaterial: {fileID: 2100000, guid: 55968bbe9e4a339419db4f46fbadbc30, type: 2}
   neonOffMaterial: {fileID: 2100000, guid: 3d35b0bfa57ce8645b5739bc522bb137, type: 2}
   rewardNeonMaterial: {fileID: 2100000, guid: d0f83024f9377df4db1bbe17b671d28f, type: 2}
   playerNameDisplay: {fileID: 1384943789}
   emissionFader: {fileID: 237540036}
-  shaker: {fileID: 237540035}
-  unitTagPrefab: {fileID: 5266329344428490568, guid: f698fff105e991e4db4a2ecb38683c9f, type: 3}
   feedbackPoint: {fileID: 1610315910}
 --- !u!1001 &252141319
 PrefabInstance:
@@ -4529,13 +4529,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bff314a1ebfcaa4d8a3b671b6ed55e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasePresentation
+  shaker: {fileID: 841109266}
+  floatingTagPrefab: {fileID: 5266329344428490568, guid: f698fff105e991e4db4a2ecb38683c9f, type: 3}
   neonOnMaterial: {fileID: 2100000, guid: 40e94597ae6c7514eadbb0072ce028e8, type: 2}
   neonOffMaterial: {fileID: 2100000, guid: 3d35b0bfa57ce8645b5739bc522bb137, type: 2}
   rewardNeonMaterial: {fileID: 2100000, guid: dbd153d643f487c47958017fcb89d4e2, type: 2}
   playerNameDisplay: {fileID: 480463781}
   emissionFader: {fileID: 841109267}
-  shaker: {fileID: 841109266}
-  unitTagPrefab: {fileID: 5266329344428490568, guid: f698fff105e991e4db4a2ecb38683c9f, type: 3}
   feedbackPoint: {fileID: 1413713537}
 --- !u!1 &891579594
 GameObject:
