@@ -4,7 +4,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class FloatingUnitTag : MonoBehaviour
+public class FloatingTag : MonoBehaviour
 {
     [Title("References")]
     [Required][SerializeField] private TextMeshPro moneyText;

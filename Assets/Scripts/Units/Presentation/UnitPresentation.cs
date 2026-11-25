@@ -23,8 +23,8 @@ public class UnitPresentation : HealthPresentation
     }
     public void ShowReward(RewardResult reward, Vector3 moveDirection, Material popularityMaterial)
     {
-        FloatingUnitTag unitTag = CreateUnitTag();
-        unitTag.ShowReward(reward, moneyRewardSpawnPoint.position, popularityRewardSpawnPoint.position, moveDirection, popularityMaterial);
+        FloatingTag floatingTag = CreateFloatingTag();
+        floatingTag.ShowReward(reward, moneyRewardSpawnPoint.position, popularityRewardSpawnPoint.position, moveDirection, popularityMaterial);
     }
 
     public void ShowLifesteal(int currentHealth, int maxHealth)
@@ -48,12 +48,12 @@ public class UnitPresentation : HealthPresentation
     }
 
 #if UNITY_EDITOR
-    public void EditorAutoWire(FloatingUnitTag sharedUnitTagPrefab)
+    public void EditorAutoWire(FloatingTag sharedFloatingTagPrefab)
     {
         visualRoot = FindChild("Visual");
         shaker = GetComponentInChildren<AttackedShaker>(true);
         hpBar = GetComponentInChildren<FloatingHpBar>(true);
-        unitTagPrefab = sharedUnitTagPrefab;
+        floatingTagPrefab = sharedFloatingTagPrefab;
         moneyRewardSpawnPoint = FindChild("MoneyRewardSpawnPoint");
         popularityRewardSpawnPoint = FindChild("PopularityRewardSpawnPoint");
     }

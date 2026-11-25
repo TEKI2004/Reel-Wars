@@ -5,7 +5,7 @@ public abstract class HealthPresentation : MonoBehaviour
 {
     [Title("Health Feedback")]
     [Required][SerializeField] protected AttackedShaker shaker;
-    [Required][SerializeField] protected FloatingUnitTag unitTagPrefab;
+    [Required][SerializeField] protected FloatingTag floatingTagPrefab;
 
     public abstract Vector3 FeedbackPosition { get; }
 
@@ -34,13 +34,13 @@ public abstract class HealthPresentation : MonoBehaviour
 
     public void ShowFeedback(GenrePassiveType passiveType, Vector3 position, int amount = 0)
     {
-        FloatingUnitTag unitTag = CreateUnitTag();
-        unitTag.ShowFeedback(passiveType, position, amount);
+        FloatingTag floatingTag = CreateFloatingTag();
+        floatingTag.ShowFeedback(passiveType, position, amount);
     }
 
-    protected FloatingUnitTag CreateUnitTag()
+    protected FloatingTag CreateFloatingTag()
     {
-        return Instantiate(unitTagPrefab);
+        return Instantiate(floatingTagPrefab);
     }
 
     protected abstract void SetHealth(int currentHealth, int maxHealth);

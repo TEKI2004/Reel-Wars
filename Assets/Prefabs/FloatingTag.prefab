@@ -554,7 +554,7 @@ GameObject:
   - component: {fileID: 7675094945569301576}
   - component: {fileID: 5266329344428490568}
   m_Layer: 0
-  m_Name: FloatingUnitTag
+  m_Name: FloatingTag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
