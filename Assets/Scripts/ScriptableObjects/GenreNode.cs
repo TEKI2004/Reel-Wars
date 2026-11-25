@@ -37,11 +37,6 @@ public class GenreNode : ScriptableObject
     [LabelText("Genre Name")]
     public string GenreName;
 
-    [VerticalGroup("Overview/Layout/Info")]
-    [LabelWidth(95)]
-    [LabelText("Passive")]
-    public string PassiveDescription;
-
     [BoxGroup("Passive")]
     [HideLabel]
     public GenrePassive Passive;

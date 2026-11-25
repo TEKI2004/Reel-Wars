@@ -102,7 +102,7 @@
     left: 176px;
     right: 22px;
     height: 26px;
-    font-size: 16px;
+    font-size: 14px;
     color: white;
     -unity-font-style: bold;
     -unity-text-align: middle-center;

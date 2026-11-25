@@ -73,7 +73,7 @@ public class ClapperboardHUD : MonoBehaviour
         {
             genreName.text = genre.GenreName;
             genreIcon.style.backgroundImage = new StyleBackground(genre.Icon);
-            passiveDescription.text = genre.PassiveDescription;
+            passiveDescription.text = genre.Passive.Description;
 
             melee.SetUnit(genre.MeleeUnit);
             ranged.SetUnit(genre.RangedUnit);

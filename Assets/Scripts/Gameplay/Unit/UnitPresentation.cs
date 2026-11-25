@@ -1,16 +1,19 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class UnitPresentation : MonoBehaviour
+public class UnitPresentation : HealthPresentation
 {
-    [Required][SerializeField] private AttackedShaker shaker;
     [Required][SerializeField] private FloatingHpBar hpBar;
-    [Required][SerializeField] private FloatingUnitTag unitTagPrefab;
     [Required][SerializeField] private Transform moneyRewardSpawnPoint;
     [Required][SerializeField] private Transform popularityRewardSpawnPoint;
     [Required][SerializeField] private Transform visualRoot;
     internal Transform VisualRoot => visualRoot;
-    public Vector3 FeedbackPosition => hpBar.transform.position;
+    public override Vector3 FeedbackPosition => hpBar.transform.position;
+
+    protected override void SetHealth(int currentHealth, int maxHealth)
+    {
+        hpBar.SetPercent((float)currentHealth / maxHealth);
+    }
 
     public void MirrorVisual()
     {
@@ -18,41 +21,16 @@ public class UnitPresentation : MonoBehaviour
         scale.z *= -1f;
         visualRoot.localScale = scale;
     }
-
-    public void ShowDamage(int currentHealth, int maxHealth)
-    {
-        shaker.Shake();
-        hpBar.SetPercent((float)currentHealth / maxHealth);
-    }
-
-    public void ShowHealing(int currentHealth, int maxHealth)
-    {
-        hpBar.SetPercent((float)currentHealth / maxHealth);
-    }
-
-    public void ShowLastStand(GenrePassiveType passiveType, int currentHealth, int maxHealth)
-    {
-        shaker.Shake();
-        hpBar.SetPercent((float)currentHealth / maxHealth);
-        ShowFeedback(passiveType);
-    }
-
-    public void ShowFeedback(GenrePassiveType passiveType, int amount = 0)
-    {
-        FloatingUnitTag unitTag = Instantiate(unitTagPrefab);
-        unitTag.ShowFeedback(passiveType, FeedbackPosition, amount);
-    }
-
-    public void ShowFeedback(GenrePassiveType passiveType, Vector3 position, int amount = 0)
-    {
-        FloatingUnitTag unitTag = Instantiate(unitTagPrefab);
-        unitTag.ShowFeedback(passiveType, position, amount);
-    }
-
     public void ShowReward(RewardResult reward, Vector3 moveDirection, Material popularityMaterial)
     {
-        FloatingUnitTag unitTag = Instantiate(unitTagPrefab);
+        FloatingUnitTag unitTag = CreateUnitTag();
         unitTag.ShowReward(reward, moneyRewardSpawnPoint.position, popularityRewardSpawnPoint.position, moveDirection, popularityMaterial);
+    }
+
+    public void ShowLifesteal(int currentHealth, int maxHealth)
+    {
+        ShowHealing(currentHealth, maxHealth);
+        ShowFeedback(GenrePassiveType.Lifesteal);
     }
 
     public void CalibrateAnchors(Bounds modelBounds)
@@ -84,7 +62,7 @@ public class UnitPresentation : MonoBehaviour
     {
         foreach (Transform child in GetComponentsInChildren<Transform>(true))
         {
-            if (child.name == childName)
+            if (child.name == childName )
                 return child;
         }
 

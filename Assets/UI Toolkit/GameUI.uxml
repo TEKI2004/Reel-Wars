@@ -24,7 +24,7 @@
             </ui:Button>
         </ui:VisualElement>
         <ui:Label name="LeftPassiveTitle" text="Passive" class="passive-title"/>
-        <ui:Label name="LeftPassiveValue" text="Units cost less" class="passive-value"/>
+        <ui:Label name="LeftPassiveValue" text="―――――――――" class="passive-value"/>
         <ui:Label name="LeftGenreTitle" text="Genre" class="genre-title"/>
         <ui:VisualElement name="LeftCurrentGenreIcon" class="current-genre-icon"/>
         <ui:Label name="LeftGenreName" text="Black &amp; White" class="genre-value"/>
@@ -55,7 +55,7 @@
             </ui:Button>
         </ui:VisualElement>
         <ui:Label name="RightPassiveTitle" text="Passive" class="passive-title"/>
-        <ui:Label name="RightPassiveValue" text="Units cost less" class="passive-value"/>
+        <ui:Label name="RightPassiveValue" text="―――――――――" class="passive-value"/>
         <ui:Label name="RightGenreTitle" text="Genre" class="genre-title"/>
         <ui:VisualElement name="RightCurrentGenreIcon" class="current-genre-icon"/>
         <ui:Label name="RightGenreName" text="Black &amp; White" class="genre-value"/>

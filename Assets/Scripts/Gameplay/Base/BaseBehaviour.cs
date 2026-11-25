@@ -1,36 +1,26 @@
 using UnityEngine;
 
+[RequireComponent(typeof(BasePresentation))]
 public class BaseBehaviour : MonoBehaviour, IAttackable
 {
-    [Header("Neon")]
-    [SerializeField] private Material neonOnMaterial;
-    [SerializeField] private Material neonOffMaterial;
-    [SerializeField] private NeonPlayerName playerNameDisplay;
-    [SerializeField] private Material rewardNeonMaterial;
-    public Material NeonMaterial => rewardNeonMaterial;
+    private BasePresentation presentation;
+    private BasePresentation Presentation => presentation ??= GetComponent<BasePresentation>();
+
+    private BaseHealth health;
 
     [Header("Spawn Settings")]
     [SerializeField] private BoxCollider spawnArea;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private LayerMask unitLayer;
-
-
-    [Header("Reactive Effects")]
-    [SerializeField] private AttackedShaker baseShaker;
-    [SerializeField] private BaseEmissionFader baseEmissionFader;
-
     [SerializeField] private SpawnAreaBlocked spawnAreaBlocked;
 
-    [Header("Feedback")]
-    [SerializeField] private Transform hitFeedbackPoint;
-    public Vector3 FeedbackPosition => hitFeedbackPoint.position;
+    public Material NeonMaterial => Presentation.NeonMaterial;
+    public Vector3 FeedbackPosition => Presentation.FeedbackPosition;
 
     public string OwnerId { get; private set; }
     public Player Player { get; private set; }
 
     private FacingDirection facingDirection;
-    private int maxHealth;
-    private int currentHealth;
 
     public void Initialize(string ownerId, FacingDirection direction)
     {
@@ -39,33 +29,40 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
         gameObject.name = $"Base_{OwnerId}";
 
         facingDirection = direction;
-        maxHealth = GameManager.Instance.Config.BaseHealth;
-        currentHealth = maxHealth;
 
-        playerNameDisplay.Initialize(neonOnMaterial, neonOffMaterial);
-        playerNameDisplay.SetName(OwnerId);
+        int maxHealth = GameManager.Instance.Config.BaseHealth;
+
+        Presentation.Initialize(OwnerId, maxHealth);
+        health = new BaseHealth(maxHealth, Player.CurrentGenre.Passive, Presentation);
+
+        Player.OnGenreChanged += HandleGenreChanged;
     }
 
-
-    public int TakeDamage(int amount)
+    private void HandleGenreChanged(GenreNode genre)
     {
-        if (currentHealth <= 0)
+        health.SetPassive(genre.Passive);
+    }
+
+    private void Update()
+    {
+        health?.ApplyRegeneration(Time.deltaTime);
+    }
+
+    public int TakeDamage(DamageContext context)
+    {
+        if (health == null)
             return 0;
 
-        int appliedDamage = Mathf.Min(amount, currentHealth);
-        currentHealth -= appliedDamage;
+        int appliedDamage = health.TakeDamage(context);
 
-        playerNameDisplay.SetLitPercent((float)currentHealth / maxHealth);
-        baseEmissionFader.SetLitPercent((float)currentHealth / maxHealth);
-        baseShaker.Shake();
+        if (appliedDamage <= 0)
+            return 0;
 
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
+        if (health.IsDead)
             Debug.Log($"{gameObject.name} has been destroyed.");
-        }
 
-        Debug.Log($"{gameObject.name} took {amount} damage. Current health: {currentHealth}/{maxHealth}");
+        Debug.Log($"{gameObject.name} took {appliedDamage} damage. Current health: {health.CurrentHealth}/{health.MaxHealth}");
+
         return appliedDamage;
     }
 
@@ -146,5 +143,11 @@ public class BaseBehaviour : MonoBehaviour, IAttackable
     public RewardResult ClaimReward(UnitRole victimRole, int victimCost)
     {
         return Player.ClaimReward(victimRole, victimCost);
+    }
+
+    private void OnDestroy()
+    {
+        if (Player != null)
+            Player.OnGenreChanged -= HandleGenreChanged;
     }
 }

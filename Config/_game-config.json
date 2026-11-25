@@ -12,7 +12,8 @@
       "name": "Chucky",
       "role": "Melee",
       "model": {
-        "height": 1.2
+        "height": 1.2,
+        "groundOffset": -0.05
       },
       "cost": 100,
       "damage": 60,
@@ -43,8 +44,9 @@
       "role": "Heavy",
       "model": {
         "height": 2.5,
-        "rotationY": 140,
-        "groundOffset": -0.1
+        "rotationY": -40,
+        "groundOffset": -0.13,
+        "mirrorZ": true
       },
       "cost": 300,
       "damage": 150,
@@ -59,7 +61,10 @@
     {
       "id": "horror",
       "name": "Horror",
-      "passiveDescription": "Fear units away",
+      "passive": {
+        "type": "Lifesteal",
+        "value": 0.8
+      },
       "meleeUnitId": "chucky",
       "rangedUnitId": "freddy",
       "heavyUnitId": "pennywise",

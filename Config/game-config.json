@@ -3,7 +3,7 @@
   "stats": {
     "baseHealth": 1000,
     "startingMoney": 1500,
-    "startingGenreId": "horror",
+    "startingGenreId": "black-white",
     "rewards": {
       "meleeDeathPoints": 6,
       "rangedDeathPoints": 8,
@@ -14,7 +14,7 @@
       "penaltyPerTier": 55
     },
     "popularity": {
-      "startingPoints": 100,
+      "startingPoints": 80,
       "maxTier": 4,
       "baseLimit": 16,
       "linearLimitGrowth": 25,
@@ -268,6 +268,9 @@
   "genres": [
     {
       "id": "black-white",
+      "passive": {
+        "type": "None"
+      },
       "meleeUnitId": "chaplin",
       "rangedUnitId": "cameraman",
       "heavyUnitId": "king-kong",
@@ -275,6 +278,10 @@
     },
     {
       "id": "classic",
+      "passive": {
+        "type": "DeathRefund",
+        "value": 0.25
+      },
       "meleeUnitId": "zorro",
       "rangedUnitId": "columbo",
       "heavyUnitId": "frankenstein",
@@ -282,6 +289,10 @@
     },
     {
       "id": "modern",
+      "passive": {
+        "type": "CriticalHitChance",
+        "value": 0.2
+      },
       "meleeUnitId": "indiana-jones",
       "rangedUnitId": "rambo",
       "heavyUnitId": "terminator",
@@ -289,6 +300,10 @@
     },
     {
       "id": "drama",
+      "passive": {
+        "type": "LastStand",
+        "value": 0.2
+      },
       "meleeUnitId": "forrest-gump",
       "rangedUnitId": "the-godfather",
       "heavyUnitId": "titanic",
@@ -296,6 +311,10 @@
     },
     {
       "id": "comedy",
+      "passive": {
+        "type": "DodgeChance",
+        "value": 0.15
+      },
       "meleeUnitId": "mr-bean",
       "rangedUnitId": "jack-sparrow",
       "heavyUnitId": "shrek",
@@ -303,6 +322,10 @@
     },
     {
       "id": "action",
+      "passive": {
+        "type": "Regeneration",
+        "value": 0.2
+      },
       "meleeUnitId": "deadpool",
       "rangedUnitId": "john-wick",
       "heavyUnitId": "hulk",
@@ -310,6 +333,10 @@
     },
     {
       "id": "sci-fi",
+      "passive": {
+        "type": "FirstAttackBonus",
+        "value": 0.5
+      },
       "meleeUnitId": "darth-vader",
       "rangedUnitId": "neo",
       "heavyUnitId": "thanos",
@@ -318,7 +345,10 @@
     {
       "id": "horror",
       "name": "Horror",
-      "passiveDescription": "Fears units away",
+      "passive": {
+        "type": "Lifesteal",
+        "value": 0.8
+      },
       "meleeUnitId": "chucky",
       "rangedUnitId": "ghostface",
       "heavyUnitId": "pennywise",

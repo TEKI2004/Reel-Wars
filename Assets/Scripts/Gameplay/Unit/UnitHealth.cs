@@ -1,21 +1,14 @@
 ﻿using UnityEngine;
 
-public sealed class UnitHealth
+public sealed class UnitHealth : Health
 {
-    private readonly UnitType unitType;
     private readonly UnitPassive passive;
     private readonly UnitPresentation presentation;
 
-    public int CurrentHealth { get; private set; }
-    public bool IsDead => CurrentHealth <= 0;
-
-    public UnitHealth(UnitType unitType, UnitPassive passive, UnitPresentation presentation)
+    public UnitHealth(UnitType unitType, UnitPassive passive, UnitPresentation presentation) : base(unitType.MaxHealth)
     {
-        this.unitType = unitType;
         this.passive = passive;
         this.presentation = presentation;
-
-        CurrentHealth = unitType.MaxHealth;
     }
 
     public int TakeDamage(int amount, out bool died)
@@ -31,17 +24,16 @@ public sealed class UnitHealth
             return 0;
         }
 
-        int appliedDamage = Mathf.Min(amount, CurrentHealth);
-        CurrentHealth -= appliedDamage;
+        int appliedDamage = ApplyDamage(amount);
 
         if (CurrentHealth > 0)
         {
-            presentation.ShowDamage(CurrentHealth, unitType.MaxHealth);
+            presentation.ShowDamage(CurrentHealth, MaxHealth);
         }
-        else if (passive.TryLastStand(unitType.MaxHealth, out int restoredHealth))
+        else if (passive.TryLastStand(MaxHealth, out int restoredHealth))
         {
-            CurrentHealth = restoredHealth;
-            presentation.ShowLastStand(passive.Type, CurrentHealth, unitType.MaxHealth);
+            SetHealth(restoredHealth);
+            presentation.ShowLastStand(passive.Type, CurrentHealth, MaxHealth);
         }
         else
         {
@@ -53,30 +45,23 @@ public sealed class UnitHealth
 
     public void ApplyLifesteal(int appliedDamage)
     {
-        int appliedHealing = Heal(passive.GetLifestealHealing(appliedDamage));
+        int healing = passive.GetLifestealHealing(appliedDamage);
+        int appliedHealing = Heal(healing);
 
         if (appliedHealing > 0)
-            presentation.ShowFeedback(passive.Type);
+            presentation.ShowLifesteal(CurrentHealth, MaxHealth);
     }
 
     public void ApplyRegeneration(float deltaTime)
     {
-        int healing = passive.GetRegenerationHealing(unitType.MaxHealth, CurrentHealth >= unitType.MaxHealth, deltaTime);
+        int healing = passive.GetRegenerationHealing(MaxHealth, CurrentHealth >= MaxHealth, deltaTime);
+        int appliedHealing = Heal(healing);
 
-        if (healing > 0)
-            Heal(healing);
-    }
-
-    private int Heal(int amount)
-    {
-        if (amount <= 0 || IsDead || CurrentHealth >= unitType.MaxHealth)
-            return 0;
-
-        int appliedHealing = Mathf.Min(amount, unitType.MaxHealth - CurrentHealth);
-        CurrentHealth += appliedHealing;
-
-        presentation.ShowHealing(CurrentHealth, unitType.MaxHealth);
-
-        return appliedHealing;
+        if (appliedHealing > 0)
+        {
+            presentation.ShowHealing(CurrentHealth, MaxHealth);
+            if (CurrentHealth == MaxHealth)
+                Debug.Log($"Fully regenerated to {MaxHealth} HP.");
+        }
     }
 }

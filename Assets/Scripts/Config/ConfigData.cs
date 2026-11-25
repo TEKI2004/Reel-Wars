@@ -80,11 +80,18 @@ public class GenreConfigData
 {
     public string Id { get; set; }
     public string Name { get; set; }
-    public string PassiveDescription { get; set; }
+
+    public GenrePassiveConfigData Passive { get; set; }
 
     public string MeleeUnitId { get; set; }
     public string RangedUnitId { get; set; }
     public string HeavyUnitId { get; set; }
 
     public List<string> Children { get; set; }
+}
+
+public class GenrePassiveConfigData
+{
+    public GenrePassiveType? Type { get; set; }
+    public float? Value { get; set; }
 }

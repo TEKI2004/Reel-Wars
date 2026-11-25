@@ -17,6 +17,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
     private UnitType unitType;
     private UnitPassive passive;
     private UnitHealth health;
+    public int MaxHealth => unitType.MaxHealth;
 
     private UnitPresentation presentation;
     internal UnitPresentation Presentation => presentation ??= GetComponent<UnitPresentation>();
@@ -64,7 +65,7 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         if (health.IsDead)
             return;
 
-        health.ApplyRegeneration(Time.deltaTime);
+        health?.ApplyRegeneration(Time.deltaTime);
 
         if (Targeting.TryGetTarget(out IAttackable target))
             Attack(target);
@@ -113,23 +114,24 @@ public class UnitBehaviour : MonoBehaviour, IAttackableObserver
         lastAttackTime = Time.time;
 
         Vector3 targetFeedbackPosition = target.FeedbackPosition;
-        int appliedDamage = target.TakeDamage(damage);
+        int appliedDamage = target.TakeDamage(new DamageContext(damage, this));
 
         if (appliedDamage <= 0)
             return;
 
-        health.ApplyLifesteal(appliedDamage);
+        if (passiveActivated)
+        {
+            Vector3 feedbackPosition = passive.Type == GenrePassiveType.FirstAttackBonus ? FeedbackPosition : targetFeedbackPosition;
+            Presentation.ShowFeedback(passive.Type, feedbackPosition);
+        }
 
-        if (!passiveActivated)
-            return;
-
-        Vector3 feedbackPosition = passive.Type == GenrePassiveType.FirstAttackBonus ? FeedbackPosition : targetFeedbackPosition;
-        Presentation.ShowFeedback(passive.Type, feedbackPosition);
+        if (!health.IsDead)
+            health.ApplyLifesteal(appliedDamage);
     }
 
-    public int TakeDamage(int amount)
+    public int TakeDamage(DamageContext context)
     {
-        int appliedDamage = health.TakeDamage(amount, out bool died);
+        int appliedDamage = health.TakeDamage(context.Amount, out bool died);
 
         if (appliedDamage <= 0)
             return 0;

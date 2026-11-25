@@ -272,7 +272,7 @@ public static class ConfigBuilder
 
         genre.SetRuntimeId(definition.Id);
         genre.GenreName = definition.Name;
-        genre.PassiveDescription = definition.PassiveDescription;
+        genre.Passive = genre.Passive = BuildPassive(default, definition.Passive);
         genre.Icon = ExternalAssetLoader.LoadSprite(ConfigLoader.GetGenreIconPath(definition.Id));
         genre.Children = new List<GenreNode>();
         genre.name = $"{genre.GenreName} (Runtime)";
@@ -291,8 +291,8 @@ public static class ConfigBuilder
         if (overrides?.Name != null)
             target.GenreName = overrides.Name;
 
-        if (overrides?.PassiveDescription != null)
-            target.PassiveDescription = overrides.PassiveDescription;
+        if (overrides != null)
+            target.Passive = BuildPassive(defaults.Passive, overrides?.Passive);
 
         string meleeId = overrides?.MeleeUnitId ?? defaults.MeleeUnit.Id;
         string rangedId = overrides?.RangedUnitId ?? defaults.RangedUnit.Id;
@@ -333,5 +333,19 @@ public static class ConfigBuilder
 
         foreach (string childId in definition.Children)
             target.Children.Add(genres[childId]);
+    }
+
+    private static GenrePassive BuildPassive(GenrePassive defaults, GenrePassiveConfigData overrides)
+    {
+        if (overrides == null)
+            return defaults;
+
+        GenrePassiveType type = overrides.Type ?? defaults.Type;
+
+        return new GenrePassive
+        {
+            Type = type,
+            Value = type == GenrePassiveType.None ? 0f : overrides.Value ?? defaults.Value
+        };
     }
 }

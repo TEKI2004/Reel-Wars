@@ -267,7 +267,10 @@ public static class ConfigValidator
                 continue;
             }
 
-            bool isNewGenre = !registry.Genres.ContainsKey(genre.Id);
+            bool isNewGenre = !registry.Genres.TryGetValue(genre.Id, out GenreNode defaultGenre);
+            GenrePassive defaultPassive = isNewGenre ? default : defaultGenre.Passive;
+
+            ValidateGenrePassive(genre.Id, genre.Passive, defaultPassive, isNewGenre, errors);
 
             if (isNewGenre)
             {
@@ -322,6 +325,36 @@ public static class ConfigValidator
             errors.Add($"{prefix}: Children is required. Use an empty array for a leaf genre.");
 
         ValidateRequiredFile(ConfigLoader.GetGenreIconPath(genre.Id), $"{prefix}: Icon", errors);
+    }
+
+    private static void ValidateGenrePassive(
+        string genreId,
+        GenrePassiveConfigData passive,
+        GenrePassive defaults,
+        bool isNewGenre,
+        List<string> errors
+    )
+    {
+        if (passive == null)
+            return;
+
+        GenrePassiveType type = passive.Type ?? defaults.Type;
+
+        if (type == GenrePassiveType.None)
+            return;
+
+        bool typeChanged = passive.Type.HasValue && passive.Type.Value != defaults.Type;
+
+        if ((isNewGenre || typeChanged) && !passive.Value.HasValue)
+        {
+            errors.Add($"Genre '{genreId}': Passive.Value is required for '{type}'.");
+            return;
+        }
+
+        float value = passive.Value ?? defaults.Value;
+
+        if (value <= 0f || value > 1f)
+            errors.Add($"Genre '{genreId}': Passive.Value must be greater than 0 and at most 1.");
     }
 
     private static void ValidateGenreUnitReference(

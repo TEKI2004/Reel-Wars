@@ -15,7 +15,6 @@ MonoBehaviour:
   id: black-white
   Icon: {fileID: 21300000, guid: 91f7d787dcf73024698889bf58becff3, type: 3}
   GenreName: Black & White
-  PassiveDescription: "\u2015\u2015\u2015\u2015\u2015\u2015"
   Passive:
     Type: 0
     Value: 0
